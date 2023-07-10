@@ -132,7 +132,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
         </select>
       </div>
       <div className="sendPage-to-container">
-        <p>to</p>
+        <p>To</p>
         <input
           className="sendPage-toadrs"
           id="toadrs"
