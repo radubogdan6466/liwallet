@@ -1,6 +1,5 @@
-import { useEffect } from "react";
-import "../App.css";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import React from "react";
 import Web3 from "web3";
 import Send from "./SendPage";
 import mimabi from "../mimabi";
@@ -12,6 +11,33 @@ import CheckUser from "./CheckUser";
 import { ethchainTokens, bnbchainTokens, dogechainTokens } from "./tokens";
 import TokenList from "./TokenList";
 import NativeChainValue from "./NativeChainValue";
+import { Box, Typography, Button, Container } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { ContentCopy } from "@mui/icons-material";
+import Divider from "@mui/material/Divider";
+
+const CenterBox = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+const StyledButton = styled(Button)({});
+const DarkBackground = styled(Container)({
+  backgroundColor: "#333",
+  color: "white",
+  maxWidth: "900px",
+  width: "100%",
+  minWidth: "483px",
+});
+
+const TypographyTitle = styled(Typography)({
+  fontWeight: "bold",
+  textAlign: "center",
+  color: "#fff",
+});
+
 export default function Home() {
   const [selectedChain, setSelectedChain] = useState(ethchain);
   const [web3, setWeb3] = useState(
@@ -104,28 +130,23 @@ export default function Home() {
   if (!userWallet) {
     return <CheckUser />;
   }
-  /**
-   * 
-   * 
-   *  <NativeChainValue
-        userWallet={userWallet}
-        web3={web3}
-        selectedChain={selectedChain}
-        ethchain={ethchain}
-        bnbchain={bnbchain}
-        dogechain={dogechain}
-      />
-   */
   const shortenedAddress = `${userWallet.address.substring(
     0,
     5
   )}...${userWallet.address.substring(userWallet.address.length - 4)}`;
   return (
-    <div className="homePage">
-      <div className="homePage-nav-container">
-        {/* Navigation */}
+    <DarkBackground>
+      <Box className="nav" sx={{ display: "flex", justifyContent: "center" }}>
         <Meniu />
-        {/* ChainSelector */}
+        <CenterBox>
+          <StyledButton
+            onClick={() => copyAddress(userWallet.address)}
+            endIcon={<ContentCopy />}
+          >
+            {shortenedAddress}
+          </StyledButton>
+          <Typography id="copyMessage"></Typography>
+        </CenterBox>
         <ChainSelector
           selectedChain={selectedChain}
           handleChainChange={handleChainChange}
@@ -133,69 +154,51 @@ export default function Home() {
           ethchain={ethchain}
           dogechain={dogechain}
         />
-      </div>
+      </Box>
+      <Divider />
 
-      {/* Main Content */}
-      <div className="homePage-container">
-        <p className="value" id="bal">
-          {ethBalance}{" "}
+      <CenterBox>
+        <TypographyTitle variant="p">
+          {Number(ethBalance).toFixed(4)}{" "}
           {selectedChain === ethchain
             ? "ETH"
             : selectedChain === bnbchain
             ? "BNB"
             : "DOGE"}
-        </p>
-        {/* Address Display */}
-        <div className="homePage-address-display">
-          <p className="connected-address">Account</p>
-          <button
-            className="homePage-selected-account"
-            onClick={() => copyAddress(userWallet.address)}
-          >
-            {shortenedAddress}
-          </button>
-          <p id="copyMessage"></p>
-        </div>
+        </TypographyTitle>
+      </CenterBox>
 
-        {/* Value Display */}
-        <div className="homePage-value-display">
-          <div className="homePage-token-balances">
-            {/* Token Balances */}
-            <TokenList
-              userWallet={userWallet}
-              web3={web3}
-              selectedChain={selectedChain}
-              ethchain={ethchain}
-              bnbchain={bnbchain}
-              dogechain={dogechain}
-              ethBalance={ethBalance}
-              handleTokenClick={handleTokenClick}
-            />
-          </div>
-        </div>
+      <CenterBox>
+        <TokenList
+          userWallet={userWallet}
+          web3={web3}
+          selectedChain={selectedChain}
+          ethchain={ethchain}
+          bnbchain={bnbchain}
+          dogechain={dogechain}
+          ethBalance={ethBalance}
+          handleTokenClick={handleTokenClick}
+        />
+      </CenterBox>
+      <CenterBox>
+        <StyledButton
+          variant="contained"
+          color="primary"
+          onClick={() => setShowSendPopup(true)}
+        >
+          Send
+        </StyledButton>
+      </CenterBox>
 
-        {/* Button Box */}
-        <div className="homePage-button-box">
-          <button
-            onClick={() => setShowSendPopup(true)}
-            className="homePage-send-button"
-          >
-            Send
-          </button>
-        </div>
-
-        {showSendPopup && (
-          <div className="popup-overlay">
-            <div className="sendeth-popup">
-              <Send
-                onClose={() => setShowSendPopup(false)}
-                selectedToken={selectedToken}
-                selectedChain={selectedChain}
-              />
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+      {showSendPopup && (
+        <CenterBox>
+          <Send
+            onClose={() => setShowSendPopup(false)}
+            selectedToken={selectedToken}
+            selectedChain={selectedChain}
+          />
+        </CenterBox>
+      )}
+    </DarkBackground>
   );
 }

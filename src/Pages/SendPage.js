@@ -2,7 +2,45 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { ethchainTokens, bnbchainTokens, dogechainTokens } from "./tokens";
 import { ethchain, bnbchain, dogechain } from "./ChainSelector";
+import {
+  Box,
+  Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Typography,
+  Link as MuiLink,
+} from "@mui/material";
 
+import { styled } from "@mui/material/styles";
+
+const StyledBox = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "20px",
+  backgroundColor: "#d3d3d3", // Gri deschis pentru fundal
+});
+
+const StyledFormControl = styled(FormControl)({
+  marginBottom: "15px", // Adaugă spațiu între input-uri
+});
+
+const TransferDetailsBox = styled(Box)({
+  backgroundColor: "#666666", // Gri pentru fundal
+  color: "#ffffff", // Text alb
+  borderRadius: "10px",
+  padding: "20px",
+  marginTop: "20px",
+  textAlign: "left",
+});
+
+const Link = styled(MuiLink)({
+  textDecoration: "none", // Fără text decoration pentru link-uri
+});
 const Send = ({ onClose, selectedToken, selectedChain }) => {
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
 
@@ -111,55 +149,40 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
   }, [selectedChain]);
 
   return (
-    <div className="sendPage-send-content" id="send-content">
-      <div className="sendPage-input-group">
-        <input
-          className="sendPage-val"
-          id="val"
-          type="number"
-          placeholder="Enter amount"
-        />
-        <select
-          className="sendPage-token-select"
+    <StyledBox>
+      <StyledFormControl>
+        <InputLabel id="send-amount-label"></InputLabel>
+        <TextField id="val" type="number" placeholder="Enter amount" />
+      </StyledFormControl>
+      <StyledFormControl>
+        <InputLabel id="token-select-label">Token</InputLabel>
+        <Select
+          labelId="token-select-label"
+          id="token-select"
           value={selectedTokenState}
           onChange={(e) => setSelectedTokenState(e.target.value)}
         >
           {getTokens(selectedChain).map((token) => (
-            <option key={token.symbol} value={token.symbol}>
+            <MenuItem key={token.symbol} value={token.symbol}>
               {token.symbol}
-            </option>
+            </MenuItem>
           ))}
-        </select>
-      </div>
-      <div className="sendPage-to-container">
-        <p>To</p>
-        <input
-          className="sendPage-toadrs"
-          id="toadrs"
-          placeholder="Recipient address"
-        />
-        <input
-          className="sendPage-gas-price"
-          id="gasprice"
-          type="number"
-          placeholder="Gas Price (Gwei)"
-        />
-      </div>
-      <div className="sendPage-send-actions">
-        <button onClick={transferToken} className="sendPage-send-btn">
-          Send {selectedTokenState}
-        </button>
-        <button onClick={closePopup} className="sendPage-close-btn">
-          Close
-        </button>
-      </div>
+        </Select>
+      </StyledFormControl>
+      <TextField id="toadrs" placeholder="Recipient address" />
+      <TextField id="gasprice" type="number" placeholder="Gas Price (Gwei)" />
+      <Button variant="contained" color="primary" onClick={transferToken}>
+        Send {selectedTokenState}
+      </Button>
+      <Button variant="outlined" color="secondary" onClick={closePopup}>
+        Close
+      </Button>
       {transferDetails && (
-        <div className="sendPage-transfer-details">
-          <p>Transfer Details:</p>
-          <p>
+        <TransferDetailsBox>
+          <Typography variant="body1">Transfer Details:</Typography>
+          <Typography variant="body2">
             To:
-            <a
-              className="transferLink"
+            <Link
               href={`https://sepolia.etherscan.io/address/${transferDetails.toAddress}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -170,17 +193,17 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               )}...${transferDetails.toAddress.substring(
                 transferDetails.toAddress.length - 4
               )}`}
-            </a>
-          </p>
-          <p>
+            </Link>
+          </Typography>
+          <Typography variant="body2">
             Value: {transferDetails.amount} Token: {transferDetails.token}
-          </p>
-          <p>Gas Price: {transferDetails.gasPrice} Gwei</p>
-
-          <p>
+          </Typography>
+          <Typography variant="body2">
+            Gas Price: {transferDetails.gasPrice} Gwei
+          </Typography>
+          <Typography variant="body2">
             Txn Hash:
-            <a
-              className="transferLink"
+            <Link
               href={`https://sepolia.etherscan.io/tx/${transferDetails.txHash}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -191,11 +214,11 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               )}...${transferDetails.txHash.substring(
                 transferDetails.txHash.length - 4
               )}`}
-            </a>
-          </p>
-        </div>
+            </Link>
+          </Typography>
+        </TransferDetailsBox>
       )}
-    </div>
+    </StyledBox>
   );
 };
 

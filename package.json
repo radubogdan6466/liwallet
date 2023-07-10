@@ -5,7 +5,11 @@
   "dependencies": {
     "@babel/core": "^7.21.8",
     "@babel/preset-env": "^7.21.5",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@ethersproject/wallet": "^5.7.0",
+    "@mui/icons-material": "^5.13.7",
+    "@mui/material": "^5.13.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -21,6 +25,7 @@
     "react-router-dom": "^6.8.2",
     "react-scripts": "^5.0.1",
     "requests": "^0.3.0",
+    "styled-components": "^6.0.3",
     "web-vitals": "^2.1.4",
     "web3": "^1.10.0",
     "webpack": "^4.28.3"
