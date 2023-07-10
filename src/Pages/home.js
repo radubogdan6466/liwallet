@@ -137,6 +137,14 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="homePage-container">
+        <p className="value" id="bal">
+          {ethBalance}{" "}
+          {selectedChain === ethchain
+            ? "ETH"
+            : selectedChain === bnbchain
+            ? "BNB"
+            : "DOGE"}
+        </p>
         {/* Address Display */}
         <div className="homePage-address-display">
           <p className="connected-address">Account</p>
@@ -151,14 +159,6 @@ export default function Home() {
 
         {/* Value Display */}
         <div className="homePage-value-display">
-          <p className="value" id="bal">
-            {ethBalance}{" "}
-            {selectedChain === ethchain
-              ? "ETH"
-              : selectedChain === bnbchain
-              ? "BNB"
-              : "DOGE"}
-          </p>
           <div className="homePage-token-balances">
             {/* Token Balances */}
             <TokenList
