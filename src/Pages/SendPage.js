@@ -3,6 +3,10 @@ import { ethers } from "ethers";
 import { ethchainTokens, bnbchainTokens, dogechainTokens } from "./tokens";
 import { ethchain, bnbchain, dogechain } from "./ChainSelector";
 import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   Box,
   Button,
   TextField,
@@ -13,7 +17,6 @@ import {
   Typography,
   Link as MuiLink,
 } from "@mui/material";
-
 import { styled } from "@mui/material/styles";
 
 const StyledBox = styled(Box)({
@@ -21,7 +24,7 @@ const StyledBox = styled(Box)({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  padding: "20px",
+  padding: "30px",
   backgroundColor: "#d3d3d3", // Gri deschis pentru fundal
 });
 
@@ -149,34 +152,46 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
   }, [selectedChain]);
 
   return (
-    <StyledBox>
-      <StyledFormControl>
-        <InputLabel id="send-amount-label"></InputLabel>
-        <TextField id="val" type="number" placeholder="Enter amount" />
-      </StyledFormControl>
-      <StyledFormControl>
-        <InputLabel id="token-select-label">Token</InputLabel>
-        <Select
-          labelId="token-select-label"
-          id="token-select"
-          value={selectedTokenState}
-          onChange={(e) => setSelectedTokenState(e.target.value)}
-        >
-          {getTokens(selectedChain).map((token) => (
-            <MenuItem key={token.symbol} value={token.symbol}>
-              {token.symbol}
-            </MenuItem>
-          ))}
-        </Select>
-      </StyledFormControl>
-      <TextField id="toadrs" placeholder="Recipient address" />
-      <TextField id="gasprice" type="number" placeholder="Gas Price (Gwei)" />
-      <Button variant="contained" color="primary" onClick={transferToken}>
-        Send {selectedTokenState}
-      </Button>
-      <Button variant="outlined" color="secondary" onClick={closePopup}>
-        Close
-      </Button>
+    <Dialog open={true} onClose={closePopup}>
+      <DialogTitle>Send {selectedTokenState}</DialogTitle>
+      <DialogContent>
+        <StyledBox>
+          <StyledFormControl>
+            <InputLabel id="send-amount-label"></InputLabel>
+            <TextField id="val" type="number" placeholder="Enter amount" />
+          </StyledFormControl>
+          <StyledFormControl>
+            <InputLabel id="token-select-label">Token</InputLabel>
+            <Select
+              labelId="token-select-label"
+              id="token-select"
+              variant="standard"
+              value={selectedTokenState}
+              onChange={(e) => setSelectedTokenState(e.target.value)}
+            >
+              {getTokens(selectedChain).map((token) => (
+                <MenuItem key={token.symbol} value={token.symbol}>
+                  {token.symbol}
+                </MenuItem>
+              ))}
+            </Select>
+          </StyledFormControl>
+          <TextField id="toadrs" placeholder="Recipient address" />
+          <TextField
+            id="gasprice"
+            type="number"
+            placeholder="Gas Price (Gwei)"
+          />
+        </StyledBox>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="contained" color="primary" onClick={transferToken}>
+          Send {selectedTokenState}
+        </Button>
+        <Button variant="outlined" color="secondary" onClick={closePopup}>
+          Close
+        </Button>
+      </DialogActions>
       {transferDetails && (
         <TransferDetailsBox>
           <Typography variant="body1">Transfer Details:</Typography>
@@ -218,7 +233,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
           </Typography>
         </TransferDetailsBox>
       )}
-    </StyledBox>
+    </Dialog>
   );
 };
 

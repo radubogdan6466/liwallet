@@ -27,9 +27,13 @@ const StyledButton = styled(Button)({});
 const DarkBackground = styled(Container)({
   backgroundColor: "#333",
   color: "white",
-  maxWidth: "900px",
-  width: "100%",
-  minWidth: "483px",
+  maxWidth: "700px",
+  width: "40%",
+  minWidth: "480px",
+  height: "600px",
+  "@media (max-width: 500px)": {
+    width: "100%",
+  },
 });
 
 const TypographyTitle = styled(Typography)({
@@ -136,8 +140,21 @@ export default function Home() {
   )}...${userWallet.address.substring(userWallet.address.length - 4)}`;
   return (
     <DarkBackground>
-      <Box className="nav" sx={{ display: "flex", justifyContent: "center" }}>
-        <Meniu />
+      <Box
+        className="nav"
+        sx={{
+          height: "80px",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <ChainSelector
+          selectedChain={selectedChain}
+          handleChainChange={handleChainChange}
+          bnbchain={bnbchain}
+          ethchain={ethchain}
+          dogechain={dogechain}
+        />
         <CenterBox>
           <StyledButton
             onClick={() => copyAddress(userWallet.address)}
@@ -147,18 +164,12 @@ export default function Home() {
           </StyledButton>
           <Typography id="copyMessage"></Typography>
         </CenterBox>
-        <ChainSelector
-          selectedChain={selectedChain}
-          handleChainChange={handleChainChange}
-          bnbchain={bnbchain}
-          ethchain={ethchain}
-          dogechain={dogechain}
-        />
+        <Meniu />
       </Box>
       <Divider />
 
       <CenterBox>
-        <TypographyTitle variant="p">
+        <TypographyTitle variant="h4">
           {Number(ethBalance).toFixed(4)}{" "}
           {selectedChain === ethchain
             ? "ETH"
