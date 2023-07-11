@@ -18,7 +18,9 @@ const StyledBox = styled(Box)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  color: "white", // Schimbați culoarea textului
+  color: "white",
+  marginRight: "50px",
+  margin: "auto",
 });
 
 const Meniu = () => {

@@ -15,32 +15,30 @@ import { Box, Typography, Button, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { ContentCopy } from "@mui/icons-material";
 import Divider from "@mui/material/Divider";
+import { Grid } from "@mui/material";
 
-const CenterBox = styled(Box)({
+const CenterBox = styled(Grid)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-});
-
-const StyledButton = styled(Button)({});
-const DarkBackground = styled(Container)({
-  backgroundColor: "#333",
-  color: "white",
-  maxWidth: "700px",
-  width: "40%",
-  minWidth: "480px",
-  height: "600px",
-  "@media (max-width: 500px)": {
-    width: "100%",
+  height: "100%",
+  minWidth: "50vw", // 50% of the viewport width
+  padding: theme.spacing(2),
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "2rem",
+    margin: 0,
   },
-});
+}));
 
-const TypographyTitle = styled(Typography)({
-  fontWeight: "bold",
+const TypographyTitle = styled(Typography)(({ theme }) => ({
+  fontWeight: "",
   textAlign: "center",
-  color: "#fff",
-});
+  marginTop: "12px",
+  [theme.breakpoints.up("sm")]: {
+    fontSize: "2rem",
+  },
+}));
 
 export default function Home() {
   const [selectedChain, setSelectedChain] = useState(ethchain);
@@ -139,47 +137,71 @@ export default function Home() {
     5
   )}...${userWallet.address.substring(userWallet.address.length - 4)}`;
   return (
-    <DarkBackground>
-      <Box
-        className="nav"
-        sx={{
-          height: "80px",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <ChainSelector
-          selectedChain={selectedChain}
-          handleChainChange={handleChainChange}
-          bnbchain={bnbchain}
-          ethchain={ethchain}
-          dogechain={dogechain}
-        />
+    <Grid
+      sx={{ backgroundColor: "#24272a" }}
+      container
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <CenterBox item xs={12} sm={6} md={4} lg={3}>
+        <Box
+          className="nav"
+          sx={{
+            height: "100px",
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+            boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.5)",
+          }}
+        >
+          <ChainSelector
+            selectedChain={selectedChain}
+            handleChainChange={handleChainChange}
+            bnbchain={bnbchain}
+            ethchain={ethchain}
+            dogechain={dogechain}
+          />
+          <CenterBox>
+            <Button
+              onClick={() => copyAddress(userWallet.address)}
+              endIcon={<ContentCopy />}
+            >
+              {shortenedAddress}
+            </Button>
+            <Typography id="copyMessage"></Typography>
+          </CenterBox>
+          <Meniu />
+        </Box>
+        <Divider sx={{ height: "10px", backgroundColor: "white" }} />
+        <Box sx={{ width: "100%" }}>
+          <TypographyTitle variant="h5">
+            {Number(ethBalance).toFixed(4)}{" "}
+            {selectedChain === ethchain
+              ? "ETH"
+              : selectedChain === bnbchain
+              ? "BNB"
+              : "DOGE"}
+          </TypographyTitle>
+        </Box>
         <CenterBox>
-          <StyledButton
-            onClick={() => copyAddress(userWallet.address)}
-            endIcon={<ContentCopy />}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            {shortenedAddress}
-          </StyledButton>
-          <Typography id="copyMessage"></Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setShowSendPopup(true)}
+            >
+              Send
+            </Button>
+          </Box>
+          <TypographyTitle>Tokens</TypographyTitle>
         </CenterBox>
-        <Meniu />
-      </Box>
-      <Divider />
-
-      <CenterBox>
-        <TypographyTitle variant="h4">
-          {Number(ethBalance).toFixed(4)}{" "}
-          {selectedChain === ethchain
-            ? "ETH"
-            : selectedChain === bnbchain
-            ? "BNB"
-            : "DOGE"}
-        </TypographyTitle>
-      </CenterBox>
-
-      <CenterBox>
         <TokenList
           userWallet={userWallet}
           web3={web3}
@@ -190,26 +212,26 @@ export default function Home() {
           ethBalance={ethBalance}
           handleTokenClick={handleTokenClick}
         />
-      </CenterBox>
-      <CenterBox>
-        <StyledButton
-          variant="contained"
-          color="primary"
-          onClick={() => setShowSendPopup(true)}
-        >
-          Send
-        </StyledButton>
-      </CenterBox>
+        {/**<CenterBox>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setShowSendPopup(true)}
+          >
+            Send
+          </Button>
+        </CenterBox> */}
 
-      {showSendPopup && (
-        <CenterBox>
-          <Send
-            onClose={() => setShowSendPopup(false)}
-            selectedToken={selectedToken}
-            selectedChain={selectedChain}
-          />
-        </CenterBox>
-      )}
-    </DarkBackground>
+        {showSendPopup && (
+          <CenterBox>
+            <Send
+              onClose={() => setShowSendPopup(false)}
+              selectedToken={selectedToken}
+              selectedChain={selectedChain}
+            />
+          </CenterBox>
+        )}
+      </CenterBox>
+    </Grid>
   );
 }

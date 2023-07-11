@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 import { ethchainTokens, bnbchainTokens, dogechainTokens } from "./tokens";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  Box,
+  Button,
+} from "@mui/material";
 
 export default function TokenList({
   userWallet,
@@ -13,6 +22,7 @@ export default function TokenList({
   handleTokenClick,
 }) {
   const [tokenBalances, setTokenBalances] = useState({});
+  const [showZeroBalanceTokens, setShowZeroBalanceTokens] = useState(false);
 
   let tokens;
   if (selectedChain === ethchain) {
@@ -29,8 +39,6 @@ export default function TokenList({
     const fetchTokenBalances = async () => {
       if (userWallet) {
         const balances = { ...tokenBalances };
-
-        // add ETH to the token balances
 
         balances["ETH"] = { name: "ETH", balance: ethBalance };
 
@@ -50,31 +58,48 @@ export default function TokenList({
       }
     };
     fetchTokenBalances();
-  }, [userWallet, web3, ethBalance]);
+  }, [userWallet, web3, ethBalance, showZeroBalanceTokens]);
 
   return (
-    <div className="homePage-token-balances">
-      {Object.keys(tokenBalances).map((symbol) => {
-        if (
-          (selectedChain === ethchain &&
-            tokens.find((token) => token.symbol === symbol)) ||
-          (selectedChain === bnbchain &&
-            tokens.find((token) => token.symbol === symbol)) ||
-          (selectedChain === dogechain &&
-            tokens.find((token) => token.symbol === symbol))
-        ) {
-          return (
-            <p
-              className="value"
-              key={symbol}
-              onClick={() => handleTokenClick(symbol)}
-            >
-              {tokenBalances[symbol].balance} {tokenBalances[symbol].name}
-            </p>
-          );
-        }
-        return null;
-      })}
-    </div>
+    <Box sx={{ width: "100%", height: "100%" }}>
+      <Button onClick={() => setShowZeroBalanceTokens(!showZeroBalanceTokens)}>
+        {showZeroBalanceTokens
+          ? "Ascunde monedele cu balanța 0"
+          : "Arată monedele cu balanța 0"}
+      </Button>
+      <List>
+        {Object.keys(tokenBalances).map((symbol) => {
+          if (
+            (showZeroBalanceTokens || tokenBalances[symbol].balance !== "0") &&
+            ((selectedChain === ethchain &&
+              tokens.find((token) => token.symbol === symbol)) ||
+              (selectedChain === bnbchain &&
+                tokens.find((token) => token.symbol === symbol)) ||
+              (selectedChain === dogechain &&
+                tokens.find((token) => token.symbol === symbol)))
+          ) {
+            const token = tokens.find((token) => token.symbol === symbol);
+
+            return (
+              <ListItem
+                button
+                key={symbol}
+                onClick={() => handleTokenClick(symbol)}
+              >
+                <ListItemAvatar>
+                  <Avatar alt={tokenBalances[symbol].name} src={token.logo} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={tokenBalances[symbol].balance}
+                  secondary={tokenBalances[symbol].name}
+                  secondaryTypographyProps={{ style: { color: "gray" } }} // schimbare aici
+                />
+              </ListItem>
+            );
+          }
+          return null;
+        })}
+      </List>
+    </Box>
   );
 }

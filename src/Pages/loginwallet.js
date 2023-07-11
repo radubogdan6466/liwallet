@@ -169,7 +169,7 @@ export default function LoginWallet() {
     try {
       const userWallet = new ethers.Wallet(privateKey);
       localStorage.setItem("pkey", userWallet.privateKey);
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       // Handler de eroare
       console.error("Error, try again:", error);
