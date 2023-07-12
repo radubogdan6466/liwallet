@@ -19,14 +19,12 @@ const StyledBox = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
   color: "white",
-  marginRight: "50px",
-  margin: "auto",
 });
 
 const Meniu = () => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  //const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const gocreate = () => {
     navigate("/create");
@@ -63,6 +61,8 @@ const Meniu = () => {
   return (
     <StyledBox>
       <IconButton
+        color="secondary"
+        size="large"
         aria-label="more"
         id="long-button"
         aria-controls={open ? "long-menu" : undefined}
@@ -83,7 +83,7 @@ const Meniu = () => {
         PaperProps={{
           style: {
             maxHeight: "210px",
-            width: "20ch",
+            width: "12ch",
           },
         }}
       >

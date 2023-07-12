@@ -23,8 +23,6 @@ const StyledBox = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
   color: "white",
-  backgroundColor: "#24272a",
-  margin: "auto",
   //width: "200px",
 });
 const chains = {

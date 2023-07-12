@@ -27,13 +27,6 @@ export const ethchainTokens = [
     abi: mimabi,
     logo: "https://www.svgviewer.dev/static-svgs/424441/ethereum-crypto-cryptocurrency-2.svg",
   },
-
-  {
-    symbol: "MTA",
-    address: "0xf8E3a8FC5673b928107c78B7Af4C0b89A4c3Aac8",
-    abi: mimabi,
-    logo: "https://www.svgviewer.dev/static-svgs/424441/ethereum-crypto-cryptocurrency-2.svg",
-  },
 ];
 
 export const bnbchainTokens = [

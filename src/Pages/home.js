@@ -12,22 +12,24 @@ import { ethchainTokens, bnbchainTokens, dogechainTokens } from "./tokens";
 import TokenList from "./TokenList";
 import NativeChainValue from "./NativeChainValue";
 import { Box, Typography, Button, Container } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import { ContentCopy } from "@mui/icons-material";
-import Divider from "@mui/material/Divider";
-import { Grid } from "@mui/material";
-
+import { Grid, useMediaQuery } from "@mui/material";
+//import ImportToken from "./import";
 const CenterBox = styled(Grid)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
   height: "100%",
-  minWidth: "50vw", // 50% of the viewport width
   padding: theme.spacing(2),
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
+    minWidth: "54vw",
+    width: "100%", // Full width on small screens
+  },
+  [theme.breakpoints.up("md")]: {
+    minWidth: "50vw", // 50% of the viewport width on larger screens
     fontSize: "2rem",
-    margin: 0,
   },
 }));
 
@@ -35,7 +37,8 @@ const TypographyTitle = styled(Typography)(({ theme }) => ({
   fontWeight: "",
   textAlign: "center",
   marginTop: "12px",
-  [theme.breakpoints.up("sm")]: {
+  marginBottom: "12px",
+  [theme.breakpoints.up("600")]: {
     fontSize: "2rem",
   },
 }));
@@ -52,7 +55,8 @@ export default function Home() {
   const [showSendPopup, setShowSendPopup] = useState(false);
   const { address } = userWallet || {};
   const [selectedToken, setSelectedToken] = useState("ETH");
-
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   let tokens;
   if (selectedChain === ethchain) {
     tokens = ethchainTokens;
@@ -150,7 +154,6 @@ export default function Home() {
           sx={{
             height: "100px",
             display: "flex",
-            width: "100%",
             justifyContent: "space-between",
             boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.5)",
           }}
@@ -173,7 +176,6 @@ export default function Home() {
           </CenterBox>
           <Meniu />
         </Box>
-        <Divider sx={{ height: "10px", backgroundColor: "white" }} />
         <Box sx={{ width: "100%" }}>
           <TypographyTitle variant="h5">
             {Number(ethBalance).toFixed(4)}{" "}
@@ -212,15 +214,6 @@ export default function Home() {
           ethBalance={ethBalance}
           handleTokenClick={handleTokenClick}
         />
-        {/**<CenterBox>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setShowSendPopup(true)}
-          >
-            Send
-          </Button>
-        </CenterBox> */}
 
         {showSendPopup && (
           <CenterBox>
@@ -235,3 +228,4 @@ export default function Home() {
     </Grid>
   );
 }
+//<ImportToken />

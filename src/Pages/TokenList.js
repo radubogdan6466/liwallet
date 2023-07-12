@@ -8,7 +8,6 @@ import {
   ListItemAvatar,
   Avatar,
   Box,
-  Button,
 } from "@mui/material";
 
 export default function TokenList({
@@ -22,7 +21,7 @@ export default function TokenList({
   handleTokenClick,
 }) {
   const [tokenBalances, setTokenBalances] = useState({});
-  const [showZeroBalanceTokens, setShowZeroBalanceTokens] = useState(false);
+  const [showZeroBalanceTokens, setShowZeroBalanceTokens] = useState(false); // starea noua
 
   let tokens;
   if (selectedChain === ethchain) {
@@ -58,25 +57,19 @@ export default function TokenList({
       }
     };
     fetchTokenBalances();
-  }, [userWallet, web3, ethBalance, showZeroBalanceTokens]);
+  }, [userWallet, web3, ethBalance]);
 
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
-      <Button onClick={() => setShowZeroBalanceTokens(!showZeroBalanceTokens)}>
-        {showZeroBalanceTokens
-          ? "Ascunde monedele cu balanța 0"
-          : "Arată monedele cu balanța 0"}
-      </Button>
       <List>
         {Object.keys(tokenBalances).map((symbol) => {
           if (
-            (showZeroBalanceTokens || tokenBalances[symbol].balance !== "0") &&
-            ((selectedChain === ethchain &&
+            (selectedChain === ethchain &&
               tokens.find((token) => token.symbol === symbol)) ||
-              (selectedChain === bnbchain &&
-                tokens.find((token) => token.symbol === symbol)) ||
-              (selectedChain === dogechain &&
-                tokens.find((token) => token.symbol === symbol)))
+            (selectedChain === bnbchain &&
+              tokens.find((token) => token.symbol === symbol)) ||
+            (selectedChain === dogechain &&
+              tokens.find((token) => token.symbol === symbol))
           ) {
             const token = tokens.find((token) => token.symbol === symbol);
 
