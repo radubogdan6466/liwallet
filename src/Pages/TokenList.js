@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Web3 from "web3";
-import { ethchainTokens, bnbchainTokens, dogechainTokens } from "./tokens";
+import bscAbi from "./JsonFiles/testBnbAbi.json";
+import ercAbi from "./JsonFiles/testErcAbi.json";
+import dogeAbi from "./JsonFiles/testDogeAbi.json";
+
+//import { ethchainTokens, dogechainTokens } from "./JsonFiles/tokens";
+//import bnbchainTokens from "./JsonFiles/bscTokens.json";
 import {
   List,
   ListItem,
@@ -21,19 +25,22 @@ export default function TokenList({
   handleTokenClick,
 }) {
   const [tokenBalances, setTokenBalances] = useState({});
-  const [showZeroBalanceTokens, setShowZeroBalanceTokens] = useState(false); // starea noua
 
   let tokens;
   if (selectedChain === ethchain) {
-    tokens = ethchainTokens;
+    tokens = JSON.parse(localStorage.getItem("ethchainTokens")) || [];
   } else if (selectedChain === bnbchain) {
-    tokens = bnbchainTokens;
+    tokens = JSON.parse(localStorage.getItem("bnbchainTokens")) || [];
   } else if (selectedChain === dogechain) {
-    tokens = dogechainTokens;
+    tokens = JSON.parse(localStorage.getItem("dogechainTokens")) || [];
   } else {
     tokens = [];
   }
-
+  const abis = {
+    11155111: ercAbi,
+    56: bscAbi,
+    568: dogeAbi,
+  };
   useEffect(() => {
     const fetchTokenBalances = async () => {
       if (userWallet) {
@@ -42,12 +49,14 @@ export default function TokenList({
         balances["ETH"] = { name: "ETH", balance: ethBalance };
 
         for (const token of tokens) {
-          const { symbol, address, abi } = token;
-          const tokenContract = new web3.eth.Contract(abi, address);
+          const { symbol, address, chainId } = token;
+          const tokenContract = new web3.eth.Contract(abis[chainId], address);
           const balance = await tokenContract.methods
             .balanceOf(userWallet.address)
             .call();
-          const balanceInToken = web3.utils.fromWei(balance, "ether");
+          const decimals = await tokenContract.methods.decimals().call();
+          const balanceInToken = balance / Math.pow(10, decimals);
+
           const updatedTokenBalance = { address, balance: balanceInToken };
           updatedTokenBalance.name = symbol;
           balances[symbol] = updatedTokenBalance;
@@ -58,6 +67,21 @@ export default function TokenList({
     };
     fetchTokenBalances();
   }, [userWallet, web3, ethBalance]);
+
+  const isTokenImported = (address, selectedChain) => {
+    let importedTokensKey = "";
+    if (selectedChain === ethchain) {
+      importedTokensKey = "ethchainTokens";
+    } else if (selectedChain === bnbchain) {
+      importedTokensKey = "bnbchainTokens";
+    } else if (selectedChain === dogechain) {
+      importedTokensKey = "dogechainTokens";
+    }
+
+    const importedTokens =
+      JSON.parse(localStorage.getItem(importedTokensKey)) || [];
+    return importedTokens.some((token) => token.address === address);
+  };
 
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
@@ -72,23 +96,24 @@ export default function TokenList({
               tokens.find((token) => token.symbol === symbol))
           ) {
             const token = tokens.find((token) => token.symbol === symbol);
-
-            return (
-              <ListItem
-                button
-                key={symbol}
-                onClick={() => handleTokenClick(symbol)}
-              >
-                <ListItemAvatar>
-                  <Avatar alt={tokenBalances[symbol].name} src={token.logo} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={tokenBalances[symbol].balance}
-                  secondary={tokenBalances[symbol].name}
-                  secondaryTypographyProps={{ style: { color: "gray" } }} // schimbare aici
-                />
-              </ListItem>
-            );
+            if (isTokenImported(token.address, selectedChain)) {
+              return (
+                <ListItem
+                  button
+                  key={symbol}
+                  onClick={() => handleTokenClick(symbol)}
+                >
+                  <ListItemAvatar>
+                    <Avatar alt={tokenBalances[symbol].name} src={token.logo} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={tokenBalances[symbol].balance}
+                    secondary={tokenBalances[symbol].name}
+                    secondaryTypographyProps={{ style: { color: "gray" } }}
+                  />
+                </ListItem>
+              );
+            }
           }
           return null;
         })}

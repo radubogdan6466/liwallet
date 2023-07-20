@@ -1,16 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  IconButton,
-  Menu,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, MenuItem, IconButton, Menu } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
@@ -23,7 +13,6 @@ const StyledBox = styled(Box)({
 
 const Meniu = () => {
   const navigate = useNavigate();
-  const theme = useTheme();
   //const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const gocreate = () => {
@@ -94,41 +83,5 @@ const Meniu = () => {
     </StyledBox>
   );
 };
-/**
-   * 
-  else {
-    return (
-      <StyledBox>
-        <FormControl variant="standard" sx={{ minWidth: "80px" }}>
-          <InputLabel id="menu-select-label" sx={{ color: "primary" }}>
-            Menu
-          </InputLabel>
-          <Select
-            labelId="menu-select-label"
-            id="menu-select"
-            value=""
-            onChange={(event) => {
-              const menuItem = event.target.value;
-              if (menuItem === "create") {
-                gocreate();
-              } else if (menuItem === "login") {
-                gologin();
-              } else if (menuItem === "settings") {
-                goSettings();
-              }
-            }}
-            sx={{ color: "white" }}
-          >
-            <MenuItem value="create">Create</MenuItem>
-            <MenuItem value="login">Login</MenuItem>
-            <MenuItem value="settings">Settings</MenuItem>
-          </Select>
-        </FormControl>
-      </StyledBox>
-    );
-  }
-};
-   * 
-   */
 
 export default Meniu;

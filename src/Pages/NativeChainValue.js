@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Web3 from "web3";
-
 export default function NativeChainValue({
   userWallet,
   web3,
@@ -14,9 +12,13 @@ export default function NativeChainValue({
   useEffect(() => {
     const fetchBalance = async () => {
       if (userWallet) {
-        const balance = await web3.eth.getBalance(userWallet.address);
-        const balanceInEth = web3.utils.fromWei(balance, "ether");
-        setEthBalance(balanceInEth);
+        try {
+          const balance = await web3.eth.getBalance(userWallet.address);
+          const balanceInEth = web3.utils.fromWei(balance, "ether");
+          setEthBalance(balanceInEth);
+        } catch (error) {
+          console.error("An error occurred while fetching the balance:", error);
+        }
       }
     };
     fetchBalance();

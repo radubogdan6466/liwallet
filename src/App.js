@@ -1,6 +1,6 @@
 //import "./App.css";
-import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
-import { React, useEffect } from "react";
+import { HashRouter, Route, Routes } from "react-router-dom";
+import { React } from "react";
 import Createwallet from "./Pages/createwallet";
 import LoginWallet from "./Pages/loginwallet";
 import Home from "./Pages/home";

@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { bnbchain, ethchain, dogechain, chains } from "./utils.js";
+import { StyledBox } from "./styles";
+
 import {
   Box,
   Select,
@@ -9,36 +12,35 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  CircularProgress,
   Button,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
 
-export const bnbchain = "https://data-seed-prebsc-2-s2.bnbchain.org:8545";
-export const ethchain =
-  "https://sepolia.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd";
-export const dogechain = "https://rpc-testnet.dogechain.dog";
-
-const StyledBox = styled(Box)({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  color: "white",
-  //width: "200px",
-});
-const chains = {
-  Ethereum: ethchain,
-  SmartChain: bnbchain,
-  Dogecoin: dogechain,
-};
 const ChainSelector = ({ selectedChain, handleChainChange }) => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState(selectedChain);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    if (isLoading) return;
+
     setOpen(false);
+  };
+
+  const handleSelectionChange = async (event) => {
+    const newChain = event.target.value;
+    setIsLoading(true);
+    setValue(newChain);
+
+    setTimeout(async () => {
+      await handleChainChange(newChain);
+      setIsLoading(false);
+      handleClose();
+    }, 2000);
   };
 
   return (
@@ -55,41 +57,55 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
         <DialogContent
           sx={{ minWidth: "100px", backgroundColor: "#24272a", color: "white" }}
         >
-          <FormControl
-            variant="filled"
-            sx={{
-              minWidth: "100px",
-              backgroundColor: "#24272a",
-              color: "white",
-            }}
-          >
-            <InputLabel id="chain-selector-label" sx={{ color: "white" }}>
-              Chain
-            </InputLabel>
-            <Select
-              labelId="chain-selector-label"
-              id="chain-selector"
-              value={selectedChain}
-              onChange={handleChainChange}
+          {isLoading ? (
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              color="white"
+            >
+              <CircularProgress color="secondary" size={24} />
+              <Box ml={2}>
+                Connecting to{" "}
+                {Object.keys(chains).find((key) => chains[key] === value)}
+              </Box>
+            </Box>
+          ) : (
+            <FormControl
+              variant="filled"
               sx={{
-                color: "white",
+                minWidth: "100px",
                 backgroundColor: "#24272a",
-                "& .MuiMenuItem-root": {
-                  backgroundColor: "#24272a",
-                },
+                color: "white",
               }}
             >
-              <MenuItem value={ethchain}>Ethereum</MenuItem>
-              <MenuItem value={bnbchain}>Smart Chain</MenuItem>
-              <MenuItem value={dogechain}>Dogecoin</MenuItem>
-            </Select>
-          </FormControl>
+              <InputLabel id="chain-selector-label" sx={{ color: "white" }}>
+                Chain
+              </InputLabel>
+              <Select
+                labelId="chain-selector-label"
+                id="chain-selector"
+                value={value}
+                onChange={handleSelectionChange}
+                sx={{
+                  color: "white",
+                  backgroundColor: "#24272a",
+                  "& .MuiMenuItem-root": {
+                    backgroundColor: "#24272a",
+                  },
+                }}
+              >
+                <MenuItem value={bnbchain}>BNB Smart Chain</MenuItem>
+                <MenuItem value={ethchain}>Ethereum</MenuItem>
+                <MenuItem value={dogechain}>Dogecoin</MenuItem>
+              </Select>
+            </FormControl>
+          )}
         </DialogContent>
         <DialogActions
           sx={{ minWidth: "100px", backgroundColor: "#24272a", color: "white" }}
         >
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Ok</Button>
         </DialogActions>
       </Dialog>
     </StyledBox>

@@ -1,54 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { ethchainTokens, bnbchainTokens, dogechainTokens } from "./tokens";
-import { ethchain, bnbchain, dogechain } from "./ChainSelector";
+import { ethchain, bnbchain, dogechain } from "./utils.js";
+import bscAbi from "./JsonFiles/testBnbAbi.json";
+import ercAbi from "./JsonFiles/testErcAbi.json";
+import dogeAbi from "./JsonFiles/testDogeAbi.json";
+
+//import { dogechainTokens, ethchainTokens } from "./JsonFiles/tokens";
+//import bnbchainTokens from "./JsonFiles/bscTokens.json";
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  Box,
   Button,
   TextField,
-  FormControl,
   InputLabel,
   Select,
   MenuItem,
   Typography,
-  Link as MuiLink,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import {
+  StyledBoxx,
+  StyledFormControl,
+  TransferDetailsBox,
+  Link,
+} from "./styles";
+const bnbchainTokens = JSON.parse(localStorage.getItem("bnbchainTokens"));
+const ethchainTokens = JSON.parse(localStorage.getItem("ethchainTokens"));
+const dogechainTokens = JSON.parse(localStorage.getItem("dogechainTokens"));
 
-const StyledBox = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: "30px",
-  backgroundColor: "#d3d3d3", // Gri deschis pentru fundal
-});
-
-const StyledFormControl = styled(FormControl)({
-  marginBottom: "15px", // Adaugă spațiu între input-uri
-});
-
-const TransferDetailsBox = styled(Box)({
-  backgroundColor: "#666666", // Gri pentru fundal
-  color: "#ffffff", // Text alb
-  borderRadius: "10px",
-  padding: "20px",
-  marginTop: "20px",
-  textAlign: "left",
-});
-
-const Link = styled(MuiLink)({
-  textDecoration: "none", // Fără text decoration pentru link-uri
-});
 const Send = ({ onClose, selectedToken, selectedChain }) => {
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
 
   const [transferDetails, setTransferDetails] = useState(null);
-  console.log("chainselectat:  " + selectedChain);
 
   const closePopup = () => {
     onClose();
@@ -73,34 +57,40 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
       const amount = document.getElementById("val").value;
       let gasPrice = document.getElementById("gasprice").value;
 
-      // Daca utilizatorul nu a introdus un pret pentru gaz, folosim un pret automat
+      // gasPrice se calculeaza automat
       if (!gasPrice) {
         const gasPriceEstimate = await provider.getGasPrice();
         gasPrice = ethers.utils.formatUnits(gasPriceEstimate, "gwei");
       }
 
       let tokenContract, tokenAddress, tokenABI, amountInSmallestUnit;
-
+      const tokens = getTokens(selectedChain);
+      const selectedTokenData = tokens.find(
+        (token) => token.symbol === selectedTokenState
+      );
+      if (!selectedTokenData) {
+        throw new Error(`Token ${selectedToken} not found in tokens list`);
+      }
       if (
         selectedTokenState === "ETH" ||
         selectedTokenState === "BNB" ||
         selectedTokenState === "DOGE"
       ) {
-        amountInSmallestUnit = ethers.utils.parseEther(amount);
-      } else {
-        const tokens = getTokens(selectedChain);
-
-        const selectedTokenData = tokens.find(
-          (token) => token.symbol === selectedTokenState
+        amountInSmallestUnit = ethers.utils.parseUnits(
+          amount,
+          selectedTokenData.decimals
         );
-        if (!selectedTokenData) {
-          throw new Error(`Token ${selectedToken} not found in tokens list`);
-        }
-        if (!selectedTokenData.abi) {
-          throw new Error(`Token ${selectedToken} has no ABI data`);
-        }
+      } else {
         tokenAddress = selectedTokenData.address;
-        tokenABI = selectedTokenData.abi;
+        if (selectedTokenData.chainId === 11155111) {
+          tokenABI = ercAbi;
+        } else if (selectedTokenData.chainId === 56) {
+          tokenABI = bscAbi;
+        } else if (selectedTokenData.chainId === 568) {
+          tokenABI = dogeAbi;
+        } else {
+          throw new Error(`Token ${selectedTokenState} has no ABI data`);
+        }
         tokenContract = new ethers.Contract(tokenAddress, tokenABI, userWallet);
         amountInSmallestUnit = ethers.utils.parseUnits(
           amount,
@@ -149,13 +139,13 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
     if (!tokens.some((token) => token.symbol === selectedTokenState)) {
       setSelectedTokenState(tokens[0].symbol);
     }
-  }, [selectedChain]);
+  }, [selectedChain, selectedTokenState]);
 
   return (
     <Dialog open={true} onClose={closePopup}>
       <DialogTitle>Send {selectedTokenState}</DialogTitle>
       <DialogContent>
-        <StyledBox>
+        <StyledBoxx>
           <StyledFormControl>
             <InputLabel id="send-amount-label"></InputLabel>
             <TextField id="val" type="number" placeholder="Enter amount" />
@@ -182,7 +172,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             type="number"
             placeholder="Gas Price (Gwei)"
           />
-        </StyledBox>
+        </StyledBoxx>
       </DialogContent>
       <DialogActions>
         <Button variant="contained" color="primary" onClick={transferToken}>
