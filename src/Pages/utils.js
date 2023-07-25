@@ -24,6 +24,6 @@ export const getChainNameFromUrl = (url) => {
 };
 export const chainIds = {
   bnbchain: 56,
-  ethchain: 11155111, // Înlocuiți cu ID-ul corespunzător Ethereum
-  dogechain: 568, // Înlocuiți cu ID-ul corespunzător Dogecoin
+  ethchain: 11155111,
+  dogechain: 568,
 };

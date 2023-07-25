@@ -4,6 +4,7 @@ import { ethchain, bnbchain, dogechain } from "./utils.js";
 import bscAbi from "./JsonFiles/testBnbAbi.json";
 import ercAbi from "./JsonFiles/testErcAbi.json";
 import dogeAbi from "./JsonFiles/testDogeAbi.json";
+import TransferDetails from "./TransferDetails";
 
 //import { dogechainTokens, ethchainTokens } from "./JsonFiles/tokens";
 //import bnbchainTokens from "./JsonFiles/bscTokens.json";
@@ -19,19 +20,13 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import {
-  StyledBoxx,
-  StyledFormControl,
-  TransferDetailsBox,
-  Link,
-} from "./styles";
+import { StyledBoxx, StyledFormControl } from "./styles";
 const bnbchainTokens = JSON.parse(localStorage.getItem("bnbchainTokens"));
 const ethchainTokens = JSON.parse(localStorage.getItem("ethchainTokens"));
 const dogechainTokens = JSON.parse(localStorage.getItem("dogechainTokens"));
 
 const Send = ({ onClose, selectedToken, selectedChain }) => {
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
-
   const [transferDetails, setTransferDetails] = useState(null);
 
   const closePopup = () => {
@@ -42,7 +37,10 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
 
   const getTokens = (chain) => {
     if (chain === ethchain) {
-      return [{ symbol: "ETH", address: "", abi: null }, ...ethchainTokens];
+      return [
+        { symbol: "ETH", address: "", abi: null, decimals: 18 },
+        ...ethchainTokens,
+      ];
     } else if (chain === bnbchain) {
       return [{ symbol: "BNB", address: "", abi: null }, ...bnbchainTokens];
     } else if (chain === dogechain) {
@@ -76,10 +74,13 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
         selectedTokenState === "BNB" ||
         selectedTokenState === "DOGE"
       ) {
+        console.log(`Decimals: ${selectedTokenData.decimals}`);
+        console.log(`Amount: ${amount}`);
         amountInSmallestUnit = ethers.utils.parseUnits(
           amount,
           selectedTokenData.decimals
         );
+        console.log(`Amount in smallest unit: ${amountInSmallestUnit}`);
       } else {
         tokenAddress = selectedTokenData.address;
         if (selectedTokenData.chainId === 11155111) {
@@ -128,6 +129,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
         gasPrice,
         txHash: tx.hash,
         token: selectedTokenState,
+        chain: selectedChain,
       });
     } catch (err) {
       console.error(err);
@@ -147,10 +149,6 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
       <DialogContent>
         <StyledBoxx>
           <StyledFormControl>
-            <InputLabel id="send-amount-label"></InputLabel>
-            <TextField id="val" type="number" placeholder="Enter amount" />
-          </StyledFormControl>
-          <StyledFormControl>
             <InputLabel id="token-select-label">Token</InputLabel>
             <Select
               labelId="token-select-label"
@@ -166,12 +164,15 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               ))}
             </Select>
           </StyledFormControl>
-          <TextField id="toadrs" placeholder="Recipient address" />
+          <InputLabel id="send-amount-label"></InputLabel>
+          <TextField id="val" label="Amount" variant="outlined" required />
           <TextField
-            id="gasprice"
-            type="number"
-            placeholder="Gas Price (Gwei)"
+            id="toadrs"
+            label="To Address"
+            variant="outlined"
+            required
           />
+          <TextField id="gasprice" placeholder="Gas Price (Gwei)" />
         </StyledBoxx>
       </DialogContent>
       <DialogActions>
@@ -182,49 +183,8 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
           Close
         </Button>
       </DialogActions>
-      {transferDetails && (
-        <TransferDetailsBox>
-          <Typography variant="body1">Transfer Details:</Typography>
-          <Typography variant="body2">
-            To:
-            <Link
-              href={`https://sepolia.etherscan.io/address/${transferDetails.toAddress}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {`${transferDetails.toAddress.substring(
-                0,
-                4
-              )}...${transferDetails.toAddress.substring(
-                transferDetails.toAddress.length - 4
-              )}`}
-            </Link>
-          </Typography>
-          <Typography variant="body2">
-            Value: {transferDetails.amount} Token: {transferDetails.token}
-          </Typography>
-          <Typography variant="body2">
-            Gas Price: {transferDetails.gasPrice} Gwei
-          </Typography>
-          <Typography variant="body2">
-            Txn Hash:
-            <Link
-              href={`https://sepolia.etherscan.io/tx/${transferDetails.txHash}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {`${transferDetails.txHash.substring(
-                0,
-                4
-              )}...${transferDetails.txHash.substring(
-                transferDetails.txHash.length - 4
-              )}`}
-            </Link>
-          </Typography>
-        </TransferDetailsBox>
-      )}
+      {transferDetails && <TransferDetails details={transferDetails} />}
     </Dialog>
   );
 };
-
 export default Send;

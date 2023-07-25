@@ -3,8 +3,6 @@ import bscAbi from "./JsonFiles/testBnbAbi.json";
 import ercAbi from "./JsonFiles/testErcAbi.json";
 import dogeAbi from "./JsonFiles/testDogeAbi.json";
 
-//import { ethchainTokens, dogechainTokens } from "./JsonFiles/tokens";
-//import bnbchainTokens from "./JsonFiles/bscTokens.json";
 import {
   List,
   ListItem,
@@ -25,6 +23,7 @@ export default function TokenList({
   handleTokenClick,
 }) {
   const [tokenBalances, setTokenBalances] = useState({});
+  const [tokenAdded, setTokenAdded] = useState(false);
 
   let tokens;
   if (selectedChain === ethchain) {
@@ -66,7 +65,15 @@ export default function TokenList({
       }
     };
     fetchTokenBalances();
-  }, [userWallet, web3, ethBalance]);
+    const handleTokenAdded = (event) => {
+      setTokenAdded(!tokenAdded);
+    };
+    window.addEventListener("tokenAdded", handleTokenAdded);
+
+    return () => {
+      window.removeEventListener("tokenAdded", handleTokenAdded);
+    };
+  }, [userWallet, web3, ethBalance, tokenAdded]);
 
   const isTokenImported = (address, selectedChain) => {
     let importedTokensKey = "";

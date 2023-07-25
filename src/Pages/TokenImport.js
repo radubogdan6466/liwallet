@@ -90,12 +90,12 @@ const TokenImport = ({ onClose, selectedChain }) => {
     }
   }, [tokenAddress, provider]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (submitEvent) => {
+    submitEvent.preventDefault();
 
     const isValidAddress = EthereumAddress.isAddress(tokenAddress);
     if (!isValidAddress) {
-      setError("Adresa nu exista.");
+      setError("Adresa nu este valida.");
       return;
     }
 
@@ -112,6 +112,10 @@ const TokenImport = ({ onClose, selectedChain }) => {
     setTokenChainId("");
     setError(""); // Resetează eroarea
     setIsTokenAdded(true); // Setează tokenul ca fiind adăugat
+
+    // Emit custom event after a token is added
+    const event = new CustomEvent("tokenAdded", { detail: tokenAddress });
+    window.dispatchEvent(event);
   };
 
   return (
@@ -175,3 +179,5 @@ export default TokenImport;
 //  0xf8E3a8FC5673b928107c78B7Af4C0b89A4c3Aac8
 //   0x900B61C0b67bB3aBFAA6331Ebd2f2d08AE79cdE9
 //   0xF4A81571A52185d5cfe2344C36afddD49210fE13
+//   0x250a270B50C287ce4b613Cb4E2d78E14D05EcD9C
+//    0x39bAB97C19902348225588108Be36eD609Cd0b85
