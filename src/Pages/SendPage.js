@@ -1,3 +1,4 @@
+import { checkAddress } from "../api/api.js";
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { ethchain, bnbchain, dogechain } from "./utils.js";
@@ -28,13 +29,36 @@ const dogechainTokens = JSON.parse(localStorage.getItem("dogechainTokens"));
 const Send = ({ onClose, selectedToken, selectedChain }) => {
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
   const [transferDetails, setTransferDetails] = useState(null);
+  const [addressChecked, setAddressChecked] = useState(false);
+  const [showCheckButton, setShowCheckButton] = useState(true);
+  const [warningMessage, setWarningMessage] = useState("");
 
   const closePopup = () => {
     onClose();
   };
   const provider = new ethers.providers.JsonRpcProvider(selectedChain);
   const userWallet = new ethers.Wallet(localStorage.getItem("pkey"), provider);
+  const checkAddressBeforeTransfer = async () => {
+    try {
+      const toAddress = document.getElementById("toadrs").value;
+      const checkResult = await checkAddress(toAddress);
+      let warningMessage = "";
 
+      if (checkResult.isReported) {
+        warningMessage += `Atenție! Această adresă a fost raportată.`;
+        if (checkResult.details) {
+          warningMessage += ` Detalii: ${checkResult.details}`;
+        }
+      } else {
+        warningMessage = "Adresa nu este în baza de date.";
+      }
+      setWarningMessage(warningMessage);
+      setAddressChecked(true);
+      setShowCheckButton(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const getTokens = (chain) => {
     if (chain === ethchain) {
       return [
@@ -147,6 +171,9 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
     <Dialog open={true} onClose={closePopup}>
       <DialogTitle>Send {selectedTokenState}</DialogTitle>
       <DialogContent>
+        <Typography variant="body2" color="error">
+          {warningMessage}
+        </Typography>
         <StyledBoxx>
           <StyledFormControl>
             <InputLabel id="token-select-label">Token</InputLabel>
@@ -176,9 +203,20 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
         </StyledBoxx>
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" color="primary" onClick={transferToken}>
-          Send {selectedTokenState}
-        </Button>
+        {showCheckButton && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={checkAddressBeforeTransfer}
+          >
+            Check Address
+          </Button>
+        )}
+        {addressChecked && (
+          <Button variant="contained" color="primary" onClick={transferToken}>
+            Send {selectedTokenState}
+          </Button>
+        )}
         <Button variant="outlined" color="secondary" onClick={closePopup}>
           Close
         </Button>

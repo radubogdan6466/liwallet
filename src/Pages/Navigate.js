@@ -26,6 +26,9 @@ const Meniu = () => {
   const goSettings = () => {
     navigate("/settings");
   };
+  const goReport = () => {
+    navigate("/report");
+  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -43,6 +46,8 @@ const Meniu = () => {
       gologin();
     } else if (menuItem === "settings") {
       goSettings();
+    } else if (menuItem === "report") {
+      goReport();
     }
   };
 
@@ -79,6 +84,7 @@ const Meniu = () => {
         <MenuItem onClick={() => handleClose("create")}>Create</MenuItem>
         <MenuItem onClick={() => handleClose("login")}>Login</MenuItem>
         <MenuItem onClick={() => handleClose("settings")}>Settings</MenuItem>
+        <MenuItem onClick={() => handleClose("report")}>Report</MenuItem>
       </Menu>
     </StyledBox>
   );
