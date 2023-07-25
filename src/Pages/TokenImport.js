@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import EthereumAddress from "ethereum-address";
-import { getChainNameFromUrl } from "./utils";
+import { ethers } from "ethers";
 import { useTokenImportHandler } from "./tokenImportHandler.js";
-import { styled } from "@mui/material/styles";
+import { chainIds, getChainNameFromUrl } from "./utils";
+
 import {
   TextField,
   Button,
@@ -37,6 +38,9 @@ const TokenImport = ({ onClose, selectedChain }) => {
   );
 
   useEffect(() => {
+    const chainName = getChainNameFromUrl(selectedChain);
+    const chainId = chainIds[chainName];
+    setTokenChainId(chainId);
     const storedTokens = JSON.parse(
       localStorage.getItem(getChainNameFromUrl(selectedChain) + "Tokens")
     );
@@ -51,18 +55,52 @@ const TokenImport = ({ onClose, selectedChain }) => {
   const [tokenDecimals, setTokenDecimals] = useState(18);
   const [tokenChainId, setTokenChainId] = useState(null);
   const [error, setError] = useState("");
+  const [isTokenAdded, setIsTokenAdded] = useState(false); // Adaugă această linie
+
+  const provider = new ethers.providers.JsonRpcProvider(selectedChain);
+
+  useEffect(() => {
+    if (EthereumAddress.isAddress(tokenAddress)) {
+      const erc20Abi = [
+        "function symbol() view returns (string)",
+        "function decimals() view returns (uint8)", // ABI pentru decimals
+      ];
+      const tokenContract = new ethers.Contract(
+        tokenAddress,
+        erc20Abi,
+        provider
+      );
+
+      async function fetchTokenSymbolAndDecimals() {
+        try {
+          const symbol = await tokenContract.symbol();
+          setTokenSymbol(symbol);
+          const decimals = await tokenContract.decimals(); // Extrageți zecimalele
+          setTokenDecimals(decimals);
+        } catch (err) {
+          if (err.code === ethers.utils.Logger.errors.CALL_EXCEPTION) {
+            setError("Adresa incorecta, verifica chain-ul");
+          } else {
+            console.error(err);
+          }
+        }
+      }
+
+      fetchTokenSymbolAndDecimals();
+    }
+  }, [tokenAddress, provider]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const isValidAddress = EthereumAddress.isAddress(tokenAddress);
     if (!isValidAddress) {
-      setError("Please enter a valid token address.");
+      setError("Adresa nu exista.");
       return;
     }
 
     if (tokenChainId === null) {
-      setError("Please enter a valid chain ID.");
+      setError("Introduceti un chainId valid.");
       return;
     }
     const chainId = parseInt(tokenChainId); // Convertim chainId în număr întreg
@@ -73,6 +111,7 @@ const TokenImport = ({ onClose, selectedChain }) => {
     setTokenDecimals("");
     setTokenChainId("");
     setError(""); // Resetează eroarea
+    setIsTokenAdded(true); // Setează tokenul ca fiind adăugat
   };
 
   return (
@@ -86,30 +125,43 @@ const TokenImport = ({ onClose, selectedChain }) => {
             type="text"
             label="Enter token address"
             value={tokenAddress}
-            onChange={(event) => setTokenAddress(event.target.value)}
+            onChange={(event) => {
+              setTokenAddress(event.target.value);
+              if (error === "Adresa incorecta, verifica chain-ul") {
+                setError("");
+              }
+            }}
+            error={error === "Adresa incorecta, verifica chain-ul"}
+            helperText={
+              error === "Adresa incorecta, verifica chain-ul" ? error : ""
+            }
           />
+
           <FormField
             type="text"
-            label="Enter token symbol"
+            label="Symbol"
             value={tokenSymbol}
             onChange={(event) => setTokenSymbol(event.target.value)}
+            disabled
           />
           <FormField
             type="number"
-            label="Enter token decimals"
+            label="Decimals"
             value={tokenDecimals}
             onChange={(event) => setTokenDecimals(event.target.value)}
+            disabled
           />
           <FormField
             type="number"
-            label="Enter chain ID"
+            label="Network ID"
             value={tokenChainId !== null ? tokenChainId : ""}
             onChange={(event) => setTokenChainId(event.target.value)}
+            disabled
           />
           {error && <p>{error}</p>}
           <ActionsContainer>
             <Button type="submit" color="primary" variant="contained">
-              Import Token
+              {isTokenAdded ? "Token adăugat cu succes" : "Import Token"}
             </Button>
           </ActionsContainer>
         </FormContainer>
@@ -119,3 +171,7 @@ const TokenImport = ({ onClose, selectedChain }) => {
 };
 
 export default TokenImport;
+
+//  0xf8E3a8FC5673b928107c78B7Af4C0b89A4c3Aac8
+//   0x900B61C0b67bB3aBFAA6331Ebd2f2d08AE79cdE9
+//   0xF4A81571A52185d5cfe2344C36afddD49210fE13

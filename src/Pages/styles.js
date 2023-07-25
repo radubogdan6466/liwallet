@@ -63,12 +63,14 @@ export const Link = styled(MuiLink)({
 
 export const FormField = styled(TextField)({
   marginBottom: "10px",
+  marginTop: "10px",
 });
 
 export const ActionsContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
-  alignItems: "flex-start",
+  justifyContent: "center",
+  alignItems: "center",
 });
 
 export const FormContainer = styled("form")({
