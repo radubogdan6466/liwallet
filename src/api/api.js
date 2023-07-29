@@ -2,10 +2,13 @@ import axios from "axios";
 
 export const reportAddress = async (address, details) => {
   try {
-    const response = await axios.post("http://localhost:8000/report", {
-      address: address,
-      details: details,
-    });
+    const response = await axios.post(
+      "https://busy-calf-earrings.cyclic.app/report",
+      {
+        address: address,
+        details: details,
+      }
+    );
 
     return response.data; // return response to the caller
   } catch (error) {
@@ -22,7 +25,9 @@ export const reportAddress = async (address, details) => {
 };
 export const checkAddress = async (address) => {
   try {
-    const response = await axios.get(`http://localhost:8000/check/${address}`);
+    const response = await axios.get(
+      `https://busy-calf-earrings.cyclic.app/check/${address}`
+    );
     return response.data; // return response to the caller
   } catch (error) {
     console.error("A apărut o eroare", error);
