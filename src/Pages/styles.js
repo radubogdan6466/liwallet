@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { Grid, Box, TextField } from "@mui/material";
+import { Grid, Box, TextField, DialogContent } from "@mui/material";
 import { Typography, Link as MuiLink, FormControl } from "@mui/material";
 
 export const CenterBox = styled(Grid)(({ theme }) => ({
@@ -41,6 +41,13 @@ export const StyledBoxx = styled(Box)({
   alignItems: "center",
   padding: "30px",
   backgroundColor: "#d3d3d3", // Gri deschis pentru fundal
+});
+export const StyledDialogContent = styled(DialogContent)({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  maxWidth: "400px",
 });
 
 export const StyledFormControl = styled(FormControl)({

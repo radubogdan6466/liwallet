@@ -4,6 +4,7 @@ import { Box, MenuItem, IconButton, Menu, Dialog } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CreateWallet from "./createwallet.js";
+import LoginWallet from "./loginwallet.js";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -15,13 +16,13 @@ const StyledBox = styled(Box)({
 const Meniu = () => {
   const navigate = useNavigate();
   const [showCreatePopup, setShowCreatePopup] = useState(false);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   const handleCreateClick = () => {
     setShowCreatePopup(true);
   };
-
-  const gologin = () => {
-    navigate("/login");
+  const handleLoginClick = () => {
+    setShowLoginPopup(true);
   };
 
   const goSettings = () => {
@@ -42,9 +43,7 @@ const Meniu = () => {
   const handleClose = (menuItem) => {
     setAnchorEl(null);
 
-    if (menuItem === "login") {
-      gologin();
-    } else if (menuItem === "settings") {
+    if (menuItem === "settings") {
       goSettings();
     } else if (menuItem === "report") {
       goReport();
@@ -81,13 +80,16 @@ const Meniu = () => {
         }}
       >
         <MenuItem onClick={handleCreateClick}>Create</MenuItem>
-        <MenuItem onClick={() => handleClose("login")}>Login</MenuItem>
+        <MenuItem onClick={handleLoginClick}>Login</MenuItem>
         <MenuItem onClick={() => handleClose("settings")}>Settings</MenuItem>
         <MenuItem onClick={() => handleClose("report")}>Report</MenuItem>
       </Menu>
 
       <Dialog open={showCreatePopup} onClose={() => setShowCreatePopup(false)}>
         <CreateWallet />
+      </Dialog>
+      <Dialog open={showLoginPopup}>
+        <LoginWallet onClose={() => setShowLoginPopup(false)} />
       </Dialog>
     </StyledBox>
   );

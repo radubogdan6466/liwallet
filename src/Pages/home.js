@@ -11,6 +11,7 @@ import { useTokenImportHandler } from "./tokenImportHandler";
 import NavBar from "./Navbar";
 import Balance from "./Balance";
 import Actions from "./Actions";
+import LoginWallet from "./loginwallet";
 import TokenSection from "./TokenSection";
 import { handleAsyncError } from "./errorHandler";
 import Receive from "./receive";
@@ -33,9 +34,12 @@ export default function Home() {
   const [error, setError] = useState(null);
   const privateKey = localStorage.getItem("pkey");
   const [showSendPopup, setShowSendPopup] = useState(false);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+
   const [showReceivePopup, setShowReceivePopup] = useState(false);
   const [selectedToken, setSelectedToken] = useState("");
   const [showImportForm, setShowImportForm] = useState(false);
+
   useEffect(() => {
     if (privateKey) {
       const account = web3.eth.accounts.wallet.add(privateKey);
@@ -94,13 +98,20 @@ export default function Home() {
     },
     [setSelectedToken, setShowSendPopup]
   );
-
   const handleChainChange = useCallback(
     (selectedValue) => {
       setSelectedChain(selectedValue);
     },
     [setSelectedChain]
   );
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false); // Set isLoading to false after 2 seconds
+    }, 1000);
+
+    // Cleanup function to clear the timeout when component unmounts
+    return () => clearTimeout(timer);
+  }, []); // Run once after initial render
 
   if (isLoading) {
     return (
@@ -135,6 +146,7 @@ export default function Home() {
           selectedChain={selectedChain}
           ethchain={ethchain}
           bnbchain={bnbchain}
+          dogechain={dogechain}
         />
         <Actions
           onSendClick={() => setShowSendPopup(true)}
@@ -175,6 +187,14 @@ export default function Home() {
           <CenterBox>
             <Receive
               onClose={() => setShowReceivePopup(false)}
+              userWallet={userWallet}
+            />
+          </CenterBox>
+        )}
+        {showLoginPopup && (
+          <CenterBox>
+            <LoginWallet
+              onClose={() => setShowLoginPopup(false)}
               userWallet={userWallet}
             />
           </CenterBox>
