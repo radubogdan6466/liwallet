@@ -13,6 +13,7 @@ import {
   IconButton,
 } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import tokenLogos from "./JsonFiles/tokenLogo.json"; // import the JSON file
 
 export default function TokenList({
   userWallet,
@@ -37,6 +38,12 @@ export default function TokenList({
   } else {
     tokens = [];
   }
+
+  // Function to find a token's logo URL from the imported JSON file
+  const findLogoUrl = (symbol) => {
+    const tokenLogoObject = tokenLogos.find((token) => token.symbol === symbol);
+    return tokenLogoObject ? tokenLogoObject.logo : null;
+  };
 
   const abis = {
     11155111: ercAbi,
@@ -121,6 +128,8 @@ export default function TokenList({
       <List>
         {Object.keys(tokenBalances).map((symbol) => {
           const token = tokens.find((token) => token.symbol === symbol);
+          const logoUrl = findLogoUrl(symbol); // get the logo URL
+
           if (token) {
             return (
               <ListItem
@@ -129,7 +138,7 @@ export default function TokenList({
                 onClick={() => handleTokenClick(symbol)}
               >
                 <ListItemAvatar>
-                  <Avatar alt={tokenBalances[symbol].name} src={token.logo} />
+                  <Avatar alt={tokenBalances[symbol].name} src={logoUrl} />
                 </ListItemAvatar>
                 <ListItemText
                   primary={tokenBalances[symbol].balance}
