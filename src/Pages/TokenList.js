@@ -102,33 +102,14 @@ export default function TokenList({
       (token) => token.symbol !== symbol
     );
     localStorage.setItem(tokenListKey, JSON.stringify(updatedTokens));
-
-    // re-fetch token balances after removing a token
     fetchTokenBalances();
-  };
-  const refreshBalance = async (symbol, address, chainId) => {
-    if (userWallet) {
-      const balances = { ...tokenBalances };
-      const tokenContract = new web3.eth.Contract(abis[chainId], address);
-      const balance = await tokenContract.methods
-        .balanceOf(userWallet.address)
-        .call();
-      const decimals = await tokenContract.methods.decimals().call();
-      const balanceInToken = balance / Math.pow(10, decimals);
-
-      const updatedTokenBalance = { address, balance: balanceInToken };
-      updatedTokenBalance.name = symbol;
-      balances[symbol] = updatedTokenBalance;
-
-      setTokenBalances(balances);
-    }
   };
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
       <List>
         {Object.keys(tokenBalances).map((symbol) => {
           const token = tokens.find((token) => token.symbol === symbol);
-          const logoUrl = findLogoUrl(symbol); // get the logo URL
+          const logoUrl = findLogoUrl(symbol);
 
           if (token) {
             return (

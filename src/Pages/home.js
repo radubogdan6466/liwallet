@@ -3,7 +3,7 @@ import Web3 from "web3";
 import Send from "./SendPage";
 import { bnbchain, ethchain, dogechain } from "./utils";
 import CheckUser from "./CheckUser";
-import { Grid } from "@mui/material";
+import { Grid, Typography, CircularProgress, Box } from "@mui/material";
 import TokenImport from "./TokenImport";
 import { CenterBox } from "./styles";
 import useWeb3 from "./useWeb3"; // import the custom hook
@@ -13,6 +13,8 @@ import Balance from "./Balance";
 import Actions from "./Actions";
 import TokenSection from "./TokenSection";
 import { handleAsyncError } from "./errorHandler";
+import Receive from "./receive";
+import { StyledBox } from "./styles";
 
 export default function Home() {
   const {
@@ -27,11 +29,20 @@ export default function Home() {
     importedTokens,
     setImportedTokens,
   } = useWeb3(bnbchain);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const privateKey = localStorage.getItem("pkey");
   const [showSendPopup, setShowSendPopup] = useState(false);
+  const [showReceivePopup, setShowReceivePopup] = useState(false);
   const [selectedToken, setSelectedToken] = useState("");
   const [showImportForm, setShowImportForm] = useState(false);
+  useEffect(() => {
+    if (privateKey) {
+      const account = web3.eth.accounts.wallet.add(privateKey);
+      setIsLoading(false);
+      setUserWallet(account);
+    }
+  }, [privateKey, web3]);
   const onTokenImport = useTokenImportHandler(
     importedTokens,
     setImportedTokens,
@@ -59,13 +70,6 @@ export default function Home() {
     };
     fetchBalance();
   }, [userWallet]);
-
-  useEffect(() => {
-    if (privateKey) {
-      const account = web3.eth.accounts.wallet.add(privateKey);
-      setUserWallet(account);
-    }
-  }, [privateKey, web3]);
 
   function copyAddress(address) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -98,6 +102,15 @@ export default function Home() {
     [setSelectedChain]
   );
 
+  if (isLoading) {
+    return (
+      <StyledBox ml={2}>
+        <CircularProgress color="secondary" size={50} />
+        <Box ml={2}>Loading </Box>
+      </StyledBox>
+    );
+  }
+
   if (!userWallet) {
     return <CheckUser />;
   }
@@ -126,6 +139,7 @@ export default function Home() {
         <Actions
           onSendClick={() => setShowSendPopup(true)}
           onImportClick={() => setShowImportForm(true)}
+          onReceiveClick={() => setShowReceivePopup(true)}
         />
         {/** */}
         <TokenSection
@@ -154,6 +168,14 @@ export default function Home() {
               onClose={() => setShowSendPopup(false)}
               selectedToken={selectedToken}
               selectedChain={selectedChain}
+            />
+          </CenterBox>
+        )}
+        {showReceivePopup && (
+          <CenterBox>
+            <Receive
+              onClose={() => setShowReceivePopup(false)}
+              userWallet={userWallet}
             />
           </CenterBox>
         )}

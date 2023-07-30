@@ -1,59 +1,70 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import "../App.css";
+import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { CenterBox, TypographyTitle, StyledBox } from "./styles";
 
 export default function Settings() {
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogTitle, setDialogTitle] = useState("");
+  const [dialogContent, setDialogContent] = useState("");
 
-  const gocreate = () => {
-    navigate("/create");
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
-  const gologin = () => {
-    navigate("/login");
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
   };
-  const goSettings = () => {
-    navigate("/settings");
+
+  const showKey = (key, title) => {
+    setDialogTitle(title);
+    setOpenDialog(true);
+    setDialogContent(localStorage[key]);
   };
-  const goHome = () => {
-    navigate("/");
-  };
-  const [showSecretKey, setShowSecretKey] = useState(false);
-  const [showMnemonic, setShowMnemonic] = useState(false);
+
   return (
-    <div className="settingsPage-container">
-      <div className="settingsPage-nav-container">
-        <div className="settingsPage-dropdown">
-          <button>Menu &#9662;</button>
-          <div className="settingsPage-dropdown-content">
-            <button onClick={gocreate}>Create</button>
-            <button onClick={gologin}>Login</button>
-            <button onClick={goSettings}>Settings</button>
-          </div>
-        </div>
-        <button className="settingsPage-homeBtn" onClick={goHome}>
-          Home
-        </button>
-      </div>
-      <div className="settingsPage-showhide">
-        <div className="settingsPage-settings-menu">
-          {/* Toggle the visibility of the secret key when the button is clicked */}
-          <button
-            className="settingsPage-sc long-word"
-            onClick={() => setShowSecretKey(!showSecretKey)}
-          >
-            {showSecretKey ? "Hide" : "Show"} secret key
-          </button>
-          {/* Only display the secret key if the showSecretKey state is true */}
-          {showSecretKey && <p className="key">{localStorage["pkey"]}</p>}
-          <button
-            className="settingsPage-rp"
-            onClick={() => setShowMnemonic(!showMnemonic)}
-          >
-            {showMnemonic ? "Hide" : "Show"} recovery phrase
-          </button>
-          {showMnemonic && <p className="key">{localStorage["mnem"]}</p>}
-        </div>
-      </div>
-    </div>
+    <CenterBox>
+      <TypographyTitle variant="h6">Settings</TypographyTitle>
+      <StyledBox>
+        <Button
+          aria-controls="simple-menu"
+          aria-haspopup="true"
+          onClick={handleMenuClick}
+        >
+          Menu
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+        >
+          <MenuItem onClick={() => navigate("/create")}>Create</MenuItem>
+          <MenuItem onClick={() => navigate("/login")}>Login</MenuItem>
+          <MenuItem onClick={() => navigate("/settings")}>Settings</MenuItem>
+        </Menu>
+        <Button onClick={() => navigate("/")}>Home</Button>
+      </StyledBox>
+
+      <Button variant="contained" onClick={() => showKey("pkey", "Secret Key")}>
+        Show Secret Key
+      </Button>
+      <Button
+        variant="contained"
+        onClick={() => showKey("mnem", "Recovery Phrase")}
+      >
+        Show Recovery Phrase
+      </Button>
+
+      <Dialog onClose={() => setOpenDialog(false)} open={openDialog}>
+        <DialogTitle>{dialogTitle}</DialogTitle>
+        <DialogContent>{dialogContent}</DialogContent>
+      </Dialog>
+    </CenterBox>
   );
 }

@@ -82,8 +82,6 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
       const toAddress = document.getElementById("toadrs").value;
       const amount = document.getElementById("val").value;
       let gasPrice = document.getElementById("gasprice").value;
-
-      // gasPrice se calculeaza automat
       if (!gasPrice) {
         const gasPriceEstimate = await provider.getGasPrice();
         gasPrice = ethers.utils.formatUnits(gasPriceEstimate, "gwei");

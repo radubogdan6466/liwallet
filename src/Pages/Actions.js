@@ -2,7 +2,11 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
 
-export default function Actions({ onSendClick, onImportClick }) {
+export default function Actions({
+  onSendClick,
+  onImportClick,
+  onReceiveClick,
+}) {
   return (
     <Box
       sx={{
@@ -12,9 +16,18 @@ export default function Actions({ onSendClick, onImportClick }) {
         margin: "10px",
       }}
     >
-      <Box>
+      <Box
+        sx={{
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Button variant="contained" color="primary" onClick={onSendClick}>
           Send
+        </Button>
+
+        <Button variant="contained" color="primary" onClick={onReceiveClick}>
+          Receive
         </Button>
         <Button variant="contained" color="primary" onClick={onImportClick}>
           Import

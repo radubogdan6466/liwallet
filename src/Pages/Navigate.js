@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, MenuItem, IconButton, Menu } from "@mui/material";
+import { Box, MenuItem, IconButton, Menu, Dialog } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import CreateWallet from "./createwallet.js";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -13,10 +14,10 @@ const StyledBox = styled(Box)({
 
 const Meniu = () => {
   const navigate = useNavigate();
-  //const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [showCreatePopup, setShowCreatePopup] = useState(false);
 
-  const gocreate = () => {
-    navigate("/create");
+  const handleCreateClick = () => {
+    setShowCreatePopup(true);
   };
 
   const gologin = () => {
@@ -26,11 +27,12 @@ const Meniu = () => {
   const goSettings = () => {
     navigate("/settings");
   };
+
   const goReport = () => {
     navigate("/report");
   };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
@@ -40,9 +42,7 @@ const Meniu = () => {
   const handleClose = (menuItem) => {
     setAnchorEl(null);
 
-    if (menuItem === "create") {
-      gocreate();
-    } else if (menuItem === "login") {
+    if (menuItem === "login") {
       gologin();
     } else if (menuItem === "settings") {
       goSettings();
@@ -51,7 +51,6 @@ const Meniu = () => {
     }
   };
 
-  //if (isMobile) {
   return (
     <StyledBox>
       <IconButton
@@ -81,11 +80,15 @@ const Meniu = () => {
           },
         }}
       >
-        <MenuItem onClick={() => handleClose("create")}>Create</MenuItem>
+        <MenuItem onClick={handleCreateClick}>Create</MenuItem>
         <MenuItem onClick={() => handleClose("login")}>Login</MenuItem>
         <MenuItem onClick={() => handleClose("settings")}>Settings</MenuItem>
         <MenuItem onClick={() => handleClose("report")}>Report</MenuItem>
       </Menu>
+
+      <Dialog open={showCreatePopup} onClose={() => setShowCreatePopup(false)}>
+        <CreateWallet />
+      </Dialog>
     </StyledBox>
   );
 };
