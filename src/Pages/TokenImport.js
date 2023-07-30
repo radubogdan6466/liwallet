@@ -105,7 +105,18 @@ const TokenImport = ({ onClose, selectedChain }) => {
     }
     const chainId = parseInt(tokenChainId); // Convertim chainId în număr întreg
 
-    handleTokenImport(tokenAddress, tokenSymbol, tokenDecimals, chainId);
+    const importResult = handleTokenImport(
+      tokenAddress,
+      tokenSymbol,
+      tokenDecimals,
+      chainId
+    );
+    if (importResult.tokenAlreadyImported) {
+      setError("Tokenul este deja importat!");
+      return;
+    }
+
+    //handleTokenImport(tokenAddress, tokenSymbol, tokenDecimals, chainId);
     setTokenAddress("");
     setTokenSymbol("");
     setTokenDecimals("");

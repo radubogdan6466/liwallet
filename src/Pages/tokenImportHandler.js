@@ -14,16 +14,15 @@ export const useTokenImportHandler = (
       );
 
       if (isTokenImported) {
-        console.log("Token already imported!");
+        return { tokenAlreadyImported: true };
       } else {
         const importedToken = {
           address: tokenAddress,
           symbol: tokenSymbol,
           decimals: tokenDecimals,
           chainId,
-          logo: "", // Poți adăuga logoul aici dacă este necesar
+          logo: "",
         };
-        console.log(importedToken);
 
         const updatedTokens = [...importedTokens, importedToken];
         setImportedTokens(updatedTokens);
@@ -31,9 +30,7 @@ export const useTokenImportHandler = (
           getChainNameFromUrl(chainName) + "Tokens",
           JSON.stringify(updatedTokens)
         );
-        console.log(
-          "Token imported successfully!" + JSON.stringify(importedToken)
-        );
+        return { tokenAlreadyImported: false };
       }
     },
     [importedTokens, setImportedTokens, chainName]

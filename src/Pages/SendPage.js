@@ -22,9 +22,13 @@ import {
   Typography,
 } from "@mui/material";
 import { StyledBoxx, StyledFormControl } from "./styles";
-const bnbchainTokens = JSON.parse(localStorage.getItem("bnbchainTokens"));
-const ethchainTokens = JSON.parse(localStorage.getItem("ethchainTokens"));
-const dogechainTokens = JSON.parse(localStorage.getItem("dogechainTokens"));
+const getLocalStorageItem = (key) => {
+  const item = localStorage.getItem(key);
+  return item ? JSON.parse(item) : [];
+};
+const bnbchainTokens = getLocalStorageItem("bnbchainTokens");
+const ethchainTokens = getLocalStorageItem("ethchainTokens");
+const dogechainTokens = getLocalStorageItem("dogechainTokens");
 
 const Send = ({ onClose, selectedToken, selectedChain }) => {
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);

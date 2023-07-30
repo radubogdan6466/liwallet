@@ -30,7 +30,7 @@ export default function Home() {
   const [error, setError] = useState(null);
   const privateKey = localStorage.getItem("pkey");
   const [showSendPopup, setShowSendPopup] = useState(false);
-  const [selectedToken, setSelectedToken] = useState("ETH");
+  const [selectedToken, setSelectedToken] = useState("");
   const [showImportForm, setShowImportForm] = useState(false);
   const onTokenImport = useTokenImportHandler(
     importedTokens,

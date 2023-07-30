@@ -10,7 +10,9 @@ import {
   Avatar,
   Box,
   Button,
+  IconButton,
 } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 export default function TokenList({
   userWallet,
@@ -97,7 +99,23 @@ export default function TokenList({
     // re-fetch token balances after removing a token
     fetchTokenBalances();
   };
+  const refreshBalance = async (symbol, address, chainId) => {
+    if (userWallet) {
+      const balances = { ...tokenBalances };
+      const tokenContract = new web3.eth.Contract(abis[chainId], address);
+      const balance = await tokenContract.methods
+        .balanceOf(userWallet.address)
+        .call();
+      const decimals = await tokenContract.methods.decimals().call();
+      const balanceInToken = balance / Math.pow(10, decimals);
 
+      const updatedTokenBalance = { address, balance: balanceInToken };
+      updatedTokenBalance.name = symbol;
+      balances[symbol] = updatedTokenBalance;
+
+      setTokenBalances(balances);
+    }
+  };
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
       <List>
@@ -118,6 +136,7 @@ export default function TokenList({
                   secondary={tokenBalances[symbol].name}
                   secondaryTypographyProps={{ style: { color: "gray" } }}
                 />
+
                 <Button
                   onClick={(event) => {
                     event.stopPropagation();
@@ -125,7 +144,7 @@ export default function TokenList({
                   }}
                   color="secondary"
                 >
-                  Șterge
+                  Hide
                 </Button>
               </ListItem>
             );
@@ -133,6 +152,14 @@ export default function TokenList({
           return null;
         })}
       </List>
+      <IconButton
+        onClick={fetchTokenBalances}
+        color="primary"
+        aria-label="refresh balance"
+        component="span"
+      >
+        <RefreshIcon /> Refresh list
+      </IconButton>
     </Box>
   );
 }
