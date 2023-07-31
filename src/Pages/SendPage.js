@@ -6,9 +6,8 @@ import bscAbi from "./JsonFiles/testBnbAbi.json";
 import ercAbi from "./JsonFiles/testErcAbi.json";
 import dogeAbi from "./JsonFiles/testDogeAbi.json";
 import TransferDetails from "./TransferDetails";
+import CryptoJS from "crypto-js";
 
-//import { dogechainTokens, ethchainTokens } from "./JsonFiles/tokens";
-//import bnbchainTokens from "./JsonFiles/bscTokens.json";
 import {
   Dialog,
   DialogTitle,
@@ -36,12 +35,22 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
   const [addressChecked, setAddressChecked] = useState(false);
   const [showCheckButton, setShowCheckButton] = useState(true);
   const [warningMessage, setWarningMessage] = useState("");
+  const secretKey = process.env.REACT_APP_SECRET_KEY;
 
   const closePopup = () => {
     onClose();
   };
+
+  const getDecryptedPrivateKey = () => {
+    const encryptedPrivateKey = localStorage.getItem("pkey");
+    const bytes = CryptoJS.AES.decrypt(encryptedPrivateKey, secretKey);
+    const originalText = bytes.toString(CryptoJS.enc.Utf8);
+
+    return originalText;
+  };
+
   const provider = new ethers.providers.JsonRpcProvider(selectedChain);
-  const userWallet = new ethers.Wallet(localStorage.getItem("pkey"), provider);
+  const userWallet = new ethers.Wallet(getDecryptedPrivateKey(), provider);
   const checkAddressBeforeTransfer = async () => {
     try {
       const toAddress = document.getElementById("toadrs").value;
@@ -54,7 +63,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
           warningMessage += ` Detalii: ${checkResult.details}`;
         }
       } else {
-        warningMessage = "Adresa nu este în baza de date.";
+        warningMessage = "Nu sunt detalii despre aceasta adresa";
       }
       setWarningMessage(warningMessage);
       setAddressChecked(true);
@@ -70,7 +79,10 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
         ...ethchainTokens,
       ];
     } else if (chain === bnbchain) {
-      return [{ symbol: "BNB", address: "", abi: null }, ...bnbchainTokens];
+      return [
+        { symbol: "BNB", address: "", decimals: 8, abi: null },
+        ...bnbchainTokens,
+      ];
     } else if (chain === dogechain) {
       return [{ symbol: "DOGE", address: "", abi: null }, ...dogechainTokens];
     }
@@ -100,13 +112,10 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
         selectedTokenState === "BNB" ||
         selectedTokenState === "DOGE"
       ) {
-        console.log(`Decimals: ${selectedTokenData.decimals}`);
-        console.log(`Amount: ${amount}`);
         amountInSmallestUnit = ethers.utils.parseUnits(
           amount,
           selectedTokenData.decimals
         );
-        console.log(`Amount in smallest unit: ${amountInSmallestUnit}`);
       } else {
         tokenAddress = selectedTokenData.address;
         if (selectedTokenData.chainId === 11155111) {

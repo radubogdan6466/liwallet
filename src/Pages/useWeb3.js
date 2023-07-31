@@ -1,8 +1,21 @@
 import { useState, useEffect } from "react";
 import Web3 from "web3";
 import { bnbchain } from "./utils.js"; // import default chain
+import CryptoJS from "crypto-js";
 
 export default function useWeb3(initialChain = bnbchain) {
+  const encryptedPrivateKey = localStorage.getItem("pkey");
+  const secretKey = process.env.REACT_APP_SECRET_KEY;
+  const [privateKey, setPrivateKey] = useState(null);
+
+  useEffect(() => {
+    if (encryptedPrivateKey) {
+      const bytes = CryptoJS.AES.decrypt(encryptedPrivateKey, secretKey);
+      const decryptedPrivateKey = bytes.toString(CryptoJS.enc.Utf8);
+      setPrivateKey(decryptedPrivateKey);
+    }
+  }, [encryptedPrivateKey, secretKey]);
+
   const [web3, setWeb3] = useState(
     new Web3(new Web3.providers.HttpProvider(initialChain))
   );
@@ -26,8 +39,6 @@ export default function useWeb3(initialChain = bnbchain) {
     };
     fetchBalance();
   }, [userWallet, web3]);
-
-  const privateKey = localStorage.getItem("pkey");
 
   useEffect(() => {
     if (privateKey) {

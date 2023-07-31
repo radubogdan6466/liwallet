@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { bnbchain, ethchain, dogechain, chains } from "./utils.js";
 import { StyledBox } from "./styles";
+import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 import {
   Box,
@@ -20,6 +21,7 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(selectedChain);
+  const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,7 +47,13 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
 
   return (
     <StyledBox>
-      <Button variant="text" onClick={handleClickOpen}>
+      <Button
+        variant="text"
+        onClick={handleClickOpen}
+        sx={{
+          color: theme.palette.text.secondary, // Folosește culoarea principală din tema
+        }}
+      >
         {Object.keys(chains).find((key) => chains[key] === selectedChain)}
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -96,8 +104,8 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
                 }}
               >
                 <MenuItem value={bnbchain}>BNB Smart Chain</MenuItem>
-                <MenuItem value={ethchain}>Ethereum</MenuItem>
-                <MenuItem value={dogechain}>Dogecoin</MenuItem>
+                <MenuItem value={ethchain}>Ethereum chain</MenuItem>
+                <MenuItem value={dogechain}>Dogecoin chain</MenuItem>
               </Select>
             </FormControl>
           )}

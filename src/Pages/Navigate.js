@@ -5,7 +5,8 @@ import { styled } from "@mui/material/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CreateWallet from "./createwallet.js";
 import LoginWallet from "./loginwallet.js";
-
+import ReportAddress from "../report/ReportAddress.js";
+import Settings from "./settings.js";
 const StyledBox = styled(Box)({
   display: "flex",
   justifyContent: "center",
@@ -17,6 +18,8 @@ const Meniu = () => {
   const navigate = useNavigate();
   const [showCreatePopup, setShowCreatePopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showReportPopup, setShowReportPopup] = useState(false);
+  const [showSettingsPopup, setShowSettingsPopup] = useState(false);
 
   const handleCreateClick = () => {
     setShowCreatePopup(true);
@@ -24,15 +27,12 @@ const Meniu = () => {
   const handleLoginClick = () => {
     setShowLoginPopup(true);
   };
-
-  const goSettings = () => {
-    navigate("/settings");
+  const handleReportClick = () => {
+    setShowReportPopup(true);
   };
-
-  const goReport = () => {
-    navigate("/report");
+  const handleSettingsClick = () => {
+    setShowSettingsPopup(true);
   };
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -42,12 +42,6 @@ const Meniu = () => {
 
   const handleClose = (menuItem) => {
     setAnchorEl(null);
-
-    if (menuItem === "settings") {
-      goSettings();
-    } else if (menuItem === "report") {
-      goReport();
-    }
   };
 
   return (
@@ -81,15 +75,21 @@ const Meniu = () => {
       >
         <MenuItem onClick={handleCreateClick}>Create</MenuItem>
         <MenuItem onClick={handleLoginClick}>Login</MenuItem>
-        <MenuItem onClick={() => handleClose("settings")}>Settings</MenuItem>
-        <MenuItem onClick={() => handleClose("report")}>Report</MenuItem>
+        <MenuItem onClick={handleSettingsClick}>Settings</MenuItem>
+        <MenuItem onClick={handleReportClick}>Report</MenuItem>
       </Menu>
 
       <Dialog open={showCreatePopup} onClose={() => setShowCreatePopup(false)}>
         <CreateWallet />
       </Dialog>
-      <Dialog open={showLoginPopup}>
-        <LoginWallet onClose={() => setShowLoginPopup(false)} />
+      <Dialog open={showLoginPopup} onClose={() => setShowLoginPopup(false)}>
+        <LoginWallet />
+      </Dialog>
+      <Dialog open={showReportPopup}>
+        <ReportAddress onClose={() => setShowReportPopup(false)} />
+      </Dialog>
+      <Dialog open={showSettingsPopup}>
+        <Settings onClose={() => setShowSettingsPopup(false)} />
       </Dialog>
     </StyledBox>
   );

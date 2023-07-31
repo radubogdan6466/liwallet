@@ -10,10 +10,10 @@ import {
   Avatar,
   Box,
   Button,
-  IconButton,
 } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import tokenLogos from "./JsonFiles/tokenLogo.json"; // import the JSON file
+import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 export default function TokenList({
   userWallet,
@@ -25,6 +25,8 @@ export default function TokenList({
   ethBalance,
   handleTokenClick,
 }) {
+  const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
+
   const [tokenBalances, setTokenBalances] = useState({});
   const [tokenAdded, setTokenAdded] = useState(false);
 
@@ -104,14 +106,49 @@ export default function TokenList({
     localStorage.setItem(tokenListKey, JSON.stringify(updatedTokens));
     fetchTokenBalances();
   };
+  const getNativeCurrency = (selectedChain) => {
+    if (selectedChain === ethchain) {
+      return "ETH";
+    } else if (selectedChain === bnbchain) {
+      return "BNB";
+    } else if (selectedChain === dogechain) {
+      return "DOGE";
+    }
+    return "";
+  };
   return (
-    <Box sx={{ width: "100%", height: "100%" }}>
-      <List>
+    <Box
+      sx={{ width: "100%", height: "100%", paddingLeft: 5, paddingRight: 5 }}
+    >
+      <List
+        sx={{
+          color: theme.palette.text.secondary,
+        }}
+      >
+        {/* Afișează balanța monedei native folosind ListItem */}
+        <ListItem
+          button
+          key={getNativeCurrency(selectedChain)}
+          onClick={() => handleTokenClick(getNativeCurrency(selectedChain))}
+        >
+          <ListItemAvatar>
+            <Avatar
+              alt={getNativeCurrency(selectedChain)}
+              src={findLogoUrl(getNativeCurrency(selectedChain))}
+            />
+          </ListItemAvatar>
+          <ListItemText
+            primary={ethBalance}
+            secondary={getNativeCurrency(selectedChain)}
+            secondaryTypographyProps={{ style: { color: "#bdbdbd" } }}
+          />
+        </ListItem>
+        {/* Restul codului existent */}
         {Object.keys(tokenBalances).map((symbol) => {
           const token = tokens.find((token) => token.symbol === symbol);
           const logoUrl = findLogoUrl(symbol);
 
-          if (token) {
+          if (token && symbol !== "ETH") {
             return (
               <ListItem
                 button
@@ -124,7 +161,7 @@ export default function TokenList({
                 <ListItemText
                   primary={tokenBalances[symbol].balance}
                   secondary={tokenBalances[symbol].name}
-                  secondaryTypographyProps={{ style: { color: "gray" } }}
+                  secondaryTypographyProps={{ style: { color: "#bdbdbd" } }}
                 />
 
                 <Button
@@ -142,14 +179,20 @@ export default function TokenList({
           return null;
         })}
       </List>
-      <IconButton
+
+      <Button
         onClick={fetchTokenBalances}
         color="primary"
         aria-label="refresh balance"
-        component="span"
       >
-        <RefreshIcon /> Refresh list
-      </IconButton>
+        <RefreshIcon
+          sx={{
+            color: theme.palette.primary.icon,
+            fontSize: 40,
+          }}
+        />
+        Refresh list
+      </Button>
     </Box>
   );
 }

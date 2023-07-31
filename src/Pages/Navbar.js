@@ -5,6 +5,7 @@ import { ContentCopy } from "@mui/icons-material";
 import ChainSelector from "./ChainSelector";
 import Meniu from "./Navigate";
 import { CenterBox } from "./styles";
+import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 export default function NavBar({
   selectedChain,
@@ -12,6 +13,8 @@ export default function NavBar({
   userWallet,
   copyAddress,
 }) {
+  const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
+
   const shortenedAddress = `${userWallet.address.substring(
     0,
     5
@@ -34,11 +37,25 @@ export default function NavBar({
       <CenterBox>
         <Button
           onClick={() => copyAddress(userWallet.address)}
-          endIcon={<ContentCopy />}
+          endIcon={
+            <ContentCopy
+              sx={{
+                color: theme.palette.primary.icon,
+              }}
+            />
+          }
+          sx={{
+            color: theme.palette.text.secondary,
+          }}
         >
           {shortenedAddress}
         </Button>
-        <Typography id="copyMessage"></Typography>
+        <Typography
+          id="copyMessage"
+          sx={{
+            color: theme.palette.text.span,
+          }}
+        ></Typography>
       </CenterBox>
       <Meniu />
     </Box>

@@ -1,7 +1,6 @@
 import { styled } from "@mui/material/styles";
-import { Grid, Box, TextField, DialogContent } from "@mui/material";
+import { Grid, Box, TextField, DialogContent, Button } from "@mui/material";
 import { Typography, Link as MuiLink, FormControl } from "@mui/material";
-
 export const CenterBox = styled(Grid)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
@@ -17,12 +16,23 @@ export const CenterBox = styled(Grid)(({ theme }) => ({
     fontSize: "2rem",
   },
 }));
-
+export const ActionButton = styled(Button)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  marginLeft: 20,
+  marginRight: 20,
+  color: theme.palette.text.secondary,
+  "& .MuiSvgIcon-root": {
+    fontSize: 50,
+  },
+}));
 export const TypographyTitle = styled(Typography)(({ theme }) => ({
-  fontWeight: "",
+  fontSize: 30,
   textAlign: "center",
-  marginTop: "12px",
-  marginBottom: "12px",
+  marginTop: "10px",
+  marginBottom: "10px",
   [theme.breakpoints.up("600")]: {
     fontSize: "2rem",
   },

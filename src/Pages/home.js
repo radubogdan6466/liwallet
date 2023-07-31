@@ -16,6 +16,7 @@ import TokenSection from "./TokenSection";
 import { handleAsyncError } from "./errorHandler";
 import Receive from "./receive";
 import { StyledBox } from "./styles";
+import CryptoJS from "crypto-js";
 
 export default function Home() {
   const {
@@ -32,21 +33,23 @@ export default function Home() {
   } = useWeb3(bnbchain);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const privateKey = localStorage.getItem("pkey");
+  const encryptedPrivateKey = localStorage.getItem("pkey");
   const [showSendPopup, setShowSendPopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
-
   const [showReceivePopup, setShowReceivePopup] = useState(false);
   const [selectedToken, setSelectedToken] = useState("");
   const [showImportForm, setShowImportForm] = useState(false);
-
+  const secretKey = process.env.REACT_APP_SECRET_KEY;
   useEffect(() => {
-    if (privateKey) {
-      const account = web3.eth.accounts.wallet.add(privateKey);
+    if (encryptedPrivateKey) {
+      const bytes = CryptoJS.AES.decrypt(encryptedPrivateKey, secretKey);
+      const decryptedPrivateKey = bytes.toString(CryptoJS.enc.Utf8);
+      const account = web3.eth.accounts.wallet.add(decryptedPrivateKey);
       setIsLoading(false);
       setUserWallet(account);
     }
-  }, [privateKey, web3]);
+  }, [encryptedPrivateKey, web3, secretKey]);
+
   const onTokenImport = useTokenImportHandler(
     importedTokens,
     setImportedTokens,

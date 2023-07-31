@@ -2,9 +2,10 @@
 import React from "react";
 import { TypographyTitle } from "./styles";
 import TokenList from "./TokenList";
-
+import { useTheme } from "@mui/material/styles";
 export default function TokenSection(props) {
-  // destructure the props
+  const theme = useTheme();
+
   const {
     userWallet,
     web3,
@@ -15,10 +16,15 @@ export default function TokenSection(props) {
     ethBalance,
     handleTokenClick,
   } = props;
-
   return (
     <React.Fragment>
-      <TypographyTitle>Tokens</TypographyTitle>
+      <TypographyTitle
+        sx={{
+          color: theme.palette.text.secondary,
+        }}
+      >
+        Tokens
+      </TypographyTitle>
       <TokenList
         userWallet={userWallet}
         web3={web3}

@@ -10,5 +10,13 @@
   {
     "symbol": "WISTA",
     "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/24991.png"
+  },
+  {
+    "symbol": "ETH",
+    "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
+  },
+  {
+    "symbol": "BNB",
+    "logo": "https://cryptologos.cc/logos/bnb-bnb-logo.png?v=025"
   }
 ]

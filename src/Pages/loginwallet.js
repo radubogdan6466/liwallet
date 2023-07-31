@@ -6,23 +6,54 @@ import {
   CenterBox,
   TypographyTitle,
   FormField,
+  FormContainer,
+  StyledBoxx,
+  StyledFormControl,
   ActionsContainer,
 } from "./styles";
-import { StyledDialogContent, FormContainer } from "./styles";
+import CryptoJS from "crypto-js";
 
 export default function LoginWallet({ onClose }) {
+  const secretKey = process.env.REACT_APP_SECRET_KEY;
   const [privateKey, setPrivateKey] = useState("");
+  const [displayPrivateKey, setDisplayPrivateKey] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const closePopup = () => {
     onClose();
   };
+
+  const isValidPrivateKey = (privateKey) => {
+    try {
+      new ethers.Wallet(privateKey);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
   const Login = (event) => {
     event.preventDefault();
+
+    if (!isValidPrivateKey(privateKey)) {
+      setErrorMessage("Invalid");
+      return;
+    }
+
     try {
-      const userWallet = new ethers.Wallet(privateKey);
-      localStorage.setItem("pkey", userWallet.privateKey);
-      navigate("/");
+      const encryptedPrivateKey = CryptoJS.AES.encrypt(
+        privateKey,
+        secretKey
+      ).toString();
+      localStorage.setItem("pkey", encryptedPrivateKey);
+
+      // Clear the input field to prevent password saving prompt
+      setPrivateKey("");
+      setDisplayPrivateKey("");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.error("Error, try again:", error);
     }
@@ -30,35 +61,50 @@ export default function LoginWallet({ onClose }) {
 
   const handlePrivateKeyChange = (event) => {
     setPrivateKey(event.target.value);
+    setDisplayPrivateKey("*".repeat(event.target.value.length));
+    setErrorMessage("");
   };
 
   return (
-    <Dialog open={true} onClose={closePopup}>
-      <TypographyTitle variant="h4" gutterBottom>
-        Login
-      </TypographyTitle>
-      <FormContainer
-        onSubmit={Login}
+    <CenterBox
+      container
+      sx={{
+        backgroundColor: "#d3d3d3",
+      }}
+    >
+      <StyledBoxx
+        className="loginPage"
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          maxWidth: "400px",
+          backgroundColor: "#d3d3d3",
         }}
       >
-        <FormField
-          id="privateKey"
-          value={privateKey}
-          placeholder="Enter private key"
-          type="password"
-          onChange={handlePrivateKeyChange}
-          fullWidth
-        />
-        <Button type="submit" variant="contained" color="primary">
+        <TypographyTitle variant="h5" gutterBottom>
           Login
-        </Button>
-      </FormContainer>
-    </Dialog>
+        </TypographyTitle>
+        <FormContainer onSubmit={Login}>
+          <StyledFormControl>
+            <FormField
+              id="privateKey"
+              value={displayPrivateKey}
+              placeholder="Enter private key"
+              type="text"
+              onChange={handlePrivateKeyChange}
+              fullWidth
+              autoComplete="off"
+            />
+          </StyledFormControl>
+          {errorMessage && (
+            <Typography color="error" variant="body2" gutterBottom>
+              {errorMessage}
+            </Typography>
+          )}
+          <ActionsContainer>
+            <Button type="submit" variant="contained" color="primary">
+              Login
+            </Button>
+          </ActionsContainer>
+        </FormContainer>
+      </StyledBoxx>
+    </CenterBox>
   );
 }

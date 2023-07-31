@@ -7,8 +7,8 @@ export const dogechain = "https://rpc-testnet.dogechain.dog";
 
 export const chains = {
   "BNB Smart Chain": bnbchain,
-  Ethereum: ethchain,
-  Dogecoin: dogechain,
+  "Ethereum chain": ethchain,
+  "Dogecoin chain": dogechain,
 };
 export const getChainNameFromUrl = (url) => {
   switch (url) {

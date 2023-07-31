@@ -9,14 +9,17 @@ import {
   FormContainer,
   ActionsContainer,
 } from "../Pages/styles.js";
-import { Button, Box, Typography } from "@mui/material";
+import { Button, Box, Typography, Dialog } from "@mui/material";
 
-const ReportAddress = () => {
+export default function ReportAddress({ onClose }) {
   const [address, setAddress] = useState("");
   const [details, setDetails] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
 
+  const closePopup = () => {
+    onClose();
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,8 +45,8 @@ const ReportAddress = () => {
   };
 
   return (
-    <CenterBox container>
-      <TypographyTitle variant="h3" gutterBottom>
+    <Dialog open={true} onClose={closePopup}>
+      <TypographyTitle variant="h5" gutterBottom>
         Raportează o adresă
       </TypographyTitle>
       <StyledBoxx>
@@ -79,8 +82,6 @@ const ReportAddress = () => {
           </ActionsContainer>
         </FormContainer>
       </StyledBoxx>
-    </CenterBox>
+    </Dialog>
   );
-};
-
-export default ReportAddress;
+}

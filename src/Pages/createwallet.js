@@ -3,21 +3,22 @@ import { ethers } from "ethers";
 import { useNavigate } from "react-router-dom";
 import {
   CenterBox,
-  TypographyTitle,
   StyledBoxx,
-  StyledFormControl,
   ActionsContainer,
+  TypographyTitle,
 } from "./styles";
 import {
   Button,
-  Input,
   Typography,
   Dialog,
   DialogContent,
   DialogTitle,
 } from "@mui/material";
+import CryptoJS from "crypto-js";
+import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 export default function CreateWallet() {
+  const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
   const [showMnemonicPopup, setShowMnemonicPopup] = useState(false);
   const [mnemonic, setMnemonic] = useState("");
   let navigate = useNavigate();
@@ -26,7 +27,14 @@ export default function CreateWallet() {
     const userWalletKeys = ethers.Wallet.createRandom();
     const mnemonic = userWalletKeys.mnemonic;
 
-    localStorage.setItem("pkey", userWalletKeys.privateKey);
+    // Encrypt and save pkey
+    const secretKey = process.env.REACT_APP_SECRET_KEY; // Set your secret key here
+    const encryptedPrivateKey = CryptoJS.AES.encrypt(
+      userWalletKeys.privateKey,
+      secretKey
+    ).toString();
+    localStorage.setItem("pkey", encryptedPrivateKey);
+
     localStorage.setItem("mnem", mnemonic.phrase);
 
     setMnemonic(mnemonic.phrase);
@@ -39,15 +47,25 @@ export default function CreateWallet() {
   };
 
   return (
-    <CenterBox container>
-      <StyledBoxx className="createPage">
-        <Typography>
-          Save the phrase on an offline device or write it on paper. Once you
-          create the wallet, you will never have access to it.
-        </Typography>
+    <CenterBox
+      container
+      sx={{
+        backgroundColor: theme.palette.primary.main, // Folosește culoarea principală din tema
+      }}
+    >
+      <StyledBoxx
+        className="createPage"
+        sx={{
+          backgroundColor: theme.palette.primary.main, // Folosește culoarea principală din tema
+        }}
+      >
+        <TypographyTitle>
+          Salvează fraza pe un dispozitiv offline sau scrie-o pe hârtie. Odată
+          ce ai creat portofelul, nu vei mai avea acces la ea.
+        </TypographyTitle>
         <ActionsContainer>
           <Button variant="contained" color="primary" onClick={create}>
-            Create Wallet
+            Crează wallet
           </Button>
           {/* Other buttons here */}
         </ActionsContainer>

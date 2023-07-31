@@ -1,37 +1,57 @@
 // Actions.js
 import React from "react";
 import { Box, Button } from "@mui/material";
-
+import SendIcon from "@mui/icons-material/Send";
+import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
+import { ActionButton } from "./styles";
+import CallMadeIcon from "@mui/icons-material/CallMade";
+import CallReceivedIcon from "@mui/icons-material/CallReceived";
+import AddIcon from "@mui/icons-material/Add";
 export default function Actions({
   onSendClick,
   onImportClick,
   onReceiveClick,
 }) {
+  const theme = useTheme();
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        margin: "10px",
-      }}
-    >
+    <Box>
       <Box
         sx={{
-          flexDirection: "column",
+          display: "flex",
+          flexDirection: "row",
           alignItems: "center",
         }}
       >
-        <Button variant="contained" color="primary" onClick={onSendClick}>
+        <ActionButton
+          sx={{
+            color: theme.palette.text.secondary,
+          }}
+          onClick={onSendClick}
+        >
+          <CallMadeIcon
+            sx={{
+              color: theme.palette.primary.icon,
+            }}
+          />
           Send
-        </Button>
+        </ActionButton>
 
-        <Button variant="contained" color="primary" onClick={onReceiveClick}>
+        <ActionButton onClick={onReceiveClick}>
+          <CallReceivedIcon
+            sx={{
+              color: theme.palette.primary.icon,
+            }}
+          />
           Receive
-        </Button>
-        <Button variant="contained" color="primary" onClick={onImportClick}>
+        </ActionButton>
+        <ActionButton onClick={onImportClick}>
+          <AddIcon
+            sx={{
+              color: theme.palette.primary.icon,
+            }}
+          />
           Import
-        </Button>
+        </ActionButton>
       </Box>
     </Box>
   );
