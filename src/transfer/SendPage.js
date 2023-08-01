@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { getGasPrice } from "../hooks/gasPrice";
-
+import { StyledBoxx, StyledFormControl } from "../hooks/styles.js";
+import { getDecryptedPrivateKey } from "./utils/crypto.js";
+import { getTokens } from "./utils/chain.js";
+import TransferDetails from "../hooks/TransferDetails.js";
+import bscAbi from "../Pages/JsonFiles/testBnbAbi.json";
+import ercAbi from "../Pages/JsonFiles/testErcAbi.json";
+import dogeAbi from "../Pages/JsonFiles/testDogeAbi.json";
+import { useGasPrice } from "./utils/useGasPrice";
+import { handleError } from "../hooks/errorHandler.js";
+import { checkAddressBeforeTransfer } from "./utils/adressCheck.js";
 import {
   Dialog,
   DialogTitle,
@@ -14,19 +22,6 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { StyledBoxx, StyledFormControl } from "../hooks/styles.js";
-import { getDecryptedPrivateKey } from "./utils/crypto.js";
-import { getTokens } from "./utils/chain.js";
-
-import TransferDetails from "../hooks/TransferDetails.js";
-import bscAbi from "../Pages/JsonFiles/testBnbAbi.json";
-import ercAbi from "../Pages/JsonFiles/testErcAbi.json";
-import dogeAbi from "../Pages/JsonFiles/testDogeAbi.json";
-import { useGasPrice } from "./utils/useGasPrice";
-
-import { handleError } from "../hooks/errorHandler.js";
-import { checkAddressBeforeTransfer } from "./utils/adressCheck.js";
-
 const Send = ({ onClose, selectedToken, selectedChain }) => {
   const secretKey = process.env.REACT_APP_SECRET_KEY;
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
@@ -66,6 +61,15 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
       if (!gasPrice) {
         const gasPriceEstimate = await provider.getGasPrice();
         gasPrice = ethers.utils.formatUnits(gasPriceEstimate, "gwei");
+      }
+      // Verificăm dacă prețul gazului este mai mic decât cel estimat
+      if (
+        parseFloat(gasPrice) <
+        parseFloat(
+          ethers.utils.formatUnits(await provider.getGasPrice(), "gwei")
+        )
+      ) {
+        throw new Error("gas_price_too_low");
       }
 
       let tokenContract, tokenAddress, tokenABI, amountInSmallestUnit;
@@ -179,11 +183,8 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             variant="outlined"
             required
           />
-          <TextField
-            id="gasprice"
-            placeholder="Gas Price (Gwei)"
-            value={gasPrice}
-          />
+          <TextField id="gasprice" placeholder="Gas Price (Gwei)" />
+          <Typography>Gas Price (Gwei): {gasPrice}</Typography>
         </StyledBoxx>
       </DialogContent>
       <DialogActions>

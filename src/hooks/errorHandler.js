@@ -10,15 +10,16 @@ export function handleAsyncError(func) {
   };
 }
 export const handleError = (error) => {
-  // Aici poți avea o logică complexă de gestionare a erorilor
-  // În acest exemplu, presupunem că error este un string care descrie eroarea
   let message;
-  switch (error) {
+  switch (error.message) {
     case "invalid_address":
       message = "Adresa introdusă nu este validă.";
       break;
     case "invalid_value":
       message = "Valoarea introdusă nu este validă.";
+      break;
+    case "gas_price_too_low":
+      message = "Prețul gazului este prea mic.";
       break;
     default:
       message = "A apărut o eroare. Te rugăm să încerci din nou.";
