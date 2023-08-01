@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import { getGasPrice } from "../hooks/gasPrice";
 
 import {
   Dialog,
@@ -21,17 +22,18 @@ import TransferDetails from "../hooks/TransferDetails.js";
 import bscAbi from "../Pages/JsonFiles/testBnbAbi.json";
 import ercAbi from "../Pages/JsonFiles/testErcAbi.json";
 import dogeAbi from "../Pages/JsonFiles/testDogeAbi.json";
+import { useGasPrice } from "./utils/useGasPrice";
 
 import { handleError } from "../hooks/errorHandler.js";
 import { checkAddressBeforeTransfer } from "./utils/adressCheck.js";
 
 const Send = ({ onClose, selectedToken, selectedChain }) => {
+  const secretKey = process.env.REACT_APP_SECRET_KEY;
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
   const [transferDetails, setTransferDetails] = useState(null);
   const [addressChecked, setAddressChecked] = useState(false);
   const [showCheckButton, setShowCheckButton] = useState(true);
   const [warningMessage, setWarningMessage] = useState("");
-  const secretKey = process.env.REACT_APP_SECRET_KEY;
 
   const closePopup = () => {
     onClose();
@@ -42,6 +44,8 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
     getDecryptedPrivateKey(secretKey),
     provider
   );
+  const gasPrice = useGasPrice(provider);
+
   const handleAddressCheck = async () => {
     const toAddress = document.getElementById("toadrs").value;
     try {
@@ -175,7 +179,11 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             variant="outlined"
             required
           />
-          <TextField id="gasprice" placeholder="Gas Price (Gwei)" />
+          <TextField
+            id="gasprice"
+            placeholder="Gas Price (Gwei)"
+            value={gasPrice}
+          />
         </StyledBoxx>
       </DialogContent>
       <DialogActions>
