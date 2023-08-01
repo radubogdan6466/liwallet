@@ -12,10 +12,7 @@ export const getTokens = (chain) => {
       ...ethchainTokens,
     ];
   } else if (chain === bnbchain) {
-    return [
-      { symbol: "BNB", address: "", decimals: 8, abi: null },
-      ...bnbchainTokens,
-    ];
+    return [{ symbol: "BNB", address: "", abi: null }, ...bnbchainTokens];
   } else if (chain === dogechain) {
     return [{ symbol: "DOGE", address: "", abi: null }, ...dogechainTokens];
   }

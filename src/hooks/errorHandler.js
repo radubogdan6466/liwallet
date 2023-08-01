@@ -21,6 +21,9 @@ export const handleError = (error) => {
     case "gas_price_too_low":
       message = "Prețul gazului este prea mic.";
       break;
+    case "insufficient_funds":
+      message = "Nu ai suficiente fonduri pentru a efectua această tranzacție.";
+      break;
     default:
       message = "A apărut o eroare. Te rugăm să încerci din nou.";
       break;

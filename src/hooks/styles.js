@@ -37,6 +37,13 @@ export const TypographyTitle = styled(Typography)(({ theme }) => ({
     fontSize: "2rem",
   },
 }));
+export const TypographyTitleForm = styled(Typography)(({ theme }) => ({
+  fontSize: 20,
+  textAlign: "center",
+  [theme.breakpoints.up("600")]: {
+    fontSize: "2rem",
+  },
+}));
 export const StyledBox = styled(Box)({
   display: "flex",
   justifyContent: "center",
@@ -49,7 +56,6 @@ export const StyledBoxx = styled(Box)({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  padding: "30px",
   backgroundColor: "#d3d3d3", // Gri deschis pentru fundal
 });
 export const StyledDialogContent = styled(DialogContent)({
@@ -57,12 +63,9 @@ export const StyledDialogContent = styled(DialogContent)({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  maxWidth: "400px",
 });
 
-export const StyledFormControl = styled(FormControl)({
-  marginBottom: "15px", // Adaugă spațiu între input-uri
-});
+export const StyledFormControl = styled(FormControl)({});
 
 export const TransferDetailsBox = styled(Box)({
   backgroundColor: "#666666", // Gri pentru fundal

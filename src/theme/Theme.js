@@ -8,8 +8,8 @@ const Theme = createTheme({
     },
     text: {
       main: "#9c27b0", // Blue color -
-      secondary: "#ffffff", // White color - poți înlocui cu culoarea dorită
-
+      secondary: "#ffffff", // White color
+      popup: "#9e9e9e", //
       span: "#bdbdbd",
     },
   },
