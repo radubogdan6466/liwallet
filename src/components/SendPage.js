@@ -1,11 +1,11 @@
 import { checkAddress } from "../api/api.js";
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { ethchain, bnbchain, dogechain } from "./utils.js";
-import bscAbi from "./JsonFiles/testBnbAbi.json";
-import ercAbi from "./JsonFiles/testErcAbi.json";
-import dogeAbi from "./JsonFiles/testDogeAbi.json";
-import TransferDetails from "./TransferDetails";
+import { ethchain, bnbchain, dogechain } from "../hooks/utils.js";
+import bscAbi from "../Pages/JsonFiles/testBnbAbi.json";
+import ercAbi from "../Pages/JsonFiles/testErcAbi.json";
+import dogeAbi from "../Pages/JsonFiles/testDogeAbi.json";
+import TransferDetails from "../hooks/TransferDetails.js";
 import CryptoJS from "crypto-js";
 
 import {
@@ -20,7 +20,7 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { StyledBoxx, StyledFormControl } from "./styles";
+import { StyledBoxx, StyledFormControl } from "../hooks/styles.js";
 const getLocalStorageItem = (key) => {
   const item = localStorage.getItem(key);
   return item ? JSON.parse(item) : [];

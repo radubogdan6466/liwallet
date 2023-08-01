@@ -1,6 +1,6 @@
 // TokenSection.js
 import React from "react";
-import { TypographyTitle } from "./styles";
+import { TypographyTitle } from "../hooks/styles";
 import TokenList from "./TokenList";
 import { useTheme } from "@mui/material/styles";
 export default function TokenSection(props) {

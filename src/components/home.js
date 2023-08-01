@@ -1,21 +1,21 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Web3 from "web3";
 import Send from "./SendPage";
-import { bnbchain, ethchain, dogechain } from "./utils";
+import { bnbchain, ethchain, dogechain } from "../hooks/utils";
 import CheckUser from "./CheckUser";
-import { Grid, Typography, CircularProgress, Box } from "@mui/material";
+import { Grid, CircularProgress, Box } from "@mui/material";
 import TokenImport from "./TokenImport";
-import { CenterBox } from "./styles";
-import useWeb3 from "./useWeb3"; // import the custom hook
-import { useTokenImportHandler } from "./tokenImportHandler";
+import { CenterBox } from "../hooks/styles";
+import useWeb3 from "../hooks/useWeb3"; // import the custom hook
+import { useTokenImportHandler } from "../hooks/tokenImportHandler";
 import NavBar from "./Navbar";
 import Balance from "./Balance";
 import Actions from "./Actions";
 import LoginWallet from "./loginwallet";
 import TokenSection from "./TokenSection";
-import { handleAsyncError } from "./errorHandler";
+import { handleAsyncError } from "../hooks/errorHandler";
 import Receive from "./receive";
-import { StyledBox } from "./styles";
+import { StyledBox } from "../hooks/styles";
 import CryptoJS from "crypto-js";
 
 export default function Home() {

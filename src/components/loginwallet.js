@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
-import { useNavigate } from "react-router-dom";
-import { Button, Typography, Dialog } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import {
   CenterBox,
   TypographyTitle,
@@ -10,7 +9,7 @@ import {
   StyledBoxx,
   StyledFormControl,
   ActionsContainer,
-} from "./styles";
+} from "../hooks/styles";
 import CryptoJS from "crypto-js";
 
 export default function LoginWallet({ onClose }) {
@@ -18,11 +17,6 @@ export default function LoginWallet({ onClose }) {
   const [privateKey, setPrivateKey] = useState("");
   const [displayPrivateKey, setDisplayPrivateKey] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
-
-  const closePopup = () => {
-    onClose();
-  };
 
   const isValidPrivateKey = (privateKey) => {
     try {

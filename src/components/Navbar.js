@@ -2,9 +2,9 @@
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
-import ChainSelector from "./ChainSelector";
+import ChainSelector from "../hooks/ChainSelector";
 import Meniu from "./Navigate";
-import { CenterBox } from "./styles";
+import { CenterBox } from "../hooks/styles";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 export default function NavBar({

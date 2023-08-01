@@ -1,17 +1,12 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import {
   ETHERSCAN_BASE_URL,
   BSCSCAN_BASE_URL,
   DOGECHAIN_BASE_URL,
 } from "./links.js";
 import { ethchain, bnbchain, dogechain } from "./utils.js";
-import {
-  StyledBoxx,
-  StyledFormControl,
-  TransferDetailsBox,
-  Link,
-} from "./styles";
+import { TransferDetailsBox, Link } from "./styles.js";
 
 const TransferDetails = ({ details }) => {
   const { toAddress, amount, gasPrice, txHash, token, chain } = details;

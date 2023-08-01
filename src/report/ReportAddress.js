@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { reportAddress } from "../api/api.js";
 import EthereumAddress from "ethereum-address";
 import {
-  CenterBox,
   TypographyTitle,
   StyledBoxx,
   FormField,
   FormContainer,
   ActionsContainer,
-} from "../Pages/styles.js";
+} from "../hooks/styles.js";
 import { Button, Box, Typography, Dialog } from "@mui/material";
 
 export default function ReportAddress({ onClose }) {

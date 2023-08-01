@@ -1,26 +1,16 @@
 import React, { useState, useEffect } from "react";
 import EthereumAddress from "ethereum-address";
 import { ethers } from "ethers";
-import { useTokenImportHandler } from "./tokenImportHandler.js";
-import { chainIds, getChainNameFromUrl } from "./utils";
+import { useTokenImportHandler } from "../hooks/tokenImportHandler.js";
+import { chainIds, getChainNameFromUrl } from "../hooks/utils.js";
 
-import {
-  TextField,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@mui/material";
+import { Button, Dialog, DialogTitle, DialogContent } from "@mui/material";
 import {
   TypographyTitle,
   FormField,
-  StyledBoxx,
-  StyledFormControl,
-  Link,
   ActionsContainer,
   FormContainer,
-} from "./styles";
+} from "../hooks/styles.js";
 
 const TokenImport = ({ onClose, selectedChain }) => {
   const [importedTokens, setImportedTokens] = useState(

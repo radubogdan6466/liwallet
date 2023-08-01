@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { React } from "react";
-import Createwallet from "./Pages/createwallet";
-import LoginWallet from "./Pages/loginwallet";
-import Home from "./Pages/home";
+import Createwallet from "./components/createwallet";
+import LoginWallet from "./components/loginwallet";
+import Home from "./components/home";
 //import Sendeth from "./Pages/SendPage";
-import Settings from "./Pages/settings";
+import Settings from "./components/settings";
 import ReportAddress from "./report/ReportAddress";
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";

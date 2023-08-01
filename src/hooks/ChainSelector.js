@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { bnbchain, ethchain, dogechain, chains } from "./utils.js";
-import { StyledBox } from "./styles";
+import { StyledBox } from "./styles.js";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 import {

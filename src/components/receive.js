@@ -1,6 +1,6 @@
 import React from "react";
 import { Dialog, Typography } from "@mui/material";
-import { StyledDialogContent } from "./styles";
+import { StyledDialogContent } from "../hooks/styles";
 import QRCode from "qrcode.react";
 
 const Receive = ({ onClose, userWallet }) => {

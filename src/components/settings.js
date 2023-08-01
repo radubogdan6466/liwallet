@@ -1,21 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
-import { CenterBox, TypographyTitle } from "./styles";
+import { TypographyTitle } from "../hooks/styles";
 import CryptoJS from "crypto-js";
 import { useTheme } from "@mui/material/styles";
 
 export default function Settings({ onClose }) {
   const theme = useTheme();
-  const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogContent, setDialogContent] = useState("");
 
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
   const closePopup = () => {
     onClose();
   };

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box, MenuItem, IconButton, Menu, Dialog } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -15,7 +14,6 @@ const StyledBox = styled(Box)({
 });
 
 const Meniu = () => {
-  const navigate = useNavigate();
   const [showCreatePopup, setShowCreatePopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showReportPopup, setShowReportPopup] = useState(false);

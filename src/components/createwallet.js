@@ -6,7 +6,7 @@ import {
   StyledBoxx,
   ActionsContainer,
   TypographyTitle,
-} from "./styles";
+} from "../hooks/styles";
 import {
   Button,
   Typography,
