@@ -1,12 +1,5 @@
-import { checkAddress } from "../api/api.js";
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { ethchain, bnbchain, dogechain } from "../hooks/utils.js";
-import bscAbi from "../Pages/JsonFiles/testBnbAbi.json";
-import ercAbi from "../Pages/JsonFiles/testErcAbi.json";
-import dogeAbi from "../Pages/JsonFiles/testDogeAbi.json";
-import TransferDetails from "../hooks/TransferDetails.js";
-import CryptoJS from "crypto-js";
 
 import {
   Dialog,
@@ -21,13 +14,16 @@ import {
   Typography,
 } from "@mui/material";
 import { StyledBoxx, StyledFormControl } from "../hooks/styles.js";
-const getLocalStorageItem = (key) => {
-  const item = localStorage.getItem(key);
-  return item ? JSON.parse(item) : [];
-};
-const bnbchainTokens = getLocalStorageItem("bnbchainTokens");
-const ethchainTokens = getLocalStorageItem("ethchainTokens");
-const dogechainTokens = getLocalStorageItem("dogechainTokens");
+import { getDecryptedPrivateKey } from "./utils/crypto.js";
+import { getTokens } from "./utils/chain.js";
+
+import TransferDetails from "../hooks/TransferDetails.js";
+import bscAbi from "../Pages/JsonFiles/testBnbAbi.json";
+import ercAbi from "../Pages/JsonFiles/testErcAbi.json";
+import dogeAbi from "../Pages/JsonFiles/testDogeAbi.json";
+
+import { handleError } from "../hooks/errorHandler.js";
+import { checkAddressBeforeTransfer } from "./utils/adressCheck.js";
 
 const Send = ({ onClose, selectedToken, selectedChain }) => {
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
@@ -41,54 +37,23 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
     onClose();
   };
 
-  const getDecryptedPrivateKey = () => {
-    const encryptedPrivateKey = localStorage.getItem("pkey");
-    const bytes = CryptoJS.AES.decrypt(encryptedPrivateKey, secretKey);
-    const originalText = bytes.toString(CryptoJS.enc.Utf8);
-
-    return originalText;
-  };
-
   const provider = new ethers.providers.JsonRpcProvider(selectedChain);
-  const userWallet = new ethers.Wallet(getDecryptedPrivateKey(), provider);
-  const checkAddressBeforeTransfer = async () => {
+  const userWallet = new ethers.Wallet(
+    getDecryptedPrivateKey(secretKey),
+    provider
+  );
+  const handleAddressCheck = async () => {
+    const toAddress = document.getElementById("toadrs").value;
     try {
-      const toAddress = document.getElementById("toadrs").value;
-      const checkResult = await checkAddress(toAddress);
-      let warningMessage = "";
-
-      if (checkResult.isReported) {
-        warningMessage += `Atenție! Această adresă a fost raportată.`;
-        if (checkResult.details) {
-          warningMessage += ` Detalii: ${checkResult.details}`;
-        }
-      } else {
-        warningMessage = "Nu sunt detalii despre aceasta adresa";
-      }
+      const { warningMessage, isAddressChecked } =
+        await checkAddressBeforeTransfer(toAddress);
       setWarningMessage(warningMessage);
-      setAddressChecked(true);
-      setShowCheckButton(false);
-    } catch (err) {
-      console.error(err);
+      setAddressChecked(isAddressChecked);
+      setShowCheckButton(!isAddressChecked);
+    } catch (errorMessage) {
+      setWarningMessage(errorMessage);
     }
   };
-  const getTokens = (chain) => {
-    if (chain === ethchain) {
-      return [
-        { symbol: "ETH", address: "", abi: null, decimals: 18 },
-        ...ethchainTokens,
-      ];
-    } else if (chain === bnbchain) {
-      return [
-        { symbol: "BNB", address: "", decimals: 8, abi: null },
-        ...bnbchainTokens,
-      ];
-    } else if (chain === dogechain) {
-      return [{ symbol: "DOGE", address: "", abi: null }, ...dogechainTokens];
-    }
-    return [];
-  };
-
   const transferToken = async () => {
     try {
       const toAddress = document.getElementById("toadrs").value;
@@ -133,7 +98,6 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
           selectedTokenData.decimals
         );
       }
-
       let tx;
       if (
         selectedTokenState === "ETH" ||
@@ -167,7 +131,8 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
         chain: selectedChain,
       });
     } catch (err) {
-      console.error(err);
+      const errorMessage = handleError(err);
+      setWarningMessage(errorMessage);
     }
   };
 
@@ -177,7 +142,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
       setSelectedTokenState(tokens[0].symbol);
     }
   }, [selectedChain, selectedTokenState]);
-
+  //    0xEC76CFF0C4992629f7Aa533BECc2783B9d420E68
   return (
     <Dialog open={true} onClose={closePopup}>
       <DialogTitle>Send {selectedTokenState}</DialogTitle>
@@ -218,7 +183,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={checkAddressBeforeTransfer}
+            onClick={handleAddressCheck}
           >
             Check Address
           </Button>

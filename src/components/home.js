@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Web3 from "web3";
-import Send from "./SendPage";
+import Send from "../transfer/SendPage";
 import { bnbchain, ethchain, dogechain } from "../hooks/utils";
 import CheckUser from "./CheckUser";
 import { Grid, CircularProgress, Box } from "@mui/material";
