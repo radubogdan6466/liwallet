@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Web3 from "web3";
 import Send from "../transfer/SendPage";
-import { bnbchain, ethchain, dogechain } from "../hooks/utils";
+import { bnbchain, ethchain, dogechain, polychain } from "../hooks/utils";
 import CheckUser from "./CheckUser";
 import { Grid, CircularProgress, Box } from "@mui/material";
 import TokenImport from "./TokenImport";
@@ -150,6 +150,7 @@ export default function Home() {
           ethchain={ethchain}
           bnbchain={bnbchain}
           dogechain={dogechain}
+          polychain={polychain}
         />
         <Actions
           onSendClick={() => setShowSendPopup(true)}
@@ -164,6 +165,7 @@ export default function Home() {
           ethchain={ethchain}
           bnbchain={bnbchain}
           dogechain={dogechain}
+          polychain={polychain}
           ethBalance={ethBalance}
           handleTokenClick={handleTokenClick}
         />

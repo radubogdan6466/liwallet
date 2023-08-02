@@ -4,8 +4,9 @@ import {
   ETHERSCAN_BASE_URL,
   BSCSCAN_BASE_URL,
   DOGECHAIN_BASE_URL,
+  POLYCHAIN_BASE_URL,
 } from "./links.js";
-import { ethchain, bnbchain, dogechain } from "./utils.js";
+import { ethchain, bnbchain, dogechain, polychain } from "./utils.js";
 import { TransferDetailsBox, Link } from "./styles.js";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
@@ -20,8 +21,9 @@ const TransferDetails = ({ details }) => {
       return BSCSCAN_BASE_URL;
     } else if (chain === dogechain) {
       return DOGECHAIN_BASE_URL;
+    } else if (chain === polychain) {
+      return POLYCHAIN_BASE_URL;
     }
-    throw new Error("Unknown chain: " + chain);
   };
 
   const baseUrl = getBaseUrl(chain);

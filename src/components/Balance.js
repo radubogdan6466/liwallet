@@ -9,6 +9,8 @@ export default function Balance({
   selectedChain,
   ethchain,
   bnbchain,
+  polychain,
+  dogechain,
 }) {
   const theme = useTheme();
 
@@ -20,12 +22,16 @@ export default function Balance({
           color: theme.palette.text.secondary,
         }}
       >
-        {Number(ethBalance).toFixed(4)}{" "}
+        {Number(ethBalance).toFixed(4)}
         {selectedChain === ethchain
           ? "ETH"
           : selectedChain === bnbchain
           ? "BNB"
-          : "DOGE"}
+          : selectedChain === polychain
+          ? "MATIC"
+          : selectedChain === dogechain
+          ? "DOGE"
+          : "Unknown Chain"}
       </TypographyTitle>
     </Box>
   );

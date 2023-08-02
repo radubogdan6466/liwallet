@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import bscAbi from "../JsonFiles/testBnbAbi.json";
 import ercAbi from "../JsonFiles/testErcAbi.json";
 import dogeAbi from "../JsonFiles/testDogeAbi.json";
+import polyAbi from "../JsonFiles/testPolyAbi.json";
 import {
   List,
   ListItem,
@@ -22,6 +23,7 @@ export default function TokenList({
   ethchain,
   bnbchain,
   dogechain,
+  polychain,
   ethBalance,
   handleTokenClick,
 }) {
@@ -37,6 +39,8 @@ export default function TokenList({
     tokens = JSON.parse(localStorage.getItem("bnbchainTokens")) || [];
   } else if (selectedChain === dogechain) {
     tokens = JSON.parse(localStorage.getItem("dogechainTokens")) || [];
+  } else if (selectedChain === polychain) {
+    tokens = JSON.parse(localStorage.getItem("polychainTokens")) || [];
   } else {
     tokens = [];
   }
@@ -51,6 +55,7 @@ export default function TokenList({
     11155111: ercAbi,
     56: bscAbi,
     568: dogeAbi,
+    137: polyAbi,
   };
 
   const fetchTokenBalances = async () => {
@@ -97,6 +102,8 @@ export default function TokenList({
       tokenListKey = "bnbchainTokens";
     } else if (selectedChain === dogechain) {
       tokenListKey = "dogechainTokens";
+    } else if (selectedChain === polychain) {
+      tokenListKey = "polychainTokens";
     }
 
     const storedTokens = JSON.parse(localStorage.getItem(tokenListKey)) || [];
@@ -113,6 +120,8 @@ export default function TokenList({
       return "BNB";
     } else if (selectedChain === dogechain) {
       return "DOGE";
+    } else if (selectedChain === polychain) {
+      return "MATIC";
     }
     return "";
   };

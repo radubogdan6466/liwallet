@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { bnbchain, ethchain, dogechain, chains } from "./utils.js";
+import { bnbchain, ethchain, dogechain, polychain, chains } from "./utils.js";
 import { StyledBox } from "./styles.js";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
@@ -104,8 +104,9 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
                 }}
               >
                 <MenuItem value={bnbchain}>BNB Smart Chain</MenuItem>
-                <MenuItem value={ethchain}>Ethereum chain</MenuItem>
-                <MenuItem value={dogechain}>Dogecoin chain</MenuItem>
+                <MenuItem value={ethchain}>Ethereum Mainnet</MenuItem>
+                <MenuItem value={polychain}>Polygon Mainnet</MenuItem>
+                <MenuItem value={dogechain}>Dogecoin ERC20</MenuItem>
               </Select>
             </FormControl>
           )}

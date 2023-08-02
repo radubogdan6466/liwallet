@@ -5,9 +5,10 @@ import { getTokens } from "./chain";
 import { checkAddressBeforeTransfer } from "./adressCheck.js";
 import { useGasPrice } from "./useGasPrice";
 import { handleError } from "../../hooks/errorHandler";
-import bscAbi from "../../Pages/JsonFiles/testBnbAbi.json";
-import ercAbi from "../../Pages/JsonFiles/testErcAbi.json";
-import dogeAbi from "../../Pages/JsonFiles/testDogeAbi.json";
+import bscAbi from "../../JsonFiles/testBnbAbi.json";
+import ercAbi from "../../JsonFiles/testErcAbi.json";
+import dogeAbi from "../../JsonFiles/testDogeAbi.json";
+import polyAbi from "../../JsonFiles/testPolyAbi.json";
 
 export const useTransaction = (selectedTokenState, selectedChain) => {
   const secretKey = process.env.REACT_APP_SECRET_KEY;
@@ -72,6 +73,7 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
       if (
         selectedTokenState === "ETH" ||
         selectedTokenState === "BNB" ||
+        selectedTokenState === "MATIC" ||
         selectedTokenState === "DOGE"
       ) {
         amountInSmallestUnit = ethers.utils.parseUnits(
@@ -99,6 +101,7 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
       if (
         selectedTokenState === "ETH" ||
         selectedTokenState === "BNB" ||
+        selectedTokenState === "MATIC" ||
         selectedTokenState === "DOGE"
       ) {
         const transaction = {
