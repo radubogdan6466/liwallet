@@ -1,0 +1,50 @@
+[
+  {
+    "symbol": "ZIX",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/22107.png"
+  },
+  {
+    "symbol": "DOGE",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/74.png"
+  },
+  {
+    "symbol": "BDOGE",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/74.png"
+  },
+  {
+    "symbol": "WISTA",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/24991.png"
+  },
+  {
+    "symbol": "ETH",
+    "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
+  },
+  {
+    "symbol": "WETH",
+    "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
+  },
+  {
+    "symbol": "BNB",
+    "logo": "https://cryptologos.cc/logos/bnb-bnb-logo.png?v=025"
+  },
+  {
+    "symbol": "MATIC",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png"
+  },
+  {
+    "symbol": "BMATIC",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png"
+  },
+  {
+    "symbol": "Cake",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/7186.png"
+  },
+  {
+    "symbol": "MTA",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/7186.png"
+  },
+  {
+    "symbol": "dincoin",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/24991.png"
+  }
+]

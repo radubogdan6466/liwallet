@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import bscAbi from "../Pages/JsonFiles/testBnbAbi.json";
-import ercAbi from "../Pages/JsonFiles/testErcAbi.json";
-import dogeAbi from "../Pages/JsonFiles/testDogeAbi.json";
+import bscAbi from "../JsonFiles/testBnbAbi.json";
+import ercAbi from "../JsonFiles/testErcAbi.json";
+import dogeAbi from "../JsonFiles/testDogeAbi.json";
 import {
   List,
   ListItem,
@@ -12,7 +12,7 @@ import {
   Button,
 } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import tokenLogos from "../Pages/JsonFiles/tokenLogo.json"; // import the JSON file
+import tokenLogos from "../JsonFiles/tokenLogo.json"; // import the JSON file
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 export default function TokenList({

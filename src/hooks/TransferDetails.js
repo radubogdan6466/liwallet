@@ -7,9 +7,11 @@ import {
 } from "./links.js";
 import { ethchain, bnbchain, dogechain } from "./utils.js";
 import { TransferDetailsBox, Link } from "./styles.js";
+import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 const TransferDetails = ({ details }) => {
   const { toAddress, amount, gasPrice, txHash, token, chain } = details;
+  const theme = useTheme();
 
   const getBaseUrl = (chain) => {
     if (chain === ethchain) {
@@ -25,7 +27,11 @@ const TransferDetails = ({ details }) => {
   const baseUrl = getBaseUrl(chain);
 
   return (
-    <TransferDetailsBox>
+    <TransferDetailsBox
+      sx={{
+        backgroundColor: theme.palette.text.popup,
+      }}
+    >
       <Typography variant="body1">Transfer Details:</Typography>
       <Typography variant="body2">
         To:

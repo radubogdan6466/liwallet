@@ -12,7 +12,7 @@ export const useGasPrice = (provider) => {
 
   useEffect(() => {
     updateGasPrice();
-    const intervalId = setInterval(updateGasPrice, 5000);
+    const intervalId = setInterval(updateGasPrice, 2000);
 
     // curățare la demontarea componentei
     return () => clearInterval(intervalId);

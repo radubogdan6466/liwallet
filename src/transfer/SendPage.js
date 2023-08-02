@@ -2,21 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useTransaction } from "./utils/useTransaction";
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogActions,
   Button,
-  TextField,
   InputLabel,
   Select,
   MenuItem,
   Typography,
-  FormControl,
+  Checkbox,
 } from "@mui/material";
 import {
   StyledBoxx,
   StyledFormControl,
   TypographyTitleForm,
+  StyledDialogContent,
+  DialogContentSend,
+  StyledTextField,
 } from "../hooks/styles.js";
 import { getTokens } from "./utils/chain.js";
 import TransferDetails from "../hooks/TransferDetails.js";
@@ -33,12 +34,23 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
     handleAddressCheck,
     transferToken,
     gasPrice,
+    customGasPrice,
+    setCustomGasPrice,
+    useCustomGasPrice,
+    setUseCustomGasPrice,
   } = useTransaction(selectedToken, selectedChain);
-  //        0xEC76CFF0C4992629f7Aa533BECc2783B9d420E68
+
+  //andr        0xEC76CFF0C4992629f7Aa533BECc2783B9d420E68
   const closePopup = () => {
     onClose();
   };
+  const handleGasPriceChange = (e) => {
+    setCustomGasPrice(e.target.value);
+  };
 
+  const handleCheckboxChange = (e) => {
+    setUseCustomGasPrice(e.target.checked);
+  };
   useEffect(() => {
     const tokens = getTokens(selectedChain);
     if (!tokens.some((token) => token.symbol === selectedTokenState)) {
@@ -60,7 +72,12 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
           backgroundColor: theme.palette.text.popup,
         }}
       >
-        <Typography variant="body2" color="error">
+        <Typography
+          sx={{
+            color: theme.palette.primary.icon,
+            width: "70%",
+          }}
+        >
           {warningMessage}
         </Typography>
         <StyledBoxx
@@ -90,23 +107,62 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             </Select>
           </StyledFormControl>
           <InputLabel id="send-amount-label"></InputLabel>
-          <TextField id="val" label="Amount" variant="outlined" required />
-          <TextField
-            id="toadrs"
-            label="To Address"
-            variant="outlined"
-            required
-          />
-          <TextField
-            id="gasprice"
-            value={gasPrice}
-            placeholder="Gas Price (Gwei)"
-          />
+          <DialogContentSend>
+            <StyledTextField
+              id="val"
+              label="Amount"
+              variant="outlined"
+              required
+              InputLabelProps={{
+                style: { color: theme.palette.text.input },
+              }}
+              inputProps={{
+                style: { color: theme.palette.text.input },
+              }}
+            />
+            <StyledTextField
+              id="toadrs"
+              label="To Address"
+              variant="outlined"
+              required
+              InputLabelProps={{
+                style: { color: theme.palette.text.input },
+              }}
+              inputProps={{
+                style: { color: theme.palette.text.input },
+              }}
+            />
+            <StyledTextField
+              id="gasprice"
+              label="Gas Price (Gwei)"
+              value={useCustomGasPrice ? customGasPrice : gasPrice}
+              onChange={handleGasPriceChange}
+              placeholder="Gas Price (Gwei)"
+              disabled={!useCustomGasPrice}
+              InputLabelProps={{
+                style: { color: theme.palette.text.input },
+              }}
+              inputProps={{
+                style: { color: theme.palette.text.input },
+              }}
+            />
+          </DialogContentSend>
+          <DialogActions>
+            <Typography>Use custom Gas</Typography>
+            <Checkbox
+              checked={useCustomGasPrice}
+              onChange={handleCheckboxChange}
+              sx={{
+                color: theme.palette.primary.icon,
+              }}
+            />
+          </DialogActions>
+
           <Typography>Gas Price (Gwei): {gasPrice}</Typography>
         </StyledBoxx>
       </DialogContent>
 
-      <DialogActions
+      <StyledDialogContent
         sx={{
           backgroundColor: theme.palette.text.popup,
         }}
@@ -125,10 +181,10 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             Send {selectedTokenState}
           </Button>
         )}
-        <Button variant="outlined" color="secondary" onClick={closePopup}>
-          Close
+        <Button variant="contained" color="primary" onClick={transferToken}>
+          Send without check {selectedTokenState}
         </Button>
-      </DialogActions>
+      </StyledDialogContent>
       {transferDetails && <TransferDetails details={transferDetails} />}
     </Dialog>
   );

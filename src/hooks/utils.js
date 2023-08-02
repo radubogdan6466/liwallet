@@ -4,7 +4,10 @@ export const bnbchain = "https://bsc-dataseed.binance.org/";
 export const ethchain =
   "https://eth-sepolia.g.alchemy.com/v2/ZTHIPCI_JxKR_hS3IeFzLMYsWUdHs4be";
 export const dogechain = "https://rpc-testnet.dogechain.dog";
-
+// Polygon Mainnet:   https://polygon-mainnet.infura.io
+// https://polygon-rpc.com
+//export const ethchain =
+// "https://eth-mainnet.g.alchemy.com/v2/MGbZdSk9u0Vlsapa_HufvZievDS9ajR6";
 export const chains = {
   "BNB Smart Chain": bnbchain,
   "Ethereum chain": ethchain,

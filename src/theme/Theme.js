@@ -11,6 +11,7 @@ const Theme = createTheme({
       secondary: "#ffffff", // White color
       popup: "#9e9e9e", //
       span: "#bdbdbd",
+      input: "#000000",
     },
   },
 });

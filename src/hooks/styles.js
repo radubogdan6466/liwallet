@@ -64,16 +64,22 @@ export const StyledDialogContent = styled(DialogContent)({
   justifyContent: "center",
   alignItems: "center",
 });
+export const StyledTextField = styled(TextField)({
+  marginTop: "10px",
+});
 
+export const DialogContentSend = styled(DialogContent)({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+});
 export const StyledFormControl = styled(FormControl)({});
 
 export const TransferDetailsBox = styled(Box)({
   backgroundColor: "#666666", // Gri pentru fundal
   color: "#ffffff", // Text alb
-  borderRadius: "10px",
-  padding: "20px",
-  marginTop: "20px",
-  textAlign: "left",
+  textAlign: "center",
 });
 
 export const Link = styled(MuiLink)({

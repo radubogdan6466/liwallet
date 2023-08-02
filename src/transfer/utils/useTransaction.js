@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ethers } from "ethers";
 import { getDecryptedPrivateKey } from "./crypto";
 import { getTokens } from "./chain";
@@ -15,7 +15,8 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
   const [addressChecked, setAddressChecked] = useState(false);
   const [showCheckButton, setShowCheckButton] = useState(true);
   const [warningMessage, setWarningMessage] = useState("");
-
+  const [customGasPrice, setCustomGasPrice] = useState(null);
+  const [useCustomGasPrice, setUseCustomGasPrice] = useState(false);
   const provider = new ethers.providers.JsonRpcProvider(selectedChain);
   const userWallet = new ethers.Wallet(
     getDecryptedPrivateKey(secretKey),
@@ -41,6 +42,8 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
       const toAddress = document.getElementById("toadrs").value;
       const amount = document.getElementById("val").value;
       let gasPrice = document.getElementById("gasprice").value;
+      const actualGasPrice = useCustomGasPrice ? customGasPrice : gasPrice;
+
       // Verificăm dacă prețul gazului este mai mic decât cel estimat
       if (
         gasPrice &&
@@ -64,7 +67,7 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
         (token) => token.symbol === selectedTokenState
       );
       if (!selectedTokenData) {
-        //throw new Error(`Token ${selectedToken} not found in tokens list`);
+        throw new Error(`Token ${selectedTokenState} not found in tokens list`);
       }
       if (
         selectedTokenState === "ETH" ||
@@ -115,7 +118,9 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
           gasPrice: ethers.utils.parseUnits(gasPrice, "gwei"),
         });
       }
-
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000);
       setTransferDetails({
         toAddress,
         amount,
@@ -139,5 +144,9 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
     handleAddressCheck,
     transferToken,
     gasPrice,
+    customGasPrice,
+    setCustomGasPrice,
+    useCustomGasPrice,
+    setUseCustomGasPrice,
   };
 };
