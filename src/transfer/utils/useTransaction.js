@@ -88,6 +88,8 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
           tokenABI = bscAbi;
         } else if (selectedTokenData.chainId === 568) {
           tokenABI = dogeAbi;
+        } else if (selectedTokenData.chainId === 137) {
+          tokenABI = polyAbi;
         } else {
           throw new Error(`Token ${selectedTokenState} has no ABI data`);
         }
