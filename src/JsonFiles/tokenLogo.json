@@ -46,5 +46,9 @@
   {
     "symbol": "dincoin",
     "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/24991.png"
+  },
+  {
+    "symbol": "ENF",
+    "logo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ7IHzBYCfSnr1iPAvFuT4X_4lcKlWvPeBfvdiT9mjSJZGYHvU4"
   }
 ]
