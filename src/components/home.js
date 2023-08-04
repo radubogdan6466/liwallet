@@ -15,8 +15,9 @@ import LoginWallet from "./loginwallet";
 import TokenSection from "./TokenSection";
 import { handleAsyncError } from "../hooks/errorHandler";
 import Receive from "./receive";
-import { StyledBox } from "../hooks/styles";
 import CryptoJS from "crypto-js";
+import Backdrop from "@mui/material/Backdrop";
+import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 export default function Home() {
   const {
@@ -40,6 +41,8 @@ export default function Home() {
   const [selectedToken, setSelectedToken] = useState("BNB");
   const [showImportForm, setShowImportForm] = useState(false);
   const secretKey = process.env.REACT_APP_SECRET_KEY;
+  const theme = useTheme();
+
   useEffect(() => {
     if (encryptedPrivateKey) {
       const bytes = CryptoJS.AES.decrypt(encryptedPrivateKey, secretKey);
@@ -118,10 +121,15 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <StyledBox ml={2}>
-        <CircularProgress color="secondary" size={50} />
-        <Box ml={2}>Loading </Box>
-      </StyledBox>
+      <Backdrop
+        sx={{
+          color: theme.palette.primary.icon,
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open
+      >
+        <CircularProgress color="inherit" size={150} />
+      </Backdrop>
     );
   }
 

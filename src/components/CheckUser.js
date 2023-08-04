@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CenterBox, ActionButton, TypographyTitle } from "../hooks/styles"; // Înlocuiți <calea_dvs.> cu calea către componentele stilizate
-import { Button } from "@mui/material";
+import { CenterBox, ActionButton, TypographyTitle } from "../hooks/styles";
+import { Button, Dialog } from "@mui/material";
+import LoginWallet from "./loginwallet";
 
 const CheckUser = ({ handleLogin, handleCreate }) => {
   const navigate = useNavigate();
+  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 
   const gocreate = () => {
     navigate("/create");
   };
-  const gologin = () => {
-    navigate("/login");
+  const openLoginDialog = () => {
+    setLoginDialogOpen(true);
   };
+  const handleClose = () => {
+    setLoginDialogOpen(false);
+  };
+
   return (
     <CenterBox
       container
@@ -22,9 +28,16 @@ const CheckUser = ({ handleLogin, handleCreate }) => {
       <TypographyTitle variant="h4" component="div">
         Looks like you're not connected with any address
       </TypographyTitle>
-      <ActionButton variant="contained" color="primary" onClick={gologin}>
+      <ActionButton
+        variant="contained"
+        color="primary"
+        onClick={openLoginDialog}
+      >
         Press here to login
       </ActionButton>
+      <Dialog open={loginDialogOpen} onClose={handleClose}>
+        <LoginWallet onClose={handleClose} />
+      </Dialog>
       <TypographyTitle variant="h5" component="div">
         Or
       </TypographyTitle>

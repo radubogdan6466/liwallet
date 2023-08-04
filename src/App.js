@@ -7,7 +7,7 @@ import Home from "./components/home";
 import Settings from "./components/settings";
 import ReportAddress from "./report/ReportAddress";
 import { ThemeProvider } from "@mui/material/styles";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, Box } from "@mui/material";
 import theme from "./theme/Theme"; // Importă tema creată
 
 export default function App() {

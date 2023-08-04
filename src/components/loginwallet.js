@@ -1,25 +1,24 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Box, Grid } from "@mui/material";
 import {
-  CenterBox,
   TypographyTitle,
   FormField,
   FormContainer,
-  StyledBoxx,
   StyledFormControl,
-  ActionsContainer,
 } from "../hooks/styles";
 import CryptoJS from "crypto-js";
-import { useNavigate } from "react-router-dom"; // Schimbați 'useHistory' cu 'useNavigate'
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 
 export default function LoginWallet({ onClose }) {
   const secretKey = process.env.REACT_APP_SECRET_KEY;
   const [privateKey, setPrivateKey] = useState("");
   const [displayPrivateKey, setDisplayPrivateKey] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const theme = useTheme();
 
-  const navigate = useNavigate(); // Folosiți 'useNavigate' în loc de 'useHistory'
+  const navigate = useNavigate();
 
   const isValidPrivateKey = (privateKey) => {
     try {
@@ -55,56 +54,58 @@ export default function LoginWallet({ onClose }) {
       ).toString();
       localStorage.setItem("pkey", encryptedPrivateKey);
 
-      // Clear the input field to prevent password saving prompt
       setPrivateKey("");
       setDisplayPrivateKey("");
-
-      gologin(); // Aici chemăm funcția 'gologin'
+      setTimeout(() => {
+        window.location.reload();
+      }, 50);
+      gologin();
     } catch (error) {
       console.error("Error, try again:", error);
     }
   };
 
   return (
-    <CenterBox
+    <Grid
       container
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
       sx={{
-        backgroundColor: "#d3d3d3",
+        backgroundColor: theme.palette.background.light,
       }}
     >
-      <StyledBoxx
-        className="loginPage"
-        sx={{
-          backgroundColor: "#d3d3d3",
-        }}
-      >
-        <TypographyTitle variant="h5" gutterBottom>
-          Login
-        </TypographyTitle>
-        <FormContainer onSubmit={Login}>
-          <StyledFormControl>
-            <FormField
-              id="privateKey"
-              value={displayPrivateKey}
-              placeholder="Enter private key"
-              type="text"
-              onChange={handlePrivateKeyChange}
-              fullWidth
-              autoComplete="off"
-            />
-          </StyledFormControl>
-          {errorMessage && (
-            <Typography color="error" variant="body2" gutterBottom>
-              {errorMessage}
-            </Typography>
-          )}
-          <ActionsContainer>
-            <Button type="submit" variant="contained" color="primary">
-              Login
-            </Button>
-          </ActionsContainer>
-        </FormContainer>
-      </StyledBoxx>
-    </CenterBox>
+      <TypographyTitle variant="h5" gutterBottom>
+        Login
+      </TypographyTitle>
+      <FormContainer onSubmit={Login}>
+        <StyledFormControl>
+          <FormField
+            id="privateKey"
+            value={displayPrivateKey}
+            placeholder="Enter private key"
+            type="text"
+            onChange={handlePrivateKeyChange}
+            fullWidth
+            autoComplete="off"
+          />
+        </StyledFormControl>
+        {errorMessage && (
+          <Typography color="error" variant="body2" gutterBottom>
+            {errorMessage}
+          </Typography>
+        )}
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Button type="submit" variant="contained" color="success">
+            Login
+          </Button>
+        </Grid>
+      </FormContainer>
+    </Grid>
   );
 }

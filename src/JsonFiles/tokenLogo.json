@@ -24,6 +24,10 @@
     "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
   },
   {
+    "symbol": "ETH Token",
+    "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
+  },
+  {
     "symbol": "BNB",
     "logo": "https://cryptologos.cc/logos/bnb-bnb-logo.png?v=025"
   },
@@ -53,6 +57,18 @@
   },
   {
     "symbol": "ENF",
+    "logo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ7IHzBYCfSnr1iPAvFuT4X_4lcKlWvPeBfvdiT9mjSJZGYHvU4"
+  },
+  {
+    "symbol": "LCK",
+    "logo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ7IHzBYCfSnr1iPAvFuT4X_4lcKlWvPeBfvdiT9mjSJZGYHvU4"
+  },
+  {
+    "symbol": "mim",
+    "logo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ7IHzBYCfSnr1iPAvFuT4X_4lcKlWvPeBfvdiT9mjSJZGYHvU4"
+  },
+  {
+    "symbol": "MANEA",
     "logo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ7IHzBYCfSnr1iPAvFuT4X_4lcKlWvPeBfvdiT9mjSJZGYHvU4"
   }
 ]

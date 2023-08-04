@@ -50,6 +50,22 @@ export const StyledBox = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
 });
+
+//LOGINPAGE
+
+export const StyledLoginBox = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+export const ActionsContainerLogin = styled(Box)({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
 //sendpage
 export const StyledBoxx = styled(Box)({
   display: "flex",
