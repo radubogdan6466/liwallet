@@ -10,12 +10,12 @@ export const checkAddressBeforeTransfer = (toAddress) => {
       let warningMessage = "";
 
       if (checkResult.isReported) {
-        warningMessage += `Atenție! Această adresă a fost raportată.`;
+        warningMessage += `Atenție! Adresa nesigura`;
         if (checkResult.details) {
           warningMessage += ` Detalii: ${checkResult.details}`;
         }
       } else {
-        warningMessage = "Nu sunt detalii despre aceasta adresa";
+        warningMessage = "Nu sunt informatii";
       }
       resolve({ warningMessage, isAddressChecked: true });
     } catch (err) {

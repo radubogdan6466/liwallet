@@ -62,7 +62,7 @@ export default function TokenList({
     if (userWallet) {
       const balances = { ...tokenBalances };
 
-      balances["ETH"] = { name: "ETH", balance: ethBalance };
+      //balances["ETH"] = { name: "ETH", balance: ethBalance };
 
       for (const token of tokens) {
         const { symbol, address, chainId } = token;
@@ -115,13 +115,13 @@ export default function TokenList({
   };
   const getNativeCurrency = (selectedChain) => {
     if (selectedChain === ethchain) {
-      return "ETH";
+      return "ETH Token";
     } else if (selectedChain === bnbchain) {
       return "BNB";
     } else if (selectedChain === dogechain) {
-      return "DOGE";
+      return "DOGECOIN";
     } else if (selectedChain === polychain) {
-      return "MATIC";
+      return "Matic Token";
     }
     return "";
   };
@@ -157,7 +157,7 @@ export default function TokenList({
           const token = tokens.find((token) => token.symbol === symbol);
           const logoUrl = findLogoUrl(symbol);
 
-          if (token && symbol !== "ETH") {
+          if (token && symbol) {
             return (
               <ListItem
                 button

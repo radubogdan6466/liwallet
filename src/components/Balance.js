@@ -24,13 +24,13 @@ export default function Balance({
       >
         {Number(ethBalance).toFixed(4)}
         {selectedChain === ethchain
-          ? "ETH"
+          ? "ETH Token"
           : selectedChain === bnbchain
           ? "BNB"
           : selectedChain === polychain
-          ? "MATIC"
+          ? "Matic Token"
           : selectedChain === dogechain
-          ? "DOGE"
+          ? "DOGECOIN"
           : "Unknown Chain"}
       </TypographyTitle>
     </Box>

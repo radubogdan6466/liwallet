@@ -58,8 +58,8 @@ const TokenImport = ({ onClose, selectedChain }) => {
     [selectedChain]
   );
   const specialSymbols = {
-    "0xba2ae424d960c26247dd6c32edc70b295c744c43": "BDOGE",
-    "0xcc42724c6683b7e57334c4e856f4c9965ed682bd": "BMATIC",
+    //"0xba2ae424d960c26247dd6c32edc70b295c744c43": "BDOGE",
+    //"0xcc42724c6683b7e57334c4e856f4c9965ed682bd": "BMATIC",
   };
   useEffect(() => {
     if (EthereumAddress.isAddress(tokenAddress)) {
@@ -205,20 +205,30 @@ const TokenImport = ({ onClose, selectedChain }) => {
 };
 
 export default TokenImport;
-//eth
+//ethereum sepolia testnet tokens
 //  0xf8E3a8FC5673b928107c78B7Af4C0b89A4c3Aac8
 //   0x900B61C0b67bB3aBFAA6331Ebd2f2d08AE79cdE9
 //   0xF4A81571A52185d5cfe2344C36afddD49210fE13
 //   0x250a270B50C287ce4b613Cb4E2d78E14D05EcD9C
 //    0x39bAB97C19902348225588108Be36eD609Cd0b85
+/////////////////////////////////////////////////////
 
-// bnb
+//doge coin erc20 tokens
+//   0x8A08d9bF87578De8DAA4C54e423472603aaD813B
+////////////////////////////////////////////////////////////
+
+// binance bsc smart chain TOKENS
 //zix
 //    0x48077400FAF11183c043Feb5184a13ea628Bb0DB
 //wista
 //    0x3720E3C827daB665383b32bC49766D2d24C1Ed35
 //doge
 //    0xbA2aE424d960c26247Dd6c32edC70B295c744C43
-
-//doge
-//   0x8A08d9bF87578De8DAA4C54e423472603aaD813B
+// ETH
+//    0x2170Ed0880ac9A755fd29B2688956BD959F933F8
+//MATIC
+//    0xCC42724C6683B7E57334c4E856f4c9965ED682bD
+//////////////////////////////////////////////////////
+// polygon matic chain tokens
+// ENF
+// 0xd096669B1C20B0fcEeDF0f4164eE918b9D709B7f

@@ -16,8 +16,14 @@ import {
   StyledFormControl,
   TypographyTitleForm,
   StyledDialogContent,
+  StyledGasTextfield,
+  DialogActionsCustomGas,
+  StyledDialogSendContent,
   DialogContentSend,
   StyledTextField,
+  CheckboxCustomGas,
+  TypographyCustomGas,
+  DialogActionsCustomGasCheck,
 } from "../hooks/styles.js";
 import { getTokens } from "./utils/chain.js";
 import TransferDetails from "../hooks/TransferDetails.js";
@@ -31,6 +37,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
     addressChecked,
     showCheckButton,
     warningMessage,
+
     handleAddressCheck,
     transferToken,
     gasPrice,
@@ -60,31 +67,13 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
 
   return (
     <Dialog open={true} onClose={closePopup}>
-      <TypographyTitleForm
-        sx={{
-          backgroundColor: theme.palette.text.popup,
-        }}
-      >
-        Send {selectedTokenState}
-      </TypographyTitleForm>
       <DialogContent
         sx={{
-          backgroundColor: theme.palette.text.popup,
+          backgroundColor: theme.palette.background.light,
         }}
       >
-        <Typography
-          sx={{
-            color: theme.palette.primary.icon,
-            width: "70%",
-          }}
-        >
-          {warningMessage}
-        </Typography>
-        <StyledBoxx
-          sx={{
-            backgroundColor: theme.palette.text.popup,
-          }}
-        >
+        <InputLabel id="send-amount-label"></InputLabel>
+        <DialogContentSend>
           <StyledFormControl>
             <InputLabel
               id="token-select-label"
@@ -106,36 +95,52 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               ))}
             </Select>
           </StyledFormControl>
-          <InputLabel id="send-amount-label"></InputLabel>
-          <DialogContentSend>
-            <StyledTextField
-              id="val"
-              label="Amount"
-              variant="outlined"
-              required
-              InputLabelProps={{
-                style: { color: theme.palette.text.input },
-              }}
-              inputProps={{
-                style: { color: theme.palette.text.input },
-              }}
-            />
-            <StyledTextField
-              id="toadrs"
-              label="To Address"
-              variant="outlined"
-              required
-              InputLabelProps={{
-                style: { color: theme.palette.text.input },
-              }}
-              inputProps={{
-                style: { color: theme.palette.text.input },
-              }}
-            />
-            <StyledTextField
+          <StyledTextField
+            id="val"
+            label="Amount"
+            variant="filled"
+            required
+            InputLabelProps={{
+              style: { color: theme.palette.text.input },
+            }}
+            inputProps={{
+              style: { color: theme.palette.text.input },
+            }}
+          />
+          <StyledTextField
+            id="toadrs"
+            label="To Address"
+            variant="outlined"
+            required
+            InputLabelProps={{
+              style: { color: theme.palette.text.input },
+            }}
+            inputProps={{
+              style: { color: theme.palette.text.input },
+            }}
+          />
+          <DialogActionsCustomGas
+            sx={{
+              width: "222.4px",
+              marginTop: "10px",
+            }}
+          >
+            <DialogActionsCustomGasCheck>
+              <TypographyCustomGas variant="caption">
+                Use custom Gas
+              </TypographyCustomGas>
+              <Checkbox
+                checked={useCustomGasPrice}
+                onChange={handleCheckboxChange}
+                sx={{
+                  color: theme.palette.primary.icon,
+                }}
+              />
+            </DialogActionsCustomGasCheck>
+            <StyledGasTextfield
               id="gasprice"
-              label="Gas Price (Gwei)"
-              value={useCustomGasPrice ? customGasPrice : gasPrice}
+              label="(Gwei)"
+              value={useCustomGasPrice ? customGasPrice || "" : gasPrice || ""}
               onChange={handleGasPriceChange}
               placeholder="Gas Price (Gwei)"
               disabled={!useCustomGasPrice}
@@ -146,46 +151,78 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
                 style: { color: theme.palette.text.input },
               }}
             />
-          </DialogContentSend>
-          <DialogActions>
-            <Typography>Use custom Gas</Typography>
-            <Checkbox
-              checked={useCustomGasPrice}
-              onChange={handleCheckboxChange}
+          </DialogActionsCustomGas>
+          <Typography variant="caption">
+            Gas Price (Gwei): {gasPrice}
+          </Typography>
+        </DialogContentSend>
+
+        <Typography
+          sx={{
+            color: theme.palette.primary.icon,
+            textAlign: "center",
+            fontSize: "12px",
+            width: "100%",
+            maxWidth: "222.4px",
+            marginLeft: "20px",
+          }}
+        >
+          {warningMessage}
+          {transferDetails && <TransferDetails details={transferDetails} />}
+        </Typography>
+        <StyledDialogSendContent
+          sx={{
+            backgroundColor: theme.palette.background.light,
+          }}
+        >
+          {showCheckButton && (
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              onClick={handleAddressCheck}
               sx={{
-                color: theme.palette.primary.icon,
+                //backgroundColor: theme.palette.background.light,
+                marginRight: "5px", // adaugă spațiu între butoane
+                fontSize: "12px",
+                width: "100px",
               }}
-            />
-          </DialogActions>
-
-          <Typography>Gas Price (Gwei): {gasPrice}</Typography>
-        </StyledBoxx>
-      </DialogContent>
-
-      <StyledDialogContent
-        sx={{
-          backgroundColor: theme.palette.text.popup,
-        }}
-      >
-        {showCheckButton && (
+            >
+              Check Address
+            </Button>
+          )}
+          {addressChecked && (
+            <Button
+              variant="contained"
+              color="success"
+              onClick={transferToken}
+              size="small"
+              sx={{
+                //backgroundColor: theme.palette.background.light,
+                marginRight: "5px", // adaugă spațiu între butoane
+                fontSize: "12px", // 111.2
+                width: "100px",
+              }}
+            >
+              Send {selectedTokenState}
+            </Button>
+          )}
           <Button
             variant="contained"
-            color="primary"
-            onClick={handleAddressCheck}
+            color="error"
+            onClick={transferToken}
+            size="small"
+            sx={{
+              //backgroundColor: theme.palette.background.light,
+              marginLeft: "5px", // adaugă spațiu între butoane
+              fontSize: "12px",
+              width: "100px",
+            }}
           >
-            Check Address
-          </Button>
-        )}
-        {addressChecked && (
-          <Button variant="contained" color="primary" onClick={transferToken}>
             Send {selectedTokenState}
           </Button>
-        )}
-        <Button variant="contained" color="primary" onClick={transferToken}>
-          Send without check {selectedTokenState}
-        </Button>
-      </StyledDialogContent>
-      {transferDetails && <TransferDetails details={transferDetails} />}
+        </StyledDialogSendContent>
+      </DialogContent>
     </Dialog>
   );
 };

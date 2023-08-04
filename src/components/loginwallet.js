@@ -11,12 +11,15 @@ import {
   ActionsContainer,
 } from "../hooks/styles";
 import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom"; // Schimbați 'useHistory' cu 'useNavigate'
 
 export default function LoginWallet({ onClose }) {
   const secretKey = process.env.REACT_APP_SECRET_KEY;
   const [privateKey, setPrivateKey] = useState("");
   const [displayPrivateKey, setDisplayPrivateKey] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate(); // Folosiți 'useNavigate' în loc de 'useHistory'
 
   const isValidPrivateKey = (privateKey) => {
     try {
@@ -25,6 +28,16 @@ export default function LoginWallet({ onClose }) {
     } catch (error) {
       return false;
     }
+  };
+
+  const gologin = () => {
+    navigate("/");
+  };
+
+  const handlePrivateKeyChange = (event) => {
+    setPrivateKey(event.target.value);
+    setDisplayPrivateKey("*".repeat(event.target.value.length));
+    setErrorMessage("");
   };
 
   const Login = (event) => {
@@ -45,18 +58,11 @@ export default function LoginWallet({ onClose }) {
       // Clear the input field to prevent password saving prompt
       setPrivateKey("");
       setDisplayPrivateKey("");
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+
+      gologin(); // Aici chemăm funcția 'gologin'
     } catch (error) {
       console.error("Error, try again:", error);
     }
-  };
-
-  const handlePrivateKeyChange = (event) => {
-    setPrivateKey(event.target.value);
-    setDisplayPrivateKey("*".repeat(event.target.value.length));
-    setErrorMessage("");
   };
 
   return (

@@ -37,7 +37,7 @@ export default function Home() {
   const [showSendPopup, setShowSendPopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showReceivePopup, setShowReceivePopup] = useState(false);
-  const [selectedToken, setSelectedToken] = useState("");
+  const [selectedToken, setSelectedToken] = useState("BNB");
   const [showImportForm, setShowImportForm] = useState(false);
   const secretKey = process.env.REACT_APP_SECRET_KEY;
   useEffect(() => {

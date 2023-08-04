@@ -20,7 +20,7 @@
     "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
   },
   {
-    "symbol": "WETH",
+    "symbol": "ETHER",
     "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
   },
   {
@@ -29,6 +29,10 @@
   },
   {
     "symbol": "MATIC",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png"
+  },
+  {
+    "symbol": "Matic Token",
     "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png"
   },
   {

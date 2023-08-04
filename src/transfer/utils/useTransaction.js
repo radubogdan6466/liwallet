@@ -71,10 +71,10 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
         throw new Error(`Token ${selectedTokenState} not found in tokens list`);
       }
       if (
-        selectedTokenState === "ETH" ||
+        selectedTokenState === "ETH Token" ||
         selectedTokenState === "BNB" ||
-        selectedTokenState === "MATIC" ||
-        selectedTokenState === "DOGE"
+        selectedTokenState === "Matic Token" ||
+        selectedTokenState === "DOGECOIN"
       ) {
         amountInSmallestUnit = ethers.utils.parseUnits(
           amount,
@@ -101,10 +101,10 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
       }
       let tx;
       if (
-        selectedTokenState === "ETH" ||
+        selectedTokenState === "ETH Token" ||
         selectedTokenState === "BNB" ||
-        selectedTokenState === "MATIC" ||
-        selectedTokenState === "DOGE"
+        selectedTokenState === "Matic Token" ||
+        selectedTokenState === "DOGECOIN"
       ) {
         const transaction = {
           to: toAddress,
@@ -123,9 +123,13 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
           gasPrice: ethers.utils.parseUnits(gasPrice, "gwei"),
         });
       }
-      setTimeout(() => {
+      /**
+       *  setTimeout(() => {
         window.location.reload();
       }, 5000);
+       *
+       */
+
       setTransferDetails({
         toAddress,
         amount,

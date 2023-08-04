@@ -31,34 +31,60 @@ const TransferDetails = ({ details }) => {
   return (
     <TransferDetailsBox
       sx={{
-        backgroundColor: theme.palette.text.popup,
+        backgroundColor: theme.palette.background.light,
+        color: theme.palette.text.text,
       }}
     >
-      <Typography variant="body1">Transfer Details:</Typography>
-      <Typography variant="body2">
-        To:
-        <Link
-          href={`${baseUrl}/address/${toAddress}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {`${toAddress.substring(0, 4)}...${toAddress.substring(
-            toAddress.length - 4
-          )}`}
-        </Link>
+      <Typography
+        variant="body1"
+        sx={{
+          color: theme.palette.transferDetails.icon,
+          fontWeight: "bold",
+        }}
+      >
+        Transfer Details:
       </Typography>
       <Typography variant="body2">
-        Value: {amount} Token: {token}
+        Amount: {amount} Token: {token}
       </Typography>
-      <Typography variant="body2">Gas Price: {gasPrice} Gwei</Typography>
-      <Typography variant="body2">
+      <Typography
+        variant="body2"
+        sx={{
+          color: theme.palette.transferDetails.dark,
+        }}
+      >
         Txn Hash:
         <Link
           href={`${baseUrl}/tx/${txHash}`}
           target="_blank"
           rel="noopener noreferrer"
+          sx={{
+            color: theme.palette.transferDetails.dark,
+            fontWeight: "bold",
+          }}
         >
           {`${txHash.substring(0, 4)}...${txHash.substring(txHash.length - 4)}`}
+        </Link>
+      </Typography>
+      <Typography
+        variant="body2"
+        sx={{
+          color: theme.palette.transferDetails.icon,
+        }}
+      >
+        To:
+        <Link
+          href={`${baseUrl}/address/${toAddress}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{
+            color: theme.palette.transferDetails.dark,
+            fontWeight: "bold",
+          }}
+        >
+          {`${toAddress.substring(0, 4)}...${toAddress.substring(
+            toAddress.length - 4
+          )}`}
         </Link>
       </Typography>
     </TransferDetailsBox>

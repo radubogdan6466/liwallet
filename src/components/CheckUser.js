@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { CenterBox, ActionButton, TypographyTitle } from "../hooks/styles"; // Înlocuiți <calea_dvs.> cu calea către componentele stilizate
+import { Button } from "@mui/material";
 
 const CheckUser = ({ handleLogin, handleCreate }) => {
   const navigate = useNavigate();
@@ -11,19 +13,25 @@ const CheckUser = ({ handleLogin, handleCreate }) => {
     navigate("/login");
   };
   return (
-    <div className="Loading-container">
-      <div className="Loading-content">
+    <CenterBox
+      container
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <TypographyTitle variant="h4" component="div">
         Looks like you're not connected with any address
-        <br />
-        <button className="Loading-btn-login" onClick={gologin}>
-          Press here to login
-        </button>
-        <p className="text-3xl font-bold underline">Or</p>
-        <button className="Loading-btn-create" onClick={gocreate}>
-          Create a new wallet
-        </button>
-      </div>
-    </div>
+      </TypographyTitle>
+      <ActionButton variant="contained" color="primary" onClick={gologin}>
+        Press here to login
+      </ActionButton>
+      <TypographyTitle variant="h5" component="div">
+        Or
+      </TypographyTitle>
+      <ActionButton variant="contained" color="primary" onClick={gocreate}>
+        Create a new wallet
+      </ActionButton>
+    </CenterBox>
   );
 };
 
