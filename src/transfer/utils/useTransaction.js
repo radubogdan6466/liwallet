@@ -10,7 +10,7 @@ import ercAbi from "../../JsonFiles/testErcAbi.json";
 import dogeAbi from "../../JsonFiles/testDogeAbi.json";
 import polyAbi from "../../JsonFiles/testPolyAbi.json";
 
-export const useTransaction = (selectedTokenState, selectedChain) => {
+export const useTransaction = (selectedToken, selectedChain) => {
   const secretKey = process.env.REACT_APP_SECRET_KEY;
   const [transferDetails, setTransferDetails] = useState(null);
   const [addressChecked, setAddressChecked] = useState(false);
@@ -65,16 +65,16 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
       let tokenContract, tokenAddress, tokenABI, amountInSmallestUnit;
       const tokens = getTokens(selectedChain);
       const selectedTokenData = tokens.find(
-        (token) => token.symbol === selectedTokenState
+        (token) => token.symbol === selectedToken
       );
       if (!selectedTokenData) {
-        throw new Error(`Token ${selectedTokenState} not found in tokens list`);
+        throw new Error(`Token ${selectedToken} not found in tokens list`);
       }
       if (
-        selectedTokenState === "ETH Token" ||
-        selectedTokenState === "BNB" ||
-        selectedTokenState === "Matic Token" ||
-        selectedTokenState === "DOGECOIN"
+        selectedToken === "ETH Token" ||
+        selectedToken === "BNB" ||
+        selectedToken === "Matic Token" ||
+        selectedToken === "DOGECOIN"
       ) {
         amountInSmallestUnit = ethers.utils.parseUnits(
           amount,
@@ -91,7 +91,7 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
         } else if (selectedTokenData.chainId === 137) {
           tokenABI = polyAbi;
         } else {
-          throw new Error(`Token ${selectedTokenState} has no ABI data`);
+          throw new Error(`Token ${selectedToken} has no ABI data`);
         }
         tokenContract = new ethers.Contract(tokenAddress, tokenABI, userWallet);
         amountInSmallestUnit = ethers.utils.parseUnits(
@@ -101,10 +101,10 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
       }
       let tx;
       if (
-        selectedTokenState === "ETH Token" ||
-        selectedTokenState === "BNB" ||
-        selectedTokenState === "Matic Token" ||
-        selectedTokenState === "DOGECOIN"
+        selectedToken === "ETH Token" ||
+        selectedToken === "BNB" ||
+        selectedToken === "Matic Token" ||
+        selectedToken === "DOGECOIN"
       ) {
         const transaction = {
           to: toAddress,
@@ -135,7 +135,7 @@ export const useTransaction = (selectedTokenState, selectedChain) => {
         amount,
         gasPrice,
         txHash: tx.hash,
-        token: selectedTokenState,
+        token: selectedToken,
         chain: selectedChain,
       });
     } catch (err) {

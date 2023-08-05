@@ -10,6 +10,7 @@ import {
   MenuItem,
   Typography,
   Checkbox,
+  Box,
 } from "@mui/material";
 import {
   StyledBoxx,
@@ -29,9 +30,9 @@ import { getTokens } from "./utils/chain.js";
 import TransferDetails from "../hooks/TransferDetails.js";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
-const Send = ({ onClose, selectedToken, selectedChain }) => {
+const Send = ({ onClose, selectedChain }) => {
   const theme = useTheme();
-  const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
+  const [selectedToken, setselectedToken] = useState("");
   const {
     transferDetails,
     addressChecked,
@@ -60,10 +61,10 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
   };
   useEffect(() => {
     const tokens = getTokens(selectedChain);
-    if (!tokens.some((token) => token.symbol === selectedTokenState)) {
-      setSelectedTokenState(tokens[0].symbol);
+    if (!tokens.some((token) => token.symbol === selectedToken)) {
+      setselectedToken(tokens[0].symbol);
     }
-  }, [selectedChain, selectedTokenState]);
+  }, [selectedChain, selectedToken]);
 
   return (
     <Dialog open={true} onClose={closePopup}>
@@ -85,8 +86,8 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               labelId="token-select-label"
               id="token-select"
               variant="standard"
-              value={selectedTokenState}
-              onChange={(e) => setSelectedTokenState(e.target.value)}
+              value={selectedToken}
+              onChange={(e) => setselectedToken(e.target.value)}
             >
               {getTokens(selectedChain).map((token) => (
                 <MenuItem key={token.symbol} value={token.symbol}>
@@ -157,7 +158,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
           </Typography>
         </DialogContentSend>
 
-        <Typography
+        <Box
           sx={{
             color: theme.palette.primary.icon,
             textAlign: "center",
@@ -169,7 +170,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
         >
           {warningMessage}
           {transferDetails && <TransferDetails details={transferDetails} />}
-        </Typography>
+        </Box>
         <StyledDialogSendContent
           sx={{
             backgroundColor: theme.palette.background.light,
@@ -204,7 +205,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
                 width: "100px",
               }}
             >
-              Send {selectedTokenState}
+              Send {selectedToken}
             </Button>
           )}
           <Button
@@ -219,7 +220,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               width: "100px",
             }}
           >
-            Send {selectedTokenState}
+            Send {selectedToken}
           </Button>
         </StyledDialogSendContent>
       </DialogContent>
