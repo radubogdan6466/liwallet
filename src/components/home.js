@@ -1,7 +1,14 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Web3 from "web3";
 import Send from "../transfer/SendPage";
-import { bnbchain, ethchain, dogechain, polychain } from "../hooks/utils";
+import {
+  bnbchain,
+  ethchain,
+  dogechain,
+  polychain,
+  getDefaultTokenForChain,
+  getChainNameFromUrl,
+} from "../hooks/utils";
 import CheckUser from "./CheckUser";
 import { Grid, CircularProgress, Box } from "@mui/material";
 import TokenImport from "./TokenImport";
@@ -38,10 +45,18 @@ export default function Home() {
   const [showSendPopup, setShowSendPopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showReceivePopup, setShowReceivePopup] = useState(false);
-  const [selectedToken, setSelectedToken] = useState("");
+
+  const [selectedToken, setSelectedToken] = useState(
+    getDefaultTokenForChain(selectedChain)
+  );
   const [showImportForm, setShowImportForm] = useState(false);
   const secretKey = process.env.REACT_APP_SECRET_KEY;
   const theme = useTheme();
+  useEffect(() => {
+    setSelectedToken(
+      getDefaultTokenForChain(getChainNameFromUrl(selectedChain))
+    );
+  }, [selectedChain]);
 
   useEffect(() => {
     if (encryptedPrivateKey) {

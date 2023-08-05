@@ -30,9 +30,9 @@ import { getTokens } from "./utils/chain.js";
 import TransferDetails from "../hooks/TransferDetails.js";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
-const Send = ({ onClose, selectedChain }) => {
+const Send = ({ onClose, selectedToken, selectedChain }) => {
   const theme = useTheme();
-  const [selectedToken, setselectedToken] = useState("");
+  const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
   const {
     transferDetails,
     addressChecked,
@@ -61,10 +61,10 @@ const Send = ({ onClose, selectedChain }) => {
   };
   useEffect(() => {
     const tokens = getTokens(selectedChain);
-    if (!tokens.some((token) => token.symbol === selectedToken)) {
-      setselectedToken(tokens[0].symbol);
+    if (!tokens.some((token) => token.symbol === selectedTokenState)) {
+      setSelectedTokenState(tokens[0].symbol);
     }
-  }, [selectedChain, selectedToken]);
+  }, [selectedChain, selectedTokenState]);
 
   return (
     <Dialog open={true} onClose={closePopup}>
@@ -86,8 +86,8 @@ const Send = ({ onClose, selectedChain }) => {
               labelId="token-select-label"
               id="token-select"
               variant="standard"
-              value={selectedToken}
-              onChange={(e) => setselectedToken(e.target.value)}
+              value={selectedTokenState}
+              onChange={(e) => setSelectedTokenState(e.target.value)}
             >
               {getTokens(selectedChain).map((token) => (
                 <MenuItem key={token.symbol} value={token.symbol}>
@@ -205,7 +205,7 @@ const Send = ({ onClose, selectedChain }) => {
                 width: "100px",
               }}
             >
-              Send {selectedToken}
+              Send {selectedTokenState}
             </Button>
           )}
           <Button
@@ -220,7 +220,7 @@ const Send = ({ onClose, selectedChain }) => {
               width: "100px",
             }}
           >
-            Send {selectedToken}
+            Send {selectedTokenState}
           </Button>
         </StyledDialogSendContent>
       </DialogContent>

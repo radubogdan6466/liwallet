@@ -20,6 +20,7 @@ import {
 } from "../hooks/styles.js";
 
 const TokenImport = ({ onClose, selectedChain }) => {
+  const [loading, setLoading] = useState(false);
   const [importedTokens, setImportedTokens] = useState(
     JSON.parse(
       localStorage.getItem(getChainNameFromUrl(selectedChain) + "Tokens")
@@ -51,6 +52,8 @@ const TokenImport = ({ onClose, selectedChain }) => {
   const [tokenSymbol, setTokenSymbol] = useState("");
   const [tokenDecimals, setTokenDecimals] = useState(18);
   const [tokenChainId, setTokenChainId] = useState(null);
+  const [isValidAddress, setIsValidAddress] = useState(false);
+
   const [error, setError] = useState("");
   const [isTokenAdded, setIsTokenAdded] = useState(false);
   const provider = useMemo(
@@ -62,7 +65,11 @@ const TokenImport = ({ onClose, selectedChain }) => {
     //"0xcc42724c6683b7e57334c4e856f4c9965ed682bd": "BMATIC",
   };
   useEffect(() => {
+    setIsValidAddress(EthereumAddress.isAddress(tokenAddress));
+  }, [tokenAddress]);
+  useEffect(() => {
     if (EthereumAddress.isAddress(tokenAddress)) {
+      setLoading(true); // Adauga aceasta linie
       const erc20Abi = [
         "function symbol() view returns (string)",
         "function decimals() view returns (uint8)",
@@ -93,6 +100,8 @@ const TokenImport = ({ onClose, selectedChain }) => {
           } else {
             console.error(err);
           }
+        } finally {
+          setLoading(false);
         }
       }
 
@@ -103,9 +112,13 @@ const TokenImport = ({ onClose, selectedChain }) => {
   const handleSubmit = (submitEvent) => {
     submitEvent.preventDefault();
 
-    const isValidAddress = EthereumAddress.isAddress(tokenAddress);
+    // Verifică dacă adresa este validă
+    const validAddress = EthereumAddress.isAddress(tokenAddress);
+    setIsValidAddress(validAddress);
+
     if (!isValidAddress) {
       setError(handleError({ message: "invalid_address" }));
+      return;
     }
 
     if (tokenChainId === null) {
@@ -151,17 +164,7 @@ const TokenImport = ({ onClose, selectedChain }) => {
             type="text"
             label="Enter token address"
             value={tokenAddress}
-            onChange={(event) => {
-              const newAddress = event.target.value;
-              if (EthereumAddress.isAddress(newAddress)) {
-                setTokenAddress(newAddress);
-                if (error === "Adresa incorecta, verifica chain-ul") {
-                  setError("");
-                }
-              } else {
-                setError("Adresa introdusă nu este o adresă Ethereum validă.");
-              }
-            }}
+            onChange={(event) => setTokenAddress(event.target.value)}
             error={
               error === "Adresa incorecta, verifica chain-ul" ||
               error === "Adresa introdusă nu este o adresă Ethereum validă."
@@ -194,7 +197,17 @@ const TokenImport = ({ onClose, selectedChain }) => {
             disabled
           />
           <ActionsContainer>
-            <Button type="submit" color="primary" variant="contained">
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              disabled={
+                !isValidAddress ||
+                tokenSymbol == "" ||
+                tokenDecimals == "" ||
+                tokenChainId == ""
+              }
+            >
               {isTokenAdded ? "Token adăugat cu succes" : "Import Token"}
             </Button>
           </ActionsContainer>
