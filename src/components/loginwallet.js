@@ -101,7 +101,18 @@ export default function LoginWallet({ onClose }) {
           justifyContent="center"
           alignItems="center"
         >
-          <Button type="submit" variant="contained" color="success">
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              backgroundColor: theme.palette.button.normal,
+              color: theme.palette.button.textNormal,
+              "&:hover": {
+                backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+                color: theme.palette.button.textHover,
+              },
+            }}
+          >
             Login
           </Button>
         </Grid>

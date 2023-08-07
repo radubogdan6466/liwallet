@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import { useTokenImportHandler } from "../hooks/tokenImportHandler.js";
 import { chainIds, getChainNameFromUrl } from "../hooks/utils.js";
 import { handleError } from "../hooks/errorHandler.js";
+import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 import {
   Button,
@@ -20,6 +21,8 @@ import {
 } from "../hooks/styles.js";
 
 const TokenImport = ({ onClose, selectedChain }) => {
+  const theme = useTheme();
+
   const [loading, setLoading] = useState(false);
   const [importedTokens, setImportedTokens] = useState(
     JSON.parse(
@@ -159,7 +162,15 @@ const TokenImport = ({ onClose, selectedChain }) => {
       {error && <Typography>{error}</Typography>}
 
       <DialogContent>
-        <FormContainer onSubmit={handleSubmit}>
+        <FormContainer
+          onSubmit={handleSubmit}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <FormField
             type="text"
             label="Enter token address"
@@ -195,11 +206,12 @@ const TokenImport = ({ onClose, selectedChain }) => {
             value={tokenChainId !== null ? tokenChainId : ""}
             onChange={(event) => setTokenChainId(event.target.value)}
             disabled
+            hidden
+            style={{ display: "none" }}
           />
           <ActionsContainer>
             <Button
               type="submit"
-              color="primary"
               variant="contained"
               disabled={
                 !isValidAddress ||
@@ -207,6 +219,18 @@ const TokenImport = ({ onClose, selectedChain }) => {
                 tokenDecimals == "" ||
                 tokenChainId == ""
               }
+              sx={{
+                marginRight: "5px", // adaugă spațiu între butoane
+                fontSize: "12px",
+                width: "100%",
+
+                backgroundColor: theme.palette.button.normal,
+                color: theme.palette.button.textNormal,
+                "&:hover": {
+                  backgroundColor: theme.palette.button.hover,
+                  color: theme.palette.button.textHover,
+                },
+              }}
             >
               {isTokenAdded ? "Token adăugat cu succes" : "Import Token"}
             </Button>

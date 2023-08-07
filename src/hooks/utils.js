@@ -6,7 +6,7 @@ export const dogechain = "https://rpc-testnet.dogechain.dog";
 export const polychain = "https://rpc-mumbai.maticvigil.com/";
 
 export const chains = {
-  "BNB Smart Chain": bnbchain,
+  "Smart Chain": bnbchain,
   "Ethereum chain": ethchain,
   "Dogecoin chain": dogechain,
   "Polygon chain": polychain,

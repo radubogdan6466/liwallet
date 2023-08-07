@@ -62,7 +62,7 @@ export default function TokenList({
     if (userWallet) {
       const balances = { ...tokenBalances };
 
-      //balances["ETH"] = { name: "ETH", balance: ethBalance };
+      balances["ETH"] = { name: "ETH", balance: ethBalance };
 
       for (const token of tokens) {
         const { symbol, address, chainId } = token;
@@ -71,7 +71,10 @@ export default function TokenList({
           .balanceOf(userWallet.address)
           .call();
         const decimals = await tokenContract.methods.decimals().call();
-        const balanceInToken = balance / Math.pow(10, decimals);
+
+        const balanceInToken = parseFloat(
+          (balance / Math.pow(10, decimals)).toFixed(8)
+        );
 
         const updatedTokenBalance = { address, balance: balanceInToken };
         updatedTokenBalance.name = symbol;
@@ -113,6 +116,9 @@ export default function TokenList({
     localStorage.setItem(tokenListKey, JSON.stringify(updatedTokens));
     fetchTokenBalances();
   };
+  const handleRefresh = () => {
+    window.location.reload();
+  };
   const getNativeCurrency = (selectedChain) => {
     if (selectedChain === ethchain) {
       return "ETH Token";
@@ -134,7 +140,6 @@ export default function TokenList({
           color: theme.palette.text.secondary,
         }}
       >
-        {/* Afișează balanța monedei native folosind ListItem */}
         <ListItem
           button
           key={getNativeCurrency(selectedChain)}
@@ -149,10 +154,11 @@ export default function TokenList({
           <ListItemText
             primary={ethBalance}
             secondary={getNativeCurrency(selectedChain)}
-            secondaryTypographyProps={{ style: { color: "#bdbdbd" } }}
+            secondaryTypographyProps={{
+              style: { color: theme.palette.text.symbol },
+            }}
           />
         </ListItem>
-        {/* Restul codului existent */}
         {Object.keys(tokenBalances).map((symbol) => {
           const token = tokens.find((token) => token.symbol === symbol);
           const logoUrl = findLogoUrl(symbol);
@@ -170,7 +176,9 @@ export default function TokenList({
                 <ListItemText
                   primary={tokenBalances[symbol].balance}
                   secondary={tokenBalances[symbol].name}
-                  secondaryTypographyProps={{ style: { color: "#bdbdbd" } }}
+                  secondaryTypographyProps={{
+                    style: { color: theme.palette.text.symbol },
+                  }}
                 />
 
                 <Button
@@ -190,7 +198,7 @@ export default function TokenList({
       </List>
 
       <Button
-        onClick={fetchTokenBalances}
+        onClick={handleRefresh}
         color="primary"
         aria-label="refresh balance"
       >

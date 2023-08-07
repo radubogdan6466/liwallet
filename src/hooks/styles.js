@@ -1,5 +1,12 @@
 import { styled } from "@mui/material/styles";
-import { Grid, Box, TextField, DialogContent, Button } from "@mui/material";
+import {
+  Grid,
+  Box,
+  TextField,
+  DialogContent,
+  Button,
+  Dialog,
+} from "@mui/material";
 import { Typography, Link as MuiLink, FormControl } from "@mui/material";
 import { CheckBox } from "@mui/icons-material";
 export const CenterBox = styled(Grid)(({ theme }) => ({
@@ -17,6 +24,26 @@ export const CenterBox = styled(Grid)(({ theme }) => ({
     fontSize: "2rem",
   },
 }));
+
+//HOME
+export const CenterBoxHome = styled(Grid)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100%",
+  //padding: theme.spacing(3),
+
+  [theme.breakpoints.down("md")]: {
+    minWidth: "52vw",
+  },
+  [theme.breakpoints.up("md")]: {
+    minWidth: "58vw",
+    fontSize: "2rem",
+  },
+}));
+
+//  CenterBoxHome
 export const ActionButton = styled(Button)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
@@ -50,7 +77,13 @@ export const StyledBox = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
 });
-
+// create
+export const StyledLoginDialogBox = styled(DialogContent)({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+});
 //LOGINPAGE
 
 export const StyledLoginBox = styled(Box)({

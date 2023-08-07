@@ -12,7 +12,7 @@ import {
 import CheckUser from "./CheckUser";
 import { Grid, CircularProgress, Box } from "@mui/material";
 import TokenImport from "./TokenImport";
-import { CenterBox } from "../hooks/styles";
+import { CenterBox, CenterBoxHome } from "../hooks/styles";
 import useWeb3 from "../hooks/useWeb3"; // import the custom hook
 import { useTokenImportHandler } from "../hooks/tokenImportHandler";
 import NavBar from "./Navbar";
@@ -154,13 +154,17 @@ export default function Home() {
 
   return (
     <Grid
-      sx={{ backgroundColor: "#24272a" }}
       container
       direction="column"
       alignItems="center"
       justifyContent="center"
+      sx={{
+        backgroundColor: theme.palette.primary.home,
+
+        //backgroundColor: "#24272a",
+      }}
     >
-      <CenterBox item xs={12} sm={6} md={4} lg={3}>
+      <CenterBoxHome item xs={12} sm={6} md={4} lg={3}>
         <NavBar
           selectedChain={selectedChain}
           handleChainChange={handleChainChange}
@@ -180,7 +184,6 @@ export default function Home() {
           onImportClick={() => setShowImportForm(true)}
           onReceiveClick={() => setShowReceivePopup(true)}
         />
-        {/** */}
         <TokenSection
           userWallet={userWallet}
           web3={web3}
@@ -227,7 +230,7 @@ export default function Home() {
             />
           </CenterBox>
         )}
-      </CenterBox>
+      </CenterBoxHome>
     </Grid>
   );
 }

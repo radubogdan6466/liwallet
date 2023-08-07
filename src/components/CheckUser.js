@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CenterBox, ActionButton, TypographyTitle } from "../hooks/styles";
-import { Button, Dialog } from "@mui/material";
+import { Button, Dialog, Typography } from "@mui/material";
 import LoginWallet from "./loginwallet";
+import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 const CheckUser = ({ handleLogin, handleCreate }) => {
   const navigate = useNavigate();
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+  const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
 
   const gocreate = () => {
     navigate("/create");
@@ -24,26 +26,53 @@ const CheckUser = ({ handleLogin, handleCreate }) => {
       direction="column"
       justifyContent="center"
       alignItems="center"
+      sx={{
+        backgroundColor: theme.palette.background.light,
+      }}
     >
-      <TypographyTitle variant="h4" component="div">
+      <TypographyTitle color={theme.palette.text.text}>
         Looks like you're not connected with any address
       </TypographyTitle>
-      <ActionButton
+      <Button
         variant="contained"
-        color="primary"
+        color="secondary"
+        sx={{
+          backgroundColor: theme.palette.button.normal,
+          color: theme.palette.button.textNormal,
+          "&:hover": {
+            backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+            color: theme.palette.button.textHover,
+          },
+        }}
         onClick={openLoginDialog}
       >
-        Press here to login
-      </ActionButton>
+        <Typography>Press here to login</Typography>
+      </Button>
       <Dialog open={loginDialogOpen} onClose={handleClose}>
         <LoginWallet onClose={handleClose} />
       </Dialog>
-      <TypographyTitle variant="h5" component="div">
+      <TypographyTitle
+        variant="h5"
+        component="div"
+        color={theme.palette.text.text}
+      >
         Or
       </TypographyTitle>
-      <ActionButton variant="contained" color="primary" onClick={gocreate}>
-        Create a new wallet
-      </ActionButton>
+      <Button
+        variant="contained"
+        onClick={gocreate}
+        sx={{
+          backgroundColor: theme.palette.button.normal,
+          color: theme.palette.button.textNormal,
+
+          "&:hover": {
+            backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+            color: theme.palette.button.textHover,
+          },
+        }}
+      >
+        <Typography>Create a new wallet</Typography>
+      </Button>
     </CenterBox>
   );
 };

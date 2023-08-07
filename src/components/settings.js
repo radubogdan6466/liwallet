@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogTitle, Box } from "@mui/material";
 import { TypographyTitle } from "../hooks/styles";
 import CryptoJS from "crypto-js";
 import { useTheme } from "@mui/material/styles";
@@ -55,29 +55,55 @@ export default function Settings({ onClose }) {
       <TypographyTitle variant="h6">Security</TypographyTitle>
       <Button
         variant="contained"
-        style={{
-          backgroundColor: theme.palette.primary.main,
-          color: theme.palette.text.secondary,
-        }}
         onClick={showPrivateKey}
+        sx={{
+          borderRadius: 0,
+          margin: 1,
+
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+
+          backgroundColor: theme.palette.button.normal,
+          color: theme.palette.button.textNormal,
+          "&:hover": {
+            backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+            color: theme.palette.button.textHover,
+          },
+        }}
       >
-        Show Secret Key
+        Show private Key
       </Button>
       <Button
         variant="contained"
-        style={{
-          backgroundColor: theme.palette.primary.main,
-          color: theme.palette.text.secondary,
-        }}
         onClick={showRecoveryPhrase}
+        sx={{
+          borderRadius: 0,
+          margin: 1,
+
+          backgroundColor: theme.palette.button.normal,
+          color: theme.palette.button.textNormal,
+          "&:hover": {
+            backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+            color: theme.palette.button.textHover,
+          },
+        }}
       >
-        Show Recovery Phrase
+        Secret Recovery Phrase
       </Button>
       <Dialog onClose={() => setOpenDialog(false)} open={openDialog}>
-        <DialogTitle style={{ color: theme.palette.text.main }}>
+        <DialogTitle style={{ color: theme.palette.text.text }}>
           {dialogTitle}
         </DialogTitle>
-        <DialogContent style={{ color: theme.palette.text.main }}>
+        <DialogContent
+          sx={{
+            padding: 2,
+            color: theme.palette.text.text,
+            height: "120px",
+            width: "256px",
+          }}
+        >
           {dialogContent}
         </DialogContent>
       </Dialog>

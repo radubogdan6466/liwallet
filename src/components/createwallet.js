@@ -6,6 +6,7 @@ import {
   StyledBoxx,
   ActionsContainer,
   TypographyTitle,
+  StyledLoginDialogBox,
 } from "../hooks/styles";
 import {
   Button,
@@ -50,22 +51,33 @@ export default function CreateWallet() {
     <CenterBox
       container
       sx={{
-        backgroundColor: theme.palette.primary.main, // Folosește culoarea principală din tema
+        backgroundColor: theme.palette.background.light, // Folosește culoarea principală din tema
       }}
     >
       <StyledBoxx
         className="createPage"
         sx={{
-          backgroundColor: theme.palette.primary.main, // Folosește culoarea principală din tema
+          backgroundColor: theme.palette.background.light,
         }}
       >
         <TypographyTitle>
-          Salvează fraza pe un dispozitiv offline sau scrie-o pe hârtie. Odată
-          ce ai creat portofelul, nu vei mai avea acces la ea.
+          Salveaza fraza pe o hartie. Odata ce ai creat portofelul, nu vei mai
+          avea acces la ea.
         </TypographyTitle>
         <ActionsContainer>
-          <Button variant="contained" color="primary" onClick={create}>
-            Crează wallet
+          <Button
+            variant="contained"
+            onClick={create}
+            sx={{
+              backgroundColor: theme.palette.button.normal,
+              color: theme.palette.button.textNormal,
+              "&:hover": {
+                backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+                color: theme.palette.button.textHover,
+              },
+            }}
+          >
+            Create wallet
           </Button>
           {/* Other buttons here */}
         </ActionsContainer>
@@ -76,15 +88,39 @@ export default function CreateWallet() {
           onClose={closePopup}
           aria-labelledby="mnemonic-dialog-title"
         >
-          <DialogTitle id="mnemonic-dialog-title">
-            Fraza ta Mnemonica
+          <DialogTitle
+            id="mnemonic-dialog-title"
+            sx={{
+              backgroundColor: theme.palette.background.light,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            Secret Phrase
           </DialogTitle>
-          <DialogContent>
-            <Typography>{mnemonic}</Typography>
-            <Button variant="contained" color="secondary" onClick={closePopup}>
+          <StyledLoginDialogBox
+            sx={{
+              backgroundColor: theme.palette.background.light,
+            }}
+          >
+            <TypographyTitle sx={{ width: "70px" }}>{mnemonic}</TypographyTitle>
+            <Button
+              variant="contained"
+              onClick={closePopup}
+              sx={{
+                backgroundColor: theme.palette.button.normal,
+                color: theme.palette.button.textNormal,
+                "&:hover": {
+                  backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+                  color: theme.palette.button.textHover,
+                },
+              }}
+            >
               Am salvat fraza secreta
             </Button>
-          </DialogContent>
+          </StyledLoginDialogBox>
         </Dialog>
       </StyledBoxx>
     </CenterBox>

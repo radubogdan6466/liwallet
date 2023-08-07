@@ -9,7 +9,7 @@ import ReportAddress from "./report/ReportAddress";
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline, Box } from "@mui/material";
 import theme from "./theme/Theme"; // Importă tema creată
-
+import "./App.css";
 export default function App() {
   return (
     <ThemeProvider theme={theme}>

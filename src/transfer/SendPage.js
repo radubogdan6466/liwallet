@@ -179,14 +179,19 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
           {showCheckButton && (
             <Button
               variant="contained"
-              color="error"
               size="small"
               onClick={handleAddressCheck}
               sx={{
-                //backgroundColor: theme.palette.background.light,
                 marginRight: "5px", // adaugă spațiu între butoane
                 fontSize: "12px",
                 width: "100px",
+
+                backgroundColor: theme.palette.button.normal,
+                color: theme.palette.button.textNormal,
+                "&:hover": {
+                  backgroundColor: theme.palette.button.hover,
+                  color: theme.palette.button.textHover,
+                },
               }}
             >
               Check Address
@@ -199,10 +204,16 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               onClick={transferToken}
               size="small"
               sx={{
-                //backgroundColor: theme.palette.background.light,
                 marginRight: "5px", // adaugă spațiu între butoane
-                fontSize: "12px", // 111.2
+                fontSize: "12px",
                 width: "100px",
+
+                backgroundColor: theme.palette.button.normal,
+                color: theme.palette.button.textNormal,
+                "&:hover": {
+                  backgroundColor: theme.palette.button.hover,
+                  color: theme.palette.button.textHover,
+                },
               }}
             >
               Send {selectedTokenState}
@@ -214,10 +225,16 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             onClick={transferToken}
             size="small"
             sx={{
-              //backgroundColor: theme.palette.background.light,
-              marginLeft: "5px", // adaugă spațiu între butoane
+              marginRight: "5px", // adaugă spațiu între butoane
               fontSize: "12px",
               width: "100px",
+
+              backgroundColor: theme.palette.button.normal,
+              color: theme.palette.button.textNormal,
+              "&:hover": {
+                backgroundColor: theme.palette.button.hover,
+                color: theme.palette.button.textHover,
+              },
             }}
           >
             Send {selectedTokenState}
