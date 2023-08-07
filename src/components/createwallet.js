@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { ethers } from "ethers";
 import { useNavigate } from "react-router-dom";
 import {
@@ -26,7 +26,7 @@ export default function CreateWallet() {
   const [mnemonic, setMnemonic] = useState("");
   const [verificationIndices, setVerificationIndices] = useState([]);
   const [userInputWords, setUserInputWords] = useState({});
-
+  const mnemonicKeysRef = useRef([]);
   const selectVerificationWords = (mnemonicPhrase) => {
     const words = mnemonicPhrase.split(" ");
     const indices = [];
@@ -54,13 +54,30 @@ export default function CreateWallet() {
     return true;
   };
 
+  const clearData = () => {
+    localStorage.removeItem("pkey");
+
+    mnemonicKeysRef.current.forEach((key) => {
+      localStorage.removeItem(key);
+    });
+  };
+
   const closePopup = () => {
     if (verifyWords()) {
       setShowMnemonicPopup(false);
       navigate("/");
     } else {
       alert("Cuvintele introduse nu sunt corecte. Te rog să încerci din nou.");
+      clearData();
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000); // Reload după 5 secunde
     }
+  };
+
+  const handleCloseDialog = () => {
+    clearData();
+    setShowMnemonicPopup(false);
   };
 
   const create = () => {
@@ -106,6 +123,7 @@ export default function CreateWallet() {
         .substr(2, 5)}_${index}`;
 
       localStorage.setItem(randomKey, encryptedWord);
+      mnemonicKeysRef.current.push(randomKey);
     });
 
     setMnemonic(userWalletKeys.mnemonic.phrase);
@@ -145,7 +163,7 @@ export default function CreateWallet() {
 
         <Dialog
           open={showMnemonicPopup}
-          onClose={closePopup}
+          onClose={handleCloseDialog}
           aria-labelledby="mnemonic-dialog-title"
         >
           <DialogTitle
@@ -174,6 +192,7 @@ export default function CreateWallet() {
               <div key={index}>
                 <Typography>Cuvântul {index + 1}</Typography>
                 <TextField
+                  size="small"
                   value={userInputWords[index] || ""}
                   onChange={(e) => handleInputChange(index, e.target.value)}
                 />
