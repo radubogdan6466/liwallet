@@ -178,7 +178,9 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             backgroundColor: theme.palette.background.light,
           }}
         >
-          {check && showCheckButton && (
+          {/**check &&  */}
+
+          {showCheckButton && (
             <Button
               variant="contained"
               size="small"
