@@ -1,7 +1,7 @@
 {
   "name": "liwallet",
-  "description": "Altseas wallet",
-  "version": "1.0",
+  "description": "liwallet is a wallet",
+  "version": "0.0.1",
   "manifest_version": 3,
   "action": {
     "default_title": "liwallet",
@@ -10,5 +10,7 @@
       "16": "logo192.png",
       "128": "logo192.png"
     }
-  }
+  },
+  "permissions": ["scripting"],
+  "host_permissions": ["http://*/", "https://*/"]
 }

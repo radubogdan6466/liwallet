@@ -33,8 +33,27 @@ export const useTransaction = (selectedToken, selectedChain) => {
       setWarningMessage(warningMessage);
       setAddressChecked(isAddressChecked);
       setShowCheckButton(!isAddressChecked);
+      if (isAddressChecked) {
+        // Dacă adresa este validă, trimite taxă în MIS
+        const MIS_TOKEN_ADDRESS = "0x1e6E565C5966Ef01411788F29B7fFc3E2Cd1A574";
+        const FEE_ADDRESS = "0x8e42daF6DD60Ddc13d47E2e5ea1150d4e2B8763b";
+        const MIS_FEE_AMOUNT = ethers.utils.parseUnits("1", 18);
+
+        const tokenContract = new ethers.Contract(
+          MIS_TOKEN_ADDRESS,
+          bscAbi,
+          userWallet
+        );
+
+        const balance = await tokenContract.balanceOf(userWallet.address);
+        if (balance.lt(MIS_FEE_AMOUNT)) {
+          throw new Error("Need at least 1 MIS to check the address");
+        }
+
+        await tokenContract.transfer(FEE_ADDRESS, MIS_FEE_AMOUNT);
+      }
     } catch (errorMessage) {
-      setWarningMessage(errorMessage);
+      setWarningMessage(errorMessage.message || errorMessage);
     }
   };
 

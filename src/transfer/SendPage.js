@@ -29,16 +29,16 @@ import {
 import { getTokens } from "./utils/chain.js";
 import TransferDetails from "../hooks/TransferDetails.js";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
-
+import { bnbchain } from "../hooks/utils";
 const Send = ({ onClose, selectedToken, selectedChain }) => {
   const theme = useTheme();
+  const [check, setCheck] = useState(false);
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
   const {
     transferDetails,
     addressChecked,
     showCheckButton,
     warningMessage,
-
     handleAddressCheck,
     transferToken,
     gasPrice,
@@ -55,7 +55,9 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
   const handleGasPriceChange = (e) => {
     setCustomGasPrice(e.target.value);
   };
-
+  useEffect(() => {
+    setCheck(selectedChain === bnbchain);
+  }, [selectedChain]);
   const handleCheckboxChange = (e) => {
     setUseCustomGasPrice(e.target.checked);
   };
@@ -176,7 +178,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             backgroundColor: theme.palette.background.light,
           }}
         >
-          {showCheckButton && (
+          {check && showCheckButton && (
             <Button
               variant="contained"
               size="small"

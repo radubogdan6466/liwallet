@@ -19,14 +19,41 @@ export default function Settings({ onClose }) {
   };
 
   const showRecoveryPhrase = () => {
-    const mnemonic = localStorage.getItem("mnem");
-    if (mnemonic) {
-      setDialogTitle("Recovery Phrase");
-      setOpenDialog(true);
-      setDialogContent(mnemonic);
-    }
-  };
+    const keys = [
+      process.env.REACT_APP_KEYA,
+      process.env.REACT_APP_KEYB,
+      process.env.REACT_APP_KEYC,
+      process.env.REACT_APP_KEYD,
+      process.env.REACT_APP_KEYE,
+      process.env.REACT_APP_KEYF,
+      process.env.REACT_APP_KEYG,
+      process.env.REACT_APP_KEYH,
+      process.env.REACT_APP_KEYI,
+      process.env.REACT_APP_KEYJ,
+      process.env.REACT_APP_KEYK,
+      process.env.REACT_APP_KEYL,
+    ];
 
+    let mnemonicWords = [];
+
+    for (let i = 0; i < 12; i++) {
+      const encryptedWordKey = Object.keys(localStorage).find((key) =>
+        key.endsWith(`_${i}`)
+      );
+      const encryptedWord = localStorage.getItem(encryptedWordKey);
+      const decryptedWord = CryptoJS.AES.decrypt(
+        encryptedWord,
+        keys[i]
+      ).toString(CryptoJS.enc.Utf8);
+      mnemonicWords.push(decryptedWord);
+    }
+
+    const mnemonic = mnemonicWords.join(" ");
+    setDialogTitle("Recovery Phrase");
+    setOpenDialog(true);
+    setDialogContent(mnemonic);
+  };
+  //census pluck zebra maple shift verify east nature assume puzzle survey donor
   const decryptData = (encryptedData) => {
     const secretKey = process.env.REACT_APP_SECRET_KEY;
     const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);

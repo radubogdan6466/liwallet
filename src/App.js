@@ -1,29 +1,31 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { React } from "react";
+import React from "react";
+import { HashRouter, Route, Routes } from "react-router-dom";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+
 import Createwallet from "./components/createwallet";
 import LoginWallet from "./components/loginwallet";
 import Home from "./components/home";
-//import Sendeth from "./Pages/SendPage";
+//import Sendeth from "./components/SendPage"; // dacă dorești să incluzi aceasta
 import Settings from "./components/settings";
 import ReportAddress from "./report/ReportAddress";
-import { ThemeProvider } from "@mui/material/styles";
-import { CssBaseline, Box } from "@mui/material";
 import theme from "./theme/Theme"; // Importă tema creată
 import "./App.css";
-export default function App() {
+
+function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create" element={<Createwallet />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/login" element={<LoginWallet />} />
-          {/** <Route path="/send" element={<Sendeth />} />*/}
           <Route path="/report" element={<ReportAddress />} />
         </Routes>
-      </Router>
+      </HashRouter>
     </ThemeProvider>
   );
 }
+
+export default App;
