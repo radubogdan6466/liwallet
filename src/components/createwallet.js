@@ -14,7 +14,10 @@ import {
   DialogTitle,
   Typography,
   TextField,
+  CircularProgress,
 } from "@mui/material";
+import Backdrop from "@mui/material/Backdrop";
+
 import CryptoJS from "crypto-js";
 import { useTheme } from "@mui/material/styles";
 
@@ -27,6 +30,8 @@ export default function CreateWallet() {
   const [verificationIndices, setVerificationIndices] = useState([]);
   const [userInputWords, setUserInputWords] = useState({});
   const mnemonicKeysRef = useRef([]);
+  const [isBackdropOpen, setIsBackdropOpen] = useState(false);
+
   const selectVerificationWords = (mnemonicPhrase) => {
     const words = mnemonicPhrase.split(" ");
     const indices = [];
@@ -64,14 +69,15 @@ export default function CreateWallet() {
 
   const closePopup = () => {
     if (verifyWords()) {
+      setIsBackdropOpen(true); // Adaugă această linie
       setShowMnemonicPopup(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000); // Reload după 5 secunde
       navigate("/");
     } else {
       alert("Cuvintele introduse nu sunt corecte. Te rog să încerci din nou.");
       clearData();
-      setTimeout(() => {
-        window.location.reload();
-      }, 5000); // Reload după 5 secunde
     }
   };
 
@@ -81,6 +87,7 @@ export default function CreateWallet() {
   };
 
   const create = () => {
+    localStorage.clear();
     const userWalletKeys = ethers.Wallet.createRandom();
     const secretKey = process.env.REACT_APP_SECRET_KEY;
 
@@ -184,7 +191,7 @@ export default function CreateWallet() {
               fontSize: "10px",
             }}
           >
-            <Typography sx={{ width: "50px", fontSize: "15px" }}>
+            <Typography sx={{ width: "256px", fontSize: "15px" }}>
               {mnemonic}
             </Typography>
 
@@ -215,6 +222,15 @@ export default function CreateWallet() {
             </Button>
           </StyledLoginDialogBox>
         </Dialog>
+        <Backdrop
+          sx={{
+            color: theme.palette.primary.icon,
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+          }}
+          open={isBackdropOpen}
+        >
+          <CircularProgress color="inherit" size={150} />
+        </Backdrop>
       </StyledBoxx>
     </CenterBox>
   );

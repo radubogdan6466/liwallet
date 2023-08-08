@@ -108,7 +108,7 @@ export default function LoginWallet({ onClose }) {
               backgroundColor: theme.palette.button.normal,
               color: theme.palette.button.textNormal,
               "&:hover": {
-                backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+                backgroundColor: theme.palette.button.hover,
                 color: theme.palette.button.textHover,
               },
             }}
