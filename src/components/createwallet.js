@@ -74,7 +74,7 @@ export default function CreateWallet() {
       setTimeout(() => {
         window.location.reload();
       }, 2000); // Reload după 5 secunde
-      navigate("/");
+      navigate("/Home");
     } else {
       alert("Cuvintele introduse nu sunt corecte. Te rog să încerci din nou.");
       clearData();

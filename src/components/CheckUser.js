@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { CenterBox, ActionButton, TypographyTitle } from "../hooks/styles";
 import { Button, Dialog, Typography } from "@mui/material";
 import LoginWallet from "./loginwallet";
-import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
+import { useTheme } from "@mui/material/styles";
 
 const CheckUser = ({ handleLogin, handleCreate }) => {
   const navigate = useNavigate();
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
-  const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
+  const theme = useTheme();
 
   const gocreate = () => {
     navigate("/create");
@@ -40,7 +40,7 @@ const CheckUser = ({ handleLogin, handleCreate }) => {
           backgroundColor: theme.palette.button.normal,
           color: theme.palette.button.textNormal,
           "&:hover": {
-            backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+            backgroundColor: theme.palette.button.hover,
             color: theme.palette.button.textHover,
           },
         }}

@@ -41,6 +41,12 @@ const Meniu = () => {
   const handleClose = (menuItem) => {
     setAnchorEl(null);
   };
+  const handleExpandView = () => {
+    window.open(
+      "chrome-extension://edlbpjmiidgfnmblcaildocjliemkfkc/index.html",
+      "_blank"
+    );
+  };
 
   return (
     <StyledBox>
@@ -75,6 +81,7 @@ const Meniu = () => {
         <MenuItem onClick={handleLoginClick}>Login</MenuItem>
         <MenuItem onClick={handleSettingsClick}>Settings</MenuItem>
         <MenuItem onClick={handleReportClick}>Report</MenuItem>
+        <MenuItem onClick={handleExpandView}>Expand</MenuItem>
       </Menu>
 
       <Dialog open={showCreatePopup} onClose={() => setShowCreatePopup(false)}>

@@ -38,10 +38,10 @@ export default function Home() {
     setEthBalance,
     importedTokens,
     setImportedTokens,
+    privateKey,
   } = useWeb3(bnbchain);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const encryptedPrivateKey = localStorage.getItem("pkey");
   const [showSendPopup, setShowSendPopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showReceivePopup, setShowReceivePopup] = useState(false);
@@ -50,7 +50,6 @@ export default function Home() {
     getDefaultTokenForChain(selectedChain)
   );
   const [showImportForm, setShowImportForm] = useState(false);
-  const secretKey = process.env.REACT_APP_SECRET_KEY;
   const theme = useTheme();
   useEffect(() => {
     setSelectedToken(
@@ -59,14 +58,12 @@ export default function Home() {
   }, [selectedChain]);
 
   useEffect(() => {
-    if (encryptedPrivateKey) {
-      const bytes = CryptoJS.AES.decrypt(encryptedPrivateKey, secretKey);
-      const decryptedPrivateKey = bytes.toString(CryptoJS.enc.Utf8);
-      const account = web3.eth.accounts.wallet.add(decryptedPrivateKey);
+    if (privateKey) {
+      const account = web3.eth.accounts.wallet.add(privateKey);
       setIsLoading(false);
       setUserWallet(account);
     }
-  }, [encryptedPrivateKey, web3, secretKey]);
+  }, [privateKey, web3]);
 
   const onTokenImport = useTokenImportHandler(
     importedTokens,

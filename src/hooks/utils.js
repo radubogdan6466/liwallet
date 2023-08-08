@@ -1,10 +1,11 @@
 //utils.js
-export const bnbchain = "https://bsc-dataseed.binance.org/";
+export const bnbchain = "https://data-seed-prebsc-1-s1.binance.org:8545/";
 export const ethchain =
   "https://eth-sepolia.g.alchemy.com/v2/ZTHIPCI_JxKR_hS3IeFzLMYsWUdHs4be";
 export const dogechain = "https://rpc-testnet.dogechain.dog";
 export const polychain = "https://rpc-mumbai.maticvigil.com/";
-
+// bsc testnet https://data-seed-prebsc-1-s1.binance.org:8545/
+// bsc mainnet: https://bsc-dataseed.binance.org/
 export const chains = {
   "Smart Chain": bnbchain,
   "Ethereum chain": ethchain,

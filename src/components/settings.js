@@ -1,39 +1,22 @@
 import React, { useState } from "react";
-import { Button, Dialog, DialogContent, DialogTitle, Box } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { TypographyTitle } from "../hooks/styles";
-import CryptoJS from "crypto-js";
 import { useTheme } from "@mui/material/styles";
+import useWeb3 from "../hooks/useWeb3";
 
 export default function Settings({ onClose }) {
   const theme = useTheme();
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogContent, setDialogContent] = useState("");
+  const { getDecryptedData } = useWeb3();
 
-  const closePopup = () => {
-    onClose();
-  };
-
-  const showPrivateKey = () => {
-    showKey("pkey", "Secret Key");
-  };
+  const keys = Array.from(
+    { length: 12 },
+    (_, i) => process.env[`REACT_APP_KEY${String.fromCharCode(65 + i)}`]
+  );
 
   const showRecoveryPhrase = () => {
-    const keys = [
-      process.env.REACT_APP_KEYA,
-      process.env.REACT_APP_KEYB,
-      process.env.REACT_APP_KEYC,
-      process.env.REACT_APP_KEYD,
-      process.env.REACT_APP_KEYE,
-      process.env.REACT_APP_KEYF,
-      process.env.REACT_APP_KEYG,
-      process.env.REACT_APP_KEYH,
-      process.env.REACT_APP_KEYI,
-      process.env.REACT_APP_KEYJ,
-      process.env.REACT_APP_KEYK,
-      process.env.REACT_APP_KEYL,
-    ];
-
     let mnemonicWords = [];
 
     for (let i = 0; i < 12; i++) {
@@ -41,10 +24,7 @@ export default function Settings({ onClose }) {
         key.endsWith(`_${i}`)
       );
       const encryptedWord = localStorage.getItem(encryptedWordKey);
-      const decryptedWord = CryptoJS.AES.decrypt(
-        encryptedWord,
-        keys[i]
-      ).toString(CryptoJS.enc.Utf8);
+      const decryptedWord = getDecryptedData(encryptedWord, keys[i]);
       mnemonicWords.push(decryptedWord);
     }
 
@@ -53,12 +33,6 @@ export default function Settings({ onClose }) {
     setOpenDialog(true);
     setDialogContent(mnemonic);
   };
-  //census pluck zebra maple shift verify east nature assume puzzle survey donor
-  const decryptData = (encryptedData) => {
-    const secretKey = process.env.REACT_APP_SECRET_KEY;
-    const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
-    return bytes.toString(CryptoJS.enc.Utf8);
-  };
 
   const showKey = (key, title) => {
     setDialogTitle(title);
@@ -66,7 +40,7 @@ export default function Settings({ onClose }) {
     const encryptedData = localStorage.getItem(key);
     if (encryptedData) {
       try {
-        const decryptedData = decryptData(encryptedData);
+        const decryptedData = getDecryptedData(encryptedData);
         setOpenDialog(true);
         setDialogContent(decryptedData);
       } catch (error) {
@@ -76,13 +50,15 @@ export default function Settings({ onClose }) {
       console.error(`Encrypted ${title.toLowerCase()} is missing.`);
     }
   };
-
+  const closePopup = () => {
+    onClose();
+  };
   return (
     <Dialog open={true} onClose={closePopup}>
       <TypographyTitle variant="h6">Security</TypographyTitle>
       <Button
         variant="contained"
-        onClick={showPrivateKey}
+        onClick={() => showKey("pkey", "Secret Key")}
         sx={{
           borderRadius: 0,
           margin: 1,

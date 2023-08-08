@@ -195,3 +195,7 @@ export const FormContainer = styled("form")({
   flexDirection: "column",
   alignItems: "flex-start",
 });
+//createpassword
+export const PasswordCreateBox = styled("grid")({
+  backgroundColor: "#24272a", //gray
+});

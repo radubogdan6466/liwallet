@@ -22,9 +22,7 @@ export default function useWeb3(initialChain = bnbchain) {
   const [selectedChain, setSelectedChain] = useState(initialChain);
   const [userWallet, setUserWallet] = useState(null);
   const [ethBalance, setEthBalance] = useState(0);
-  const [importedTokens, setImportedTokens] = useState(
-    JSON.parse(localStorage.getItem("importedTokens")) || []
-  );
+
   useEffect(() => {
     setWeb3(new Web3(new Web3.providers.HttpProvider(selectedChain)));
   }, [selectedChain, setWeb3]);
@@ -46,17 +44,30 @@ export default function useWeb3(initialChain = bnbchain) {
       setUserWallet(account);
     }
   }, [privateKey, web3]);
+  const getDecryptedData = (encryptedData, key) => {
+    const secretKey = key || process.env.REACT_APP_SECRET_KEY;
+    const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  };
 
+  const getDecryptedPrivateKey = () => {
+    const encryptedPrivateKey = localStorage.getItem("pkey");
+    const bytes = CryptoJS.AES.decrypt(encryptedPrivateKey, secretKey);
+    const originalText = bytes.toString(CryptoJS.enc.Utf8);
+
+    return originalText;
+  };
   return {
     web3,
     selectedChain,
     setSelectedChain,
     userWallet,
     ethBalance,
-    importedTokens,
-    setImportedTokens,
     setWeb3,
     setUserWallet,
     setEthBalance,
+    privateKey,
+    getDecryptedData,
+    getDecryptedPrivateKey,
   };
 }

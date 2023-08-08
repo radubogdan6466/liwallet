@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import { getDecryptedPrivateKey } from "./crypto";
+import useWeb3 from "../../hooks/useWeb3.js";
 import { getTokens } from "./chain";
 import { checkAddressBeforeTransfer } from "./adressCheck.js";
 import { useGasPrice } from "./useGasPrice";
@@ -19,10 +19,8 @@ export const useTransaction = (selectedToken, selectedChain) => {
   const [customGasPrice, setCustomGasPrice] = useState(null);
   const [useCustomGasPrice, setUseCustomGasPrice] = useState(false);
   const provider = new ethers.providers.JsonRpcProvider(selectedChain);
-  const userWallet = new ethers.Wallet(
-    getDecryptedPrivateKey(secretKey),
-    provider
-  );
+  const { getDecryptedPrivateKey } = useWeb3();
+  const userWallet = new ethers.Wallet(getDecryptedPrivateKey(), provider);
   const gasPrice = useGasPrice(provider);
 
   const handleAddressCheck = async () => {

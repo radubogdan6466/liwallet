@@ -30,7 +30,7 @@ export default function LoginWallet({ onClose }) {
   };
 
   const gologin = () => {
-    navigate("/");
+    navigate("/Home");
   };
 
   const handlePrivateKeyChange = (event) => {
