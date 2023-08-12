@@ -156,8 +156,11 @@ export default function Home() {
       alignItems="center"
       justifyContent="center"
       sx={{
-        backgroundColor: theme.palette.primary.home,
+        backgroundColor: theme.palette.primary.second,
 
+        //  minHeight: "640px",
+        height: "100%",
+        // marginTop: 0,
         //backgroundColor: "#24272a",
       }}
     >

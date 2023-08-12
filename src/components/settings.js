@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogTitle, Box } from "@mui/material";
 import { TypographyTitle } from "../hooks/styles";
 import { useTheme } from "@mui/material/styles";
 import useWeb3 from "../hooks/useWeb3";
@@ -24,14 +24,26 @@ export default function Settings({ onClose }) {
         key.endsWith(`_${i}`)
       );
       const encryptedWord = localStorage.getItem(encryptedWordKey);
-      const decryptedWord = getDecryptedData(encryptedWord, keys[i]);
-      mnemonicWords.push(decryptedWord);
+
+      // Verificăm dacă encryptedWord este valid și nu este nul
+      if (encryptedWord) {
+        const decryptedWord = getDecryptedData(encryptedWord, keys[i]);
+        mnemonicWords.push(decryptedWord);
+      } else {
+        mnemonicWords.push(null); // adăugăm o valoare nulă sau poate un string gol
+      }
     }
 
-    const mnemonic = mnemonicWords.join(" ");
-    setDialogTitle("Recovery Phrase");
+    if (mnemonicWords.some((word) => !word)) {
+      setDialogTitle("Atenție");
+      setDialogContent("Ai accesat aplicația cu Pkey fara fraza mnemonica...");
+    } else {
+      const mnemonic = mnemonicWords.join(" ");
+      setDialogTitle("Secret words");
+      setDialogContent(mnemonic);
+    }
+
     setOpenDialog(true);
-    setDialogContent(mnemonic);
   };
 
   const showKey = (key, title) => {
@@ -55,61 +67,89 @@ export default function Settings({ onClose }) {
   };
   return (
     <Dialog open={true} onClose={closePopup}>
-      <TypographyTitle variant="h6">Security</TypographyTitle>
-      <Button
-        variant="contained"
-        onClick={() => showKey("pkey", "Secret Key")}
+      <Box
         sx={{
-          borderRadius: 0,
-          margin: 1,
-
+          backgroundColor: theme.palette.background.light,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-
-          backgroundColor: theme.palette.button.normal,
-          color: theme.palette.button.textNormal,
-          "&:hover": {
-            backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
-            color: theme.palette.button.textHover,
-          },
         }}
       >
-        Show private Key
-      </Button>
-      <Button
-        variant="contained"
-        onClick={showRecoveryPhrase}
-        sx={{
-          borderRadius: 0,
-          margin: 1,
-
-          backgroundColor: theme.palette.button.normal,
-          color: theme.palette.button.textNormal,
-          "&:hover": {
-            backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
-            color: theme.palette.button.textHover,
-          },
-        }}
-      >
-        Secret Recovery Phrase
-      </Button>
-      <Dialog onClose={() => setOpenDialog(false)} open={openDialog}>
-        <DialogTitle style={{ color: theme.palette.text.text }}>
-          {dialogTitle}
-        </DialogTitle>
-        <DialogContent
+        <TypographyTitle
+          variant="h6"
           sx={{
-            padding: 2,
-            color: theme.palette.text.text,
-            height: "120px",
-            width: "256px",
+            backgroundColor: theme.palette.background.light,
           }}
         >
-          {dialogContent}
-        </DialogContent>
-      </Dialog>
+          Security
+        </TypographyTitle>
+        <Button
+          variant="contained"
+          onClick={() => showKey("pkey", "Secret Key")}
+          sx={{
+            borderRadius: 0,
+            margin: 1,
+            width: "230px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+
+            backgroundColor: theme.palette.button.normal,
+            color: theme.palette.button.textNormal,
+            "&:hover": {
+              backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+              color: theme.palette.button.textHover,
+            },
+          }}
+        >
+          Afiseaza private key
+        </Button>
+        <Button
+          variant="contained"
+          onClick={showRecoveryPhrase}
+          sx={{
+            borderRadius: 0,
+            margin: 1,
+            width: "230px",
+            backgroundColor: theme.palette.button.normal,
+            color: theme.palette.button.textNormal,
+            "&:hover": {
+              backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+              color: theme.palette.button.textHover,
+            },
+          }}
+        >
+          Afiseaza Secret words
+        </Button>
+        <Dialog onClose={() => setOpenDialog(false)} open={openDialog}>
+          <DialogTitle
+            style={{
+              color: theme.palette.text.text,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "30px",
+            }}
+          >
+            {dialogTitle}
+          </DialogTitle>
+          <DialogContent
+            sx={{
+              padding: "20px",
+              color: theme.palette.text.text,
+              height: "130px",
+              width: "270px",
+              overflowWrap: "break-word", // asigură-te că textul lung se rupe
+              maxWidth: "90%", // alegi procentajul dorit pentru lățimea maximă a textului
+            }}
+          >
+            {dialogContent}
+          </DialogContent>
+        </Dialog>
+      </Box>
     </Dialog>
   );
 }

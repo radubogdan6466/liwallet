@@ -16,6 +16,7 @@ function App() {
   const [isPasswordMatched, setIsPasswordMatched] = useState(
     localStorage.getItem("passwordWasMatched") === "true"
   );
+
   useEffect(() => {
     const storedPassword = localStorage.getItem("userPassword");
     const isAuthenticated = sessionStorage.getItem("isAuthenticated");
@@ -23,27 +24,26 @@ function App() {
     setIsPasswordMatched(isAuthenticated === "true");
   }, []);
 
-  if (!isPasswordSet) {
-    return <SetPassword onPasswordSet={() => setIsPasswordSet(true)} />;
-  }
-
-  if (!isPasswordMatched) {
-    return <EnterPassword onPasswordMatch={() => setIsPasswordMatched(true)} />;
-  }
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<Navigate to="/Home" />} />
-          <Route path="/connect" element={<EnterPassword />} />
-          <Route path="/Home" element={<Home />} />
-          <Route path="/create" element={<Createwallet />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/login" element={<LoginWallet />} />
-          <Route path="/report" element={<ReportAddress />} />
-        </Routes>
-      </HashRouter>
+      {!isPasswordSet ? (
+        <SetPassword onPasswordSet={() => setIsPasswordSet(true)} />
+      ) : !isPasswordMatched ? (
+        <EnterPassword onPasswordMatch={() => setIsPasswordMatched(true)} />
+      ) : (
+        <HashRouter>
+          <Routes>
+            <Route path="/" element={<Navigate to="/Home" />} />
+            <Route path="/connect" element={<EnterPassword />} />
+            <Route path="/Home" element={<Home />} />
+            <Route path="/create" element={<Createwallet />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/login" element={<LoginWallet />} />
+            <Route path="/report" element={<ReportAddress />} />
+          </Routes>
+        </HashRouter>
+      )}
     </ThemeProvider>
   );
 }

@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import { CenterBox, CenterBoxHome, TypographyTitleForm } from "../hooks/styles";
-import { Box, Typography, TextField, Button, Grid } from "@mui/material";
+import {
+  CenterBoxHome,
+  GridLoginPassword,
+  AvatarLoginPassword,
+  LoginPassBtn,
+  PassLoginFormField,
+  TypographyLoginPass,
+} from "../hooks/styles";
+
 import { useTheme } from "@mui/material/styles";
-import theme from "../theme/Theme";
+import logo from "./MIS.png";
 
 export default function EnterPassword({ onPasswordMatch }) {
   const [enteredPassword, setEnteredPassword] = useState("");
   const storedPassword = localStorage.getItem("userPassword");
+  const theme = useTheme();
 
   const handleSubmit = () => {
     if (enteredPassword === storedPassword) {
@@ -19,26 +27,20 @@ export default function EnterPassword({ onPasswordMatch }) {
   };
 
   return (
-    <Grid
-      container
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      height="100Vh"
-      sx={{
-        backgroundColor: theme.palette.primary.home,
-      }}
-    >
+    <GridLoginPassword>
       <CenterBoxHome item xs={12} sm={6} md={4} lg={3}>
-        <Typography variant="h4">Enter Your Password</Typography>
-        <TextField
-          label="Password"
-          type="text"
+        <AvatarLoginPassword alt="liwallet Logo" src={logo} />
+        <TypographyLoginPass>Introduceti parola</TypographyLoginPass>
+        <PassLoginFormField
+          placeholder="Parola"
+          type="password"
           value={enteredPassword}
           onChange={(e) => setEnteredPassword(e.target.value)}
         />
-        <Button onClick={handleSubmit}>Login</Button>
+        <LoginPassBtn variant="contained" onClick={handleSubmit}>
+          Login
+        </LoginPassBtn>
       </CenterBoxHome>
-    </Grid>
+    </GridLoginPassword>
   );
 }

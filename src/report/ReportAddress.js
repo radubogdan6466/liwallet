@@ -64,34 +64,69 @@ export default function ReportAddress({ onClose }) {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            labelColor: theme.palette.text.input,
+            color: theme.palette.text.input, // Acesta setează culoarea textului
+            "& .MuiInputBase-input": {
+              // Acesta asigură că input-ul real este și el alb
+              color: theme.palette.text.input,
+            },
           }}
         >
           <FormField
             label="Adresa"
             variant="outlined"
+            color="secondary"
             fullWidth
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             error={!!error}
             helperText={error}
             required
+            InputLabelProps={{
+              style: { color: theme.palette.text.input },
+            }}
+            inputProps={{
+              style: { color: theme.palette.text.input },
+            }}
             sx={{
-              color: theme.palette.text.text,
-              labelColor: theme.palette.text.text,
+              labelColor: theme.palette.text.input,
+              color: theme.palette.text.input, // Acesta setează culoarea textului
+              "& .MuiInputBase-input": {
+                // Acesta asigură că input-ul real este și el alb
+                color: theme.palette.text.input,
+              },
             }}
           />
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="details-label">Detalii</InputLabel>
+            <InputLabel
+              color="secondary"
+              id="details-label"
+              sx={{ color: "#000" }}
+            >
+              Detalii
+            </InputLabel>
             <Select
               labelId="details-label"
               label="Detalii"
+              color="secondary"
               value={details}
               onChange={(e) => setDetails(e.target.value)}
             >
-              <MenuItem value={"ScamOption1"}>Scam Option 1</MenuItem>
-              <MenuItem value={"ScamOption2"}>Scam Option 2</MenuItem>
-              <MenuItem value={"ScamOption3"}>Scam Option 3</MenuItem>
-              {/* Adaugă aici alte opțiuni dacă este necesar */}
+              <MenuItem value={"Phishing"}>Phishing</MenuItem>
+              <MenuItem value={"PonziScheme"}>Scheme Ponzi</MenuItem>
+              <MenuItem value={"FakeICO"}>ICO-uri false</MenuItem>
+              <MenuItem value={"PumpAndDump"}>Pump and Dump</MenuItem>
+              <MenuItem value={"CloudMiningScam"}>
+                Scamuri de cloud mining
+              </MenuItem>
+              <MenuItem value={"FakeWallet"}>Portofele false</MenuItem>
+              <MenuItem value={"Shill"}>Promovări exagerate</MenuItem>
+              <MenuItem value={"Malware"}>
+                Malware pentru furtul de criptomonede
+              </MenuItem>
+              <MenuItem value={"Blackmail"}>
+                Blackmail and extortion scams
+              </MenuItem>
             </Select>
           </FormControl>
           {message && (

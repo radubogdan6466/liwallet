@@ -7,7 +7,14 @@ import {
   POLYCHAIN_BASE_URL,
 } from "./links.js";
 import { ethchain, bnbchain, dogechain, polychain } from "./utils.js";
-import { TransferDetailsBox, Link } from "./styles.js";
+import {
+  TransferDetailsBox,
+  LinkTransferDetails,
+  TypographyTrDetails,
+  TypographyTxDetails,
+  TypographyAmountDetails,
+  TypographyToDetails,
+} from "./styles.js";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
 const TransferDetails = ({ details }) => {
@@ -29,64 +36,33 @@ const TransferDetails = ({ details }) => {
   const baseUrl = getBaseUrl(chain);
 
   return (
-    <TransferDetailsBox
-      sx={{
-        backgroundColor: theme.palette.background.light,
-        color: theme.palette.text.text,
-      }}
-    >
-      <Typography
-        variant="body1"
-        sx={{
-          color: theme.palette.transferDetails.icon,
-          fontWeight: "bold",
-        }}
-      >
-        Transfer Details:
-      </Typography>
-      <Typography variant="body2">
+    <TransferDetailsBox>
+      <TypographyTrDetails>Transfer Details:</TypographyTrDetails>
+      <TypographyAmountDetails>
         Amount: {amount} Token: {token}
-      </Typography>
-      <Typography
-        variant="body2"
-        sx={{
-          color: theme.palette.transferDetails.dark,
-        }}
-      >
+      </TypographyAmountDetails>
+      <TypographyTxDetails>
         Txn Hash:
-        <Link
+        <LinkTransferDetails
           href={`${baseUrl}/tx/${txHash}`}
           target="_blank"
           rel="noopener noreferrer"
-          sx={{
-            color: theme.palette.transferDetails.dark,
-            fontWeight: "bold",
-          }}
         >
           {`${txHash.substring(0, 4)}...${txHash.substring(txHash.length - 4)}`}
-        </Link>
-      </Typography>
-      <Typography
-        variant="body2"
-        sx={{
-          color: theme.palette.transferDetails.icon,
-        }}
-      >
+        </LinkTransferDetails>
+      </TypographyTxDetails>
+      <TypographyToDetails>
         To:
-        <Link
+        <LinkTransferDetails
           href={`${baseUrl}/address/${toAddress}`}
           target="_blank"
           rel="noopener noreferrer"
-          sx={{
-            color: theme.palette.transferDetails.dark,
-            fontWeight: "bold",
-          }}
         >
           {`${toAddress.substring(0, 4)}...${toAddress.substring(
             toAddress.length - 4
           )}`}
-        </Link>
-      </Typography>
+        </LinkTransferDetails>
+      </TypographyToDetails>
     </TransferDetailsBox>
   );
 };

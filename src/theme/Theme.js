@@ -5,7 +5,9 @@ const Theme = createTheme({
     primary: {
       main: "#bdbdbd", //gray
       icon: "#9c27b0", //icons color
-      home: "#24272a",
+      home: "#24272a", //principal
+      second: "#212121",
+      TransferDetails: "#f3e5f5",
     },
     text: {
       main: "#9c27b0", // Blue color -
@@ -15,6 +17,7 @@ const Theme = createTheme({
       input: "#000000",
       text: "#000000",
       symbol: "#bdbdbd",
+      red: "#FF0000",
     },
     background: {
       light: "#f3e5f5",
@@ -26,6 +29,7 @@ const Theme = createTheme({
       main: "#3f50b5",
       dark: "#000000",
       contrastText: "#fff",
+      warning: "#FF0000",
     },
     button: {
       normal: "#9c27b0", //mov deschis

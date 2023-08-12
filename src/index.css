@@ -1,6 +1,6 @@
 html,
 body {
-  background-color: #141618;
+  background-color: #24272a;
   color: white;
   display: flex;
   justify-content: center;
@@ -11,4 +11,14 @@ body {
   top: 0;
   right: 0;
   bottom: 0;
+}
+/* Pentru a ascunde scrollbar-ul pentru majoritatea browserelor */
+body::-webkit-scrollbar {
+  display: none; /* Ascunde scrollbar-ul pentru WebKit browsers */
+}
+
+body {
+  -ms-overflow-style: none; /* Ascunde scrollbar-ul pentru IE și Edge */
+  scrollbar-width: none; /* Ascunde scrollbar-ul pentru Firefox */
+  overflow: -moz-scrollbars-none; /* Pentru versiuni mai vechi de Firefox */
 }

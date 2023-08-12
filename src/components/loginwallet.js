@@ -67,18 +67,29 @@ export default function LoginWallet({ onClose }) {
 
   return (
     <Grid
+      position="relative"
       container
       direction="column"
       justifyContent="center"
       alignItems="center"
       sx={{
+        position: "relative",
+        top: 0,
+        left: 0,
+        width: "260px",
+
         backgroundColor: theme.palette.background.light,
       }}
     >
       <TypographyTitle variant="h5" gutterBottom>
         Login
       </TypographyTitle>
-      <FormContainer onSubmit={Login}>
+      <FormContainer
+        onSubmit={Login}
+        sx={{
+          width: "260px",
+        }}
+      >
         <StyledFormControl>
           <FormField
             id="privateKey"
@@ -88,6 +99,9 @@ export default function LoginWallet({ onClose }) {
             onChange={handlePrivateKeyChange}
             fullWidth
             autoComplete="off"
+            sx={{
+              width: "260px",
+            }}
           />
         </StyledFormControl>
         {errorMessage && (

@@ -156,12 +156,16 @@ const TokenImport = ({ onClose, selectedChain }) => {
 
   return (
     <Dialog open={true} onClose={closePopup}>
-      <DialogTitle>
+      <DialogTitle sx={{ backgroundColor: theme.palette.background.light }}>
         <TypographyTitle>Import Token</TypographyTitle>
       </DialogTitle>
-      {error && <Typography>{error}</Typography>}
+      {error && (
+        <Typography sx={{ backgroundColor: theme.palette.background.light }}>
+          {error}
+        </Typography>
+      )}
 
-      <DialogContent>
+      <DialogContent sx={{ backgroundColor: theme.palette.background.light }}>
         <FormContainer
           onSubmit={handleSubmit}
           sx={{
@@ -186,6 +190,12 @@ const TokenImport = ({ onClose, selectedChain }) => {
                 ? error
                 : ""
             }
+            InputLabelProps={{
+              style: { color: theme.palette.text.input },
+            }}
+            inputProps={{
+              style: { color: theme.palette.text.input },
+            }}
           />
 
           <FormField
@@ -193,12 +203,24 @@ const TokenImport = ({ onClose, selectedChain }) => {
             label="Symbol"
             value={tokenSymbol}
             onChange={(event) => setTokenSymbol(event.target.value)}
+            InputLabelProps={{
+              style: { color: theme.palette.text.input },
+            }}
+            inputProps={{
+              style: { color: theme.palette.text.input },
+            }}
           />
           <FormField
             type="number"
             label="Decimals"
             value={tokenDecimals}
             onChange={(event) => setTokenDecimals(event.target.value)}
+            InputLabelProps={{
+              style: { color: theme.palette.text.input },
+            }}
+            inputProps={{
+              style: { color: theme.palette.text.input },
+            }}
           />
           <FormField
             type="number"
@@ -249,7 +271,7 @@ export default TokenImport;
 //   0x250a270B50C287ce4b613Cb4E2d78E14D05EcD9C
 //    0x39bAB97C19902348225588108Be36eD609Cd0b85
 /////////////////////////////////////////////////////
-
+// mtk bsc testnet    0x250a270B50C287ce4b613Cb4E2d78E14D05EcD9C
 //doge coin erc20 tokens
 //   0x8A08d9bF87578De8DAA4C54e423472603aaD813B
 ////////////////////////////////////////////////////////////

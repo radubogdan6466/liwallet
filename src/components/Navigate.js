@@ -85,7 +85,7 @@ const Meniu = () => {
       </Menu>
 
       <Dialog open={showCreatePopup} onClose={() => setShowCreatePopup(false)}>
-        <CreateWallet />
+        <CreateWallet mode="popup" />
       </Dialog>
       <Dialog open={showLoginPopup} onClose={() => setShowLoginPopup(false)}>
         <LoginWallet />

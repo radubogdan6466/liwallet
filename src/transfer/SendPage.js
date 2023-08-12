@@ -2,37 +2,37 @@ import React, { useEffect, useState } from "react";
 import { useTransaction } from "./utils/useTransaction";
 import {
   Dialog,
-  DialogContent,
-  DialogActions,
-  Button,
   InputLabel,
   Select,
   MenuItem,
   Typography,
-  Checkbox,
-  Box,
 } from "@mui/material";
 import {
-  StyledBoxx,
   StyledFormControl,
-  TypographyTitleForm,
-  StyledDialogContent,
   StyledGasTextfield,
   DialogActionsCustomGas,
   StyledDialogSendContent,
   DialogContentSend,
-  StyledTextField,
-  CheckboxCustomGas,
   TypographyCustomGas,
   DialogActionsCustomGasCheck,
+  DialogMain,
+  InputLabelSend,
+  AmountSendTextField,
+  inputLabelPropsStyles,
+  inputPropsStyles,
+  ToAdrsSendTextField,
+  GasCheckBox,
+  TransferDetailsBoxSendPage,
+  CheckButton,
+  CheckedAddressButton,
+  UncheckedAddressButton,
+  TypographyWarning,
 } from "../hooks/styles.js";
 import { getTokens } from "./utils/chain.js";
 import TransferDetails from "../hooks/TransferDetails.js";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
-import { bnbchain } from "../hooks/utils";
 const Send = ({ onClose, selectedToken, selectedChain }) => {
   const theme = useTheme();
-  const [check, setCheck] = useState(false);
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
   const {
     transferDetails,
@@ -55,9 +55,6 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
   const handleGasPriceChange = (e) => {
     setCustomGasPrice(e.target.value);
   };
-  useEffect(() => {
-    setCheck(selectedChain === bnbchain);
-  }, [selectedChain]);
   const handleCheckboxChange = (e) => {
     setUseCustomGasPrice(e.target.checked);
   };
@@ -70,20 +67,12 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
 
   return (
     <Dialog open={true} onClose={closePopup}>
-      <DialogContent
-        sx={{
-          backgroundColor: theme.palette.background.light,
-        }}
-      >
+      <DialogMain>
         <InputLabel id="send-amount-label"></InputLabel>
         <DialogContentSend>
+          <Typography variant="h4">{selectedTokenState}</Typography>
           <StyledFormControl>
-            <InputLabel
-              id="token-select-label"
-              sx={{
-                color: theme.palette.text.secondary,
-              }}
-            />
+            <InputLabelSend id="token-select-label" />
             <Select
               labelId="token-select-label"
               id="token-select"
@@ -98,153 +87,79 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               ))}
             </Select>
           </StyledFormControl>
-          <StyledTextField
+          <AmountSendTextField
             id="val"
-            label="Amount"
-            variant="filled"
+            placeholder="Amount"
             required
-            InputLabelProps={{
-              style: { color: theme.palette.text.input },
-            }}
-            inputProps={{
-              style: { color: theme.palette.text.input },
-            }}
+            size="small"
+            InputLabelProps={{ style: inputLabelPropsStyles(theme) }}
+            inputProps={{ style: inputPropsStyles(theme) }}
           />
-          <StyledTextField
+          <ToAdrsSendTextField
             id="toadrs"
-            label="To Address"
-            variant="outlined"
             required
-            InputLabelProps={{
-              style: { color: theme.palette.text.input },
-            }}
-            inputProps={{
-              style: { color: theme.palette.text.input },
-            }}
+            size="small"
+            placeholder="Sending to"
+            InputLabelProps={{ style: inputLabelPropsStyles(theme) }}
+            inputProps={{ style: inputPropsStyles(theme) }}
           />
-          <DialogActionsCustomGas
-            sx={{
-              width: "222.4px",
-              marginTop: "10px",
-            }}
-          >
+          <DialogActionsCustomGas>
             <DialogActionsCustomGasCheck>
-              <TypographyCustomGas variant="caption">
-                Use custom Gas
-              </TypographyCustomGas>
-              <Checkbox
+              <TypographyCustomGas>Custom Gas</TypographyCustomGas>
+              <GasCheckBox
                 checked={useCustomGasPrice}
                 onChange={handleCheckboxChange}
-                sx={{
-                  color: theme.palette.primary.icon,
-                }}
               />
             </DialogActionsCustomGasCheck>
             <StyledGasTextfield
               id="gasprice"
-              label="(Gwei)"
+              label="Gwei"
+              size="small"
               value={useCustomGasPrice ? customGasPrice || "" : gasPrice || ""}
               onChange={handleGasPriceChange}
               placeholder="Gas Price (Gwei)"
               disabled={!useCustomGasPrice}
-              InputLabelProps={{
-                style: { color: theme.palette.text.input },
-              }}
-              inputProps={{
-                style: { color: theme.palette.text.input },
-              }}
+              InputLabelProps={{ style: inputLabelPropsStyles(theme) }}
+              inputProps={{ style: inputPropsStyles(theme) }}
             />
           </DialogActionsCustomGas>
           <Typography variant="caption">
             Gas Price (Gwei): {gasPrice}
           </Typography>
+          <TransferDetailsBoxSendPage>
+            <TypographyWarning> {warningMessage}</TypographyWarning>
+            {transferDetails && <TransferDetails details={transferDetails} />}
+          </TransferDetailsBoxSendPage>
         </DialogContentSend>
-
-        <Box
-          sx={{
-            color: theme.palette.primary.icon,
-            textAlign: "center",
-            fontSize: "12px",
-            width: "100%",
-            maxWidth: "222.4px",
-            marginLeft: "20px",
-          }}
-        >
-          {warningMessage}
-          {transferDetails && <TransferDetails details={transferDetails} />}
-        </Box>
-        <StyledDialogSendContent
-          sx={{
-            backgroundColor: theme.palette.background.light,
-          }}
-        >
-          {/**check &&  */}
-
+        <StyledDialogSendContent>
           {showCheckButton && (
-            <Button
+            <CheckButton
               variant="contained"
               size="small"
               onClick={handleAddressCheck}
-              sx={{
-                marginRight: "5px", // adaugă spațiu între butoane
-                fontSize: "12px",
-                width: "100px",
-
-                backgroundColor: theme.palette.button.normal,
-                color: theme.palette.button.textNormal,
-                "&:hover": {
-                  backgroundColor: theme.palette.button.hover,
-                  color: theme.palette.button.textHover,
-                },
-              }}
             >
               Check Address
-            </Button>
+            </CheckButton>
           )}
           {addressChecked && (
-            <Button
+            <CheckedAddressButton
               variant="contained"
-              color="success"
               onClick={transferToken}
               size="small"
-              sx={{
-                marginRight: "5px", // adaugă spațiu între butoane
-                fontSize: "12px",
-                width: "100px",
-
-                backgroundColor: theme.palette.button.normal,
-                color: theme.palette.button.textNormal,
-                "&:hover": {
-                  backgroundColor: theme.palette.button.hover,
-                  color: theme.palette.button.textHover,
-                },
-              }}
             >
               Send {selectedTokenState}
-            </Button>
+            </CheckedAddressButton>
           )}
-          <Button
+          <UncheckedAddressButton
             variant="contained"
             color="error"
             onClick={transferToken}
             size="small"
-            sx={{
-              marginRight: "5px", // adaugă spațiu între butoane
-              fontSize: "12px",
-              width: "100px",
-
-              backgroundColor: theme.palette.button.normal,
-              color: theme.palette.button.textNormal,
-              "&:hover": {
-                backgroundColor: theme.palette.button.hover,
-                color: theme.palette.button.textHover,
-              },
-            }}
           >
             Send {selectedTokenState}
-          </Button>
+          </UncheckedAddressButton>
         </StyledDialogSendContent>
-      </DialogContent>
+      </DialogMain>
     </Dialog>
   );
 };

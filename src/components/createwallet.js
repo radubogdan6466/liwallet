@@ -1,12 +1,15 @@
 import React, { useState, useRef } from "react";
 import { ethers } from "ethers";
 import { useNavigate } from "react-router-dom";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 import {
   CenterBox,
   StyledBoxx,
   ActionsContainer,
   TypographyTitle,
   StyledLoginDialogBox,
+  CenterBoxHome,
 } from "../hooks/styles";
 import {
   Button,
@@ -15,15 +18,19 @@ import {
   Typography,
   TextField,
   CircularProgress,
+  Box,
+  Grid,
 } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 
 import CryptoJS from "crypto-js";
 import { useTheme } from "@mui/material/styles";
 
-export default function CreateWallet() {
+export default function CreateWallet({ mode }) {
   const theme = useTheme();
   const navigate = useNavigate();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isPopup = mode === "popup";
 
   const [showMnemonicPopup, setShowMnemonicPopup] = useState(false);
   const [mnemonic, setMnemonic] = useState("");
@@ -31,6 +38,8 @@ export default function CreateWallet() {
   const [userInputWords, setUserInputWords] = useState({});
   const mnemonicKeysRef = useRef([]);
   const [isBackdropOpen, setIsBackdropOpen] = useState(false);
+  const [tempMnemonic, setTempMnemonic] = useState(""); // Stare temporară pentru mnemonic
+  const [userWalletKeys, setUserWalletKeys] = useState(null);
 
   const selectVerificationWords = (mnemonicPhrase) => {
     const words = mnemonicPhrase.split(" ");
@@ -50,7 +59,7 @@ export default function CreateWallet() {
   };
 
   const verifyWords = () => {
-    const words = mnemonic.split(" ");
+    const words = tempMnemonic.split(" ");
     for (let i of verificationIndices) {
       if (words[i] !== userInputWords[i]) {
         return false;
@@ -58,51 +67,52 @@ export default function CreateWallet() {
     }
     return true;
   };
-
+  const clearOldMnemonicData = () => {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key.startsWith("data_")) {
+        localStorage.removeItem(key);
+        i--; // Ajustează indexul pentru a ține cont de elementul șters
+      }
+    }
+  };
   const clearData = () => {
     localStorage.removeItem("pkey");
-
     mnemonicKeysRef.current.forEach((key) => {
       localStorage.removeItem(key);
     });
   };
+  const saveToLocalStorage = (privateKey, mnemonicPhrase) => {
+    // 1. Elimină cheia privată existentă
+    localStorage.removeItem("pkey");
+    clearOldMnemonicData();
 
-  const closePopup = () => {
-    if (verifyWords()) {
-      setIsBackdropOpen(true); // Adaugă această linie
-      setShowMnemonicPopup(false);
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000); // Reload după 5 secunde
-      navigate("/Home");
-    } else {
-      alert("Cuvintele introduse nu sunt corecte. Te rog să încerci din nou.");
-      clearData();
-    }
-  };
+    // 2. Șterge toate datele mnemonice vechi din localStorage
+    mnemonicKeysRef.current.forEach((key) => {
+      localStorage.removeItem(key);
+    });
 
-  const handleCloseDialog = () => {
-    clearData();
-    setShowMnemonicPopup(false);
-  };
+    // 3. Resetare mnemonicKeysRef
+    mnemonicKeysRef.current = [];
 
-  const create = () => {
-    localStorage.clear();
-    const userWalletKeys = ethers.Wallet.createRandom();
+    // 4. Verifică dacă ai o cheie secretă setată
     const secretKey = process.env.REACT_APP_SECRET_KEY;
-
     if (!secretKey) {
       console.error("Secret key is not defined!");
       return;
     }
 
+    // 5. Criptează și stochează cheia privată
     const encryptedPrivateKey = CryptoJS.AES.encrypt(
-      userWalletKeys.privateKey,
+      privateKey,
       secretKey
     ).toString();
     localStorage.setItem("pkey", encryptedPrivateKey);
 
-    const mnemonicWords = userWalletKeys.mnemonic.phrase.split(" ");
+    // 6. Separă fraza mnemonică în cuvinte
+    const mnemonicWords = mnemonicPhrase.split(" ");
+
+    // 7. Definește cheile cu care vor fi criptate cuvintele mnemonice
     const keys = [
       process.env.REACT_APP_KEYA,
       process.env.REACT_APP_KEYB,
@@ -118,44 +128,106 @@ export default function CreateWallet() {
       process.env.REACT_APP_KEYL,
     ];
 
-    if (keys.some((key) => !key)) {
-      console.error("One or more keys are not defined!");
-      return;
-    }
-
+    // 8. Criptează fiecare cuvânt mnemonic și stochează-l în localStorage
     mnemonicWords.forEach((word, index) => {
       const encryptedWord = CryptoJS.AES.encrypt(word, keys[index]).toString();
       const randomKey = `data_${Math.random()
         .toString(36)
         .substr(2, 5)}_${index}`;
-
       localStorage.setItem(randomKey, encryptedWord);
+
+      // Actualizează referința pentru cheile mnemonice
       mnemonicKeysRef.current.push(randomKey);
     });
+  };
 
-    setMnemonic(userWalletKeys.mnemonic.phrase);
-    selectVerificationWords(userWalletKeys.mnemonic.phrase);
-    setShowMnemonicPopup(true);
+  const create = ({ mode }) => {
+    const isPopup = mode === "popup";
+
+    const keys = ethers.Wallet.createRandom();
+    if (keys && keys.mnemonic && keys.mnemonic.phrase) {
+      setTempMnemonic(keys.mnemonic.phrase);
+      selectVerificationWords(keys.mnemonic.phrase);
+      setUserWalletKeys(keys);
+      setShowMnemonicPopup(true);
+    } else {
+      console.error("Failed to generate wallet keys.");
+    }
+  };
+
+  const closePopup = () => {
+    if (verifyWords()) {
+      saveToLocalStorage(userWalletKeys.privateKey, tempMnemonic);
+      setMnemonic(tempMnemonic);
+      setIsBackdropOpen(true);
+      setShowMnemonicPopup(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+      navigate("/Home");
+    } else {
+      alert("Cuvintele introduse nu sunt corecte. Te rog să încerci din nou.");
+      //clearData();
+    }
+  };
+
+  const handleCloseDialog = () => {
+    setTempMnemonic("");
+    setShowMnemonicPopup(false);
   };
 
   return (
-    <CenterBox
+    <Box
+      item
       container
-      sx={{ backgroundColor: theme.palette.background.light }}
+      sx={{
+        backgroundColor: theme.palette.primary.second,
+        width: isSmallScreen ? "300px" : "198.5px",
+        height: isSmallScreen ? "100Vh" : "600px",
+        position: "relative",
+        top: 0,
+        left: 0,
+        width: isPopup ? "270px" : "50Vh",
+        minHeight: isPopup ? "313px" : "100Vh",
+        height: "auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
-      <StyledBoxx
+      <Box
         className="createPage"
-        sx={{ backgroundColor: theme.palette.background.light }}
+        sx={{ backgroundColor: theme.palette.primary.second }}
       >
-        <TypographyTitle>
+        <Typography
+          sx={{
+            fontSize: 16,
+            textAlign: "center",
+
+            color: theme.palette.text.secondary,
+          }}
+        >
           Salveaza fraza pe o hartie. Odata ce ai creat portofelul, nu vei mai
           avea acces la ea.
-        </TypographyTitle>
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: 10,
+            textAlign: "center",
+            padding: "20px",
+            color: theme.palette.text.red,
+          }}
+        >
+          Nu suntem responsabili pentru pierderea frazei mnemonice sau a private
+          key si nu avem acces la aceste date.
+        </Typography>
         <ActionsContainer>
           <Button
             variant="contained"
             onClick={create}
             sx={{
+              marginTop: "20px",
+              marginBottom: "20px",
               backgroundColor: theme.palette.button.normal,
               color: theme.palette.button.textNormal,
               "&:hover": {
@@ -164,7 +236,7 @@ export default function CreateWallet() {
               },
             }}
           >
-            Create wallet
+            Genereaza wallet
           </Button>
         </ActionsContainer>
 
@@ -173,43 +245,77 @@ export default function CreateWallet() {
           onClose={handleCloseDialog}
           aria-labelledby="mnemonic-dialog-title"
         >
-          <DialogTitle
-            id="mnemonic-dialog-title"
-            sx={{
-              backgroundColor: theme.palette.background.light,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            Secret Phrase
-          </DialogTitle>
           <StyledLoginDialogBox
             sx={{
-              backgroundColor: theme.palette.background.light,
-              fontSize: "10px",
+              backgroundColor: theme.palette.primary.second,
             }}
           >
-            <Typography sx={{ width: "256px", fontSize: "15px" }}>
-              {mnemonic}
+            <DialogTitle
+              id="mnemonic-dialog-title"
+              sx={{
+                backgroundColor: theme.palette.primary.second,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                color: theme.palette.text.secondary,
+              }}
+            >
+              Secret Phrase
+            </DialogTitle>
+            <Typography
+              sx={{ fontSize: "15px", color: theme.palette.text.secondary }}
+            >
+              {tempMnemonic}
             </Typography>
-
-            {verificationIndices.map((index) => (
-              <div key={index}>
-                <Typography>Cuvântul {index + 1}</Typography>
-                <TextField
-                  size="small"
-                  value={userInputWords[index] || ""}
-                  onChange={(e) => handleInputChange(index, e.target.value)}
-                />
-              </div>
-            ))}
-
+            <Grid
+              container
+              direction="row"
+              sx={{
+                marginTop: "10px",
+                justifyContent: "space-between",
+              }}
+            >
+              {verificationIndices.map((index) => (
+                <Grid
+                  item
+                  key={index}
+                  sx={{ fontSize: "15px", color: theme.palette.text.secondary }}
+                >
+                  <Box
+                    sx={{
+                      color: theme.palette.text.secondary,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography fontSize="12px">word {index + 1}</Typography>
+                    <TextField
+                      type="password"
+                      value={userInputWords[index] || ""}
+                      onChange={(e) => handleInputChange(index, e.target.value)}
+                      sx={{
+                        width: "70px",
+                        height: "30px",
+                        //marginLeft: "10px",
+                        color: theme.palette.text.secondary, // Acesta setează culoarea textului
+                        "& .MuiInputBase-input": {
+                          // Acesta asigură că input-ul real este și el alb
+                          color: theme.palette.text.secondary,
+                        },
+                      }}
+                    />
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
             <Button
               variant="contained"
               onClick={closePopup}
               sx={{
+                marginTop: "40px",
                 backgroundColor: theme.palette.button.normal,
                 color: theme.palette.button.textNormal,
                 "&:hover": {
@@ -231,8 +337,8 @@ export default function CreateWallet() {
         >
           <CircularProgress color="inherit" size={150} />
         </Backdrop>
-      </StyledBoxx>
-    </CenterBox>
+      </Box>
+    </Box>
   );
 }
 
