@@ -14,6 +14,7 @@ export default function TokenSection(props) {
     bnbchain,
     dogechain,
     polychain,
+    arbitrumchain,
     ethBalance,
     handleTokenClick,
   } = props;
@@ -34,6 +35,7 @@ export default function TokenSection(props) {
         bnbchain={bnbchain}
         polychain={polychain}
         dogechain={dogechain}
+        arbitrumchain={arbitrumchain}
         ethBalance={ethBalance}
         handleTokenClick={handleTokenClick}
       />

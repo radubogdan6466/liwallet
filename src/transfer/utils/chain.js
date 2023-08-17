@@ -1,9 +1,16 @@
-import { ethchain, bnbchain, dogechain, polychain } from "../../hooks/utils";
+import {
+  ethchain,
+  bnbchain,
+  dogechain,
+  polychain,
+  arbitrumchain,
+} from "../../hooks/utils";
 import {
   bnbchainTokens,
   ethchainTokens,
   dogechainTokens,
   polychainTokens,
+  arbitrumchainTokens,
 } from "../constants/tokens";
 
 export const getTokens = (chain) => {
@@ -21,6 +28,26 @@ export const getTokens = (chain) => {
       { symbol: "Matic Token", address: "", abi: null },
       ...polychainTokens,
     ];
+  } else if (chain === arbitrumchain) {
+    return [
+      { symbol: "ETH Arbitrum", address: "", abi: null },
+      ...arbitrumchainTokens,
+    ];
+  }
+  return [];
+};
+
+export const NativToken = (chain) => {
+  if (chain === ethchain) {
+    return "ETH";
+  } else if (chain === bnbchain) {
+    return "BNB";
+  } else if (chain === dogechain) {
+    return "DOGECOIN";
+  } else if (chain === polychain) {
+    return "MATIC";
+  } else if (chain === arbitrumchain) {
+    return "ETH";
   }
   return [];
 };

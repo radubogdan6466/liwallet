@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTransaction } from "./utils/useTransaction";
+import { ethers } from "ethers";
 import {
   Dialog,
   InputLabel,
@@ -28,12 +29,18 @@ import {
   UncheckedAddressButton,
   TypographyWarning,
 } from "../hooks/styles.js";
-import { getTokens } from "./utils/chain.js";
+import { getTokens, NativToken } from "./utils/chain.js";
+
 import TransferDetails from "../hooks/TransferDetails.js";
-import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
+import { useTheme } from "@mui/material/styles";
+import calculateTransactionFee from "./utils/calculateTransactionFee";
 const Send = ({ onClose, selectedToken, selectedChain }) => {
   const theme = useTheme();
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
+  const gasLimit = ethers.BigNumber.from(21000); // Exemplu de limită de gaz
+  const [transactionFee, setTransactionFee] = useState("0");
+  const [nativeCurrencySymbol, setNativeCurrencySymbol] = useState("ETH");
+
   const {
     transferDetails,
     addressChecked,
@@ -46,7 +53,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
     setCustomGasPrice,
     useCustomGasPrice,
     setUseCustomGasPrice,
-  } = useTransaction(selectedToken, selectedChain);
+  } = useTransaction(selectedTokenState, selectedChain);
 
   //andr        0xEC76CFF0C4992629f7Aa533BECc2783B9d420E68
   const closePopup = () => {
@@ -64,7 +71,19 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
       setSelectedTokenState(tokens[0].symbol);
     }
   }, [selectedChain, selectedTokenState]);
+  useEffect(() => {
+    const fee = calculateTransactionFee(gasPrice, gasLimit);
+    setTransactionFee(fee);
+  }, [gasPrice]);
+  useEffect(() => {
+    const newNativeCurrencySymbol = NativToken(selectedChain);
+    setNativeCurrencySymbol(newNativeCurrencySymbol);
 
+    const tokens = getTokens(selectedChain);
+    if (!tokens.some((token) => token.symbol === selectedTokenState)) {
+      setSelectedTokenState(tokens[0].symbol);
+    }
+  }, [selectedChain, selectedTokenState]);
   return (
     <Dialog open={true} onClose={closePopup}>
       <DialogMain>
@@ -125,6 +144,10 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
           </DialogActionsCustomGas>
           <Typography variant="caption">
             Gas Price (Gwei): {gasPrice}
+          </Typography>
+          <Typography variant="caption">
+            Transaction Fee {nativeCurrencySymbol}:
+            {Number(transactionFee).toFixed(8)}
           </Typography>
           <TransferDetailsBoxSendPage>
             <TypographyWarning> {warningMessage}</TypographyWarning>

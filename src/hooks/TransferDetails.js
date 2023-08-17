@@ -5,8 +5,15 @@ import {
   BSCSCAN_BASE_URL,
   DOGECHAIN_BASE_URL,
   POLYCHAIN_BASE_URL,
+  ARBITRUMCHAIN_BASE_URL,
 } from "./links.js";
-import { ethchain, bnbchain, dogechain, polychain } from "./utils.js";
+import {
+  ethchain,
+  bnbchain,
+  dogechain,
+  polychain,
+  arbitrumchain,
+} from "./utils.js";
 import {
   TransferDetailsBox,
   LinkTransferDetails,
@@ -30,6 +37,8 @@ const TransferDetails = ({ details }) => {
       return DOGECHAIN_BASE_URL;
     } else if (chain === polychain) {
       return POLYCHAIN_BASE_URL;
+    } else if (chain === arbitrumchain) {
+      return ARBITRUMCHAIN_BASE_URL;
     }
   };
 

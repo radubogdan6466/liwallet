@@ -11,6 +11,7 @@ export default function Balance({
   bnbchain,
   polychain,
   dogechain,
+  arbitrumchain,
 }) {
   const theme = useTheme();
 
@@ -31,6 +32,8 @@ export default function Balance({
           ? "Matic Token"
           : selectedChain === dogechain
           ? "DOGECOIN"
+          : selectedChain === arbitrumchain
+          ? "ETH Arbitrum"
           : "Unknown Chain"}
       </TypographyTitle>
     </Box>

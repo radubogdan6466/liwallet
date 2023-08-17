@@ -36,7 +36,7 @@ export const CenterBoxHome = styled(Grid)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   height: "100%",
-  border: "1px solid red",
+  //border: "1px solid red",
 
   //padding: theme.spacing(3),
 
@@ -411,4 +411,41 @@ export const TypographyLoginPass = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
   fontWeight: "bold",
   fontSize: "25px",
+}));
+export const TypographySetupPass = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  fontSize: "10px",
+  marginLeft: "10px",
+  marginRight: "10px",
+  justifyContent: "center",
+}));
+export const PassSetupFormField = styled(TextField)(({ theme }) => ({
+  marginTop: "20px",
+  borderColor: theme.palette.primary.icon,
+  width: "80%",
+
+  "& .MuiOutlinedInput-root": {
+    "&:hover fieldset": {
+      borderColor: theme.palette.primary.icon,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.primary.icon,
+    },
+  },
+  "& .MuiOutlinedInput-root fieldset": {
+    borderColor: theme.palette.primary.icon,
+  },
+}));
+export const SetupPassBtn = styled(Button)(({ theme }) => ({
+  fontSize: "12px",
+  height: "small",
+  width: "80%",
+
+  marginTop: "20px",
+  backgroundColor: theme.palette.button.normal,
+  color: theme.palette.button.textNormal,
+  "&:hover": {
+    backgroundColor: theme.palette.button.hover,
+    color: theme.palette.button.textHover,
+  },
 }));

@@ -1,29 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { HashRouter, Route, Routes, Navigate } from "react-router-dom";
 import { ThemeProvider, CssBaseline } from "@mui/material";
-import SetPassword from "./appAccess/setPassword.js";
-import EnterPassword from "./appAccess/enterPassword.js";
+import SetPassword from "./appAccess/ui/setPassword.js";
+import EnterPassword from "./appAccess/ui/enterPassword.js";
 import Createwallet from "./components/createwallet";
 import LoginWallet from "./components/loginwallet";
 import Home from "./components/home";
 import Settings from "./components/settings";
 import ReportAddress from "./report/ReportAddress";
 import theme from "./theme/Theme"; // Importă tema creată
+import { AppLogic } from "./appAccess/logic/appLogic.js";
 import "./App.css";
 
 function App() {
-  const [isPasswordSet, setIsPasswordSet] = useState(false);
-  const [isPasswordMatched, setIsPasswordMatched] = useState(
-    localStorage.getItem("passwordWasMatched") === "true"
-  );
-
-  useEffect(() => {
-    const storedPassword = localStorage.getItem("userPassword");
-    const isAuthenticated = sessionStorage.getItem("isAuthenticated");
-    setIsPasswordSet(!!storedPassword);
-    setIsPasswordMatched(isAuthenticated === "true");
-  }, []);
-
+  const {
+    isPasswordSet,
+    setIsPasswordSet,
+    isPasswordMatched,
+    setIsPasswordMatched,
+  } = AppLogic();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

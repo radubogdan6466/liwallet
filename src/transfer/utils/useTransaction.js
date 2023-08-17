@@ -9,50 +9,32 @@ import bscAbi from "../../JsonFiles/testBnbAbi.json";
 import ercAbi from "../../JsonFiles/testErcAbi.json";
 import dogeAbi from "../../JsonFiles/testDogeAbi.json";
 import polyAbi from "../../JsonFiles/testPolyAbi.json";
+import { eip1559Chains, getChainNameFromUrl } from "../../hooks/utils.js";
 
 export const useTransaction = (selectedToken, selectedChain) => {
-  const secretKey = process.env.REACT_APP_SECRET_KEY;
   const [transferDetails, setTransferDetails] = useState(null);
   const [addressChecked, setAddressChecked] = useState(false);
   const [showCheckButton, setShowCheckButton] = useState(true);
   const [warningMessage, setWarningMessage] = useState("");
   const [customGasPrice, setCustomGasPrice] = useState(null);
   const [useCustomGasPrice, setUseCustomGasPrice] = useState(false);
+
   const provider = new ethers.providers.JsonRpcProvider(selectedChain);
   const { getDecryptedPrivateKey } = useWeb3();
   const userWallet = new ethers.Wallet(getDecryptedPrivateKey(), provider);
   const gasPrice = useGasPrice(provider);
+  const chainName = getChainNameFromUrl(selectedChain);
+  const isEIP1559Supported = eip1559Chains[chainName];
 
   const handleAddressCheck = async () => {
     const toAddress = document.getElementById("toadrs").value;
     try {
       const { warningMessage, isAddressChecked } =
         await checkAddressBeforeTransfer(toAddress);
+
       setWarningMessage(warningMessage);
       setAddressChecked(isAddressChecked);
       setShowCheckButton(!isAddressChecked);
-      if (isAddressChecked) {
-        // Dacă adresa este validă, trimite taxă în MIS
-        /**
-         * 
-          const MIS_TOKEN_ADDRESS = "0x1e6E565C5966Ef01411788F29B7fFc3E2Cd1A574";
-        const FEE_ADDRESS = "0x8e42daF6DD60Ddc13d47E2e5ea1150d4e2B8763b";
-        const MIS_FEE_AMOUNT = ethers.utils.parseUnits("1", 18);
-
-        const tokenContract = new ethers.Contract(
-          MIS_TOKEN_ADDRESS,
-          bscAbi,
-          userWallet
-        );
-
-        const balance = await tokenContract.balanceOf(userWallet.address);
-        if (balance.lt(MIS_FEE_AMOUNT)) {
-          throw new Error("Need at least 1 MIS to check the address");
-        }
-
-        await tokenContract.transfer(FEE_ADDRESS, MIS_FEE_AMOUNT);
-         */
-      }
     } catch (errorMessage) {
       setWarningMessage(errorMessage.message || errorMessage);
     }
@@ -62,93 +44,56 @@ export const useTransaction = (selectedToken, selectedChain) => {
     try {
       const toAddress = document.getElementById("toadrs").value;
       const amount = document.getElementById("val").value;
-      let gasPrice = document.getElementById("gasprice").value;
-      const actualGasPrice = useCustomGasPrice ? customGasPrice : gasPrice;
-
-      // Verificăm dacă prețul gazului este mai mic decât cel estimat
-      if (
-        gasPrice &&
-        parseFloat(gasPrice) <
-          parseFloat(
-            ethers.utils.formatUnits(await provider.getGasPrice(), "gwei")
-          )
-      ) {
-        throw new Error("gas_price_too_low");
-      }
-      if (!gasPrice) {
-        gasPrice = ethers.utils.formatUnits(
-          await provider.getGasPrice(),
-          "gwei"
-        );
-      }
-
-      let tokenContract, tokenAddress, tokenABI, amountInSmallestUnit;
-      const tokens = getTokens(selectedChain);
-      const selectedTokenData = tokens.find(
+      const selectedTokenData = getTokens(selectedChain).find(
         (token) => token.symbol === selectedToken
       );
+
       if (!selectedTokenData) {
         throw new Error(`Token ${selectedToken} not found in tokens list`);
       }
-      if (
-        selectedToken === "ETH Token" ||
-        selectedToken === "BNB" ||
-        selectedToken === "Matic Token" ||
-        selectedToken === "DOGECOIN"
-      ) {
-        amountInSmallestUnit = ethers.utils.parseUnits(
-          amount,
-          selectedTokenData.decimals
-        );
-      } else {
-        tokenAddress = selectedTokenData.address;
-        if (selectedTokenData.chainId === 11155111) {
-          tokenABI = ercAbi;
-        } else if (selectedTokenData.chainId === 56) {
-          tokenABI = bscAbi;
-        } else if (selectedTokenData.chainId === 568) {
-          tokenABI = dogeAbi;
-        } else if (selectedTokenData.chainId === 137) {
-          tokenABI = polyAbi;
-        } else {
-          throw new Error(`Token ${selectedToken} has no ABI data`);
-        }
-        tokenContract = new ethers.Contract(tokenAddress, tokenABI, userWallet);
-        amountInSmallestUnit = ethers.utils.parseUnits(
-          amount,
-          selectedTokenData.decimals
-        );
-      }
+
+      const amountInSmallestUnit = ethers.utils.parseUnits(
+        amount,
+        selectedTokenData.decimals
+      );
+
+      const transactionParameters = isEIP1559Supported
+        ? await getEIP1559TransactionParameters()
+        : {
+            gasPrice: ethers.utils.parseUnits(
+              gasPrice || (await provider.getGasPrice()),
+              "gwei"
+            ),
+          };
+
       let tx;
+
       if (
-        selectedToken === "ETH Token" ||
-        selectedToken === "BNB" ||
-        selectedToken === "Matic Token" ||
-        selectedToken === "DOGECOIN"
+        [
+          "ETH Token",
+          "BNB",
+          "Matic Token",
+          "ETH Arbitrum",
+          "DOGECOIN",
+        ].includes(selectedToken)
       ) {
-        const transaction = {
+        tx = await userWallet.sendTransaction({
           to: toAddress,
           value: amountInSmallestUnit,
-          gasPrice: ethers.utils.parseUnits(gasPrice, "gwei"),
-        };
-
-        tx = await userWallet.sendTransaction(transaction);
+          ...transactionParameters,
+        });
       } else {
+        const tokenContract = getTokenContract(selectedTokenData);
         const gasLimit = await tokenContract.estimateGas.transfer(
           toAddress,
           amountInSmallestUnit
         );
+
         tx = await tokenContract.transfer(toAddress, amountInSmallestUnit, {
-          gasLimit: gasLimit,
-          gasPrice: ethers.utils.parseUnits(gasPrice, "gwei"),
+          gasLimit,
+          ...transactionParameters,
         });
       }
-      /**
-       *  setTimeout(() => {
-        window.location.reload();
-      }, 5000);
-       *
-       */
 
       setTransferDetails({
         toAddress,
@@ -160,9 +105,41 @@ export const useTransaction = (selectedToken, selectedChain) => {
       });
     } catch (err) {
       console.error(err);
-      const errorMessage = handleError(err);
-      setWarningMessage(errorMessage);
+      setWarningMessage(handleError(err));
     }
+  };
+
+  const getTokenContract = (selectedTokenData) => {
+    const tokenAddress = selectedTokenData.address;
+    const tokenABI = getTokenABI(selectedTokenData.chainId);
+    return new ethers.Contract(tokenAddress, tokenABI, userWallet);
+  };
+
+  const getTokenABI = (chainId) => {
+    switch (chainId) {
+      case 11155111:
+        return ercAbi;
+      case 56:
+        return bscAbi;
+      case 568:
+        return dogeAbi;
+      case 137:
+        return polyAbi;
+      case 42161:
+        return ercAbi;
+      default:
+        throw new Error("Token has no ABI data");
+    }
+  };
+
+  const getEIP1559TransactionParameters = async () => {
+    const latestBlock = await provider.getBlock("latest");
+    const baseFee = latestBlock.baseFeePerGas;
+    const maxPriorityFeePerGas = ethers.utils.parseUnits("2", "gwei");
+    const maxFeePerGas = baseFee
+      .add(maxPriorityFeePerGas)
+      .add(ethers.utils.parseUnits("10", "gwei"));
+    return { maxPriorityFeePerGas, maxFeePerGas };
   };
 
   return {

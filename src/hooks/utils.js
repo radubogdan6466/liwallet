@@ -1,11 +1,11 @@
 //utils.js
-export const bnbchain = "https://data-seed-prebsc-1-s1.binance.org:8545/";
+export const bnbchain = "https://bsc-testnet.publicnode.com";
 export const ethchain =
-  "https://eth-sepolia.g.alchemy.com/v2/ZTHIPCI_JxKR_hS3IeFzLMYsWUdHs4be";
+  "https://sepolia.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd";
 export const dogechain = "https://rpc-testnet.dogechain.dog";
 export const polychain = "https://rpc-mumbai.maticvigil.com/";
-// bsc testnet https://data-seed-prebsc-1-s1.binance.org:8545/
-// bsc mainnet: https://bsc-dataseed.binance.org/
+export const arbitrumchain =
+  "https://arb-goerli.g.alchemy.com/v2/t2cQiVI5X6yk0mZDgu1IrM90NAVhhMxi";
 export const chains = {
   "Smart Chain": bnbchain,
   "Ethereum chain": ethchain,
@@ -22,7 +22,8 @@ export const getChainNameFromUrl = (url) => {
       return "dogechain";
     case polychain:
       return "polychain";
-
+    case arbitrumchain:
+      return "polychain";
     default:
       return "";
   }
@@ -32,6 +33,14 @@ export const chainIds = {
   ethchain: 11155111,
   dogechain: 568,
   polychain: 137,
+  arbitrumchain: 42161,
+};
+export const eip1559Chains = {
+  bnbchain: false,
+  ethchain: true, // presupunem ca reteaua ta Ethereum suporta EIP-1559
+  dogechain: false,
+  polychain: false,
+  arbitrumchain: false,
 };
 
 export function getDefaultTokenForChain(chain) {
@@ -40,6 +49,7 @@ export function getDefaultTokenForChain(chain) {
     ethchain: "ETH Token",
     polychain: "Matic Token",
     dogechain: "DOGECOIN",
+    arbitrumchain: "ETH Arbitrum",
   };
 
   return defaultTokens[chain];
@@ -51,3 +61,9 @@ export function getDefaultTokenForChain(chain) {
 // https://polygon-rpc.com
 //export const ethchain =
 // "https://eth-mainnet.g.alchemy.com/v2/MGbZdSk9u0Vlsapa_HufvZievDS9ajR6";
+// bsc testnet https://data-seed-prebsc-1-s1.binance.org:8545/
+// bsc mainnet: https://bsc-dataseed.binance.org/
+//test bsc 2   https://bsc-testnet.publicnode.com
+// eth test sepolia infura   https://sepolia.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd
+
+//ARBITRUB  https://arb-goerli.g.alchemy.com/v2/t2cQiVI5X6yk0mZDgu1IrM90NAVhhMxi

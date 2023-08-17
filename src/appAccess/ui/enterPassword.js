@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   CenterBoxHome,
   GridLoginPassword,
@@ -6,25 +6,16 @@ import {
   LoginPassBtn,
   PassLoginFormField,
   TypographyLoginPass,
-} from "../hooks/styles";
+} from "../../hooks/styles";
 
 import { useTheme } from "@mui/material/styles";
-import logo from "./MIS.png";
+import logo from "../MIS.png";
+import { usePasswordLogic } from "../logic/passwordLogic"; // <-- import the new hook
 
 export default function EnterPassword({ onPasswordMatch }) {
-  const [enteredPassword, setEnteredPassword] = useState("");
-  const storedPassword = localStorage.getItem("userPassword");
+  const { enteredPassword, setEnteredPassword, handleSubmit } =
+    usePasswordLogic(onPasswordMatch); // <-- use the hook
   const theme = useTheme();
-
-  const handleSubmit = () => {
-    if (enteredPassword === storedPassword) {
-      onPasswordMatch();
-      sessionStorage.setItem("isAuthenticated", "true");
-      window.location.hash = "/Home"; // redirecționează către pagina de Home
-    } else {
-      console.error("Incorrect Password");
-    }
-  };
 
   return (
     <GridLoginPassword>

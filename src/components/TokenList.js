@@ -25,6 +25,7 @@ export default function TokenList({
   dogechain,
   polychain,
   ethBalance,
+  arbitrumchain,
   handleTokenClick,
 }) {
   const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
@@ -41,6 +42,8 @@ export default function TokenList({
     tokens = JSON.parse(localStorage.getItem("dogechainTokens")) || [];
   } else if (selectedChain === polychain) {
     tokens = JSON.parse(localStorage.getItem("polychainTokens")) || [];
+  } else if (selectedChain === arbitrumchain) {
+    tokens = JSON.parse(localStorage.getItem("arbitrumchainTokens")) || [];
   } else {
     tokens = [];
   }
@@ -56,6 +59,7 @@ export default function TokenList({
     56: bscAbi,
     568: dogeAbi,
     137: polyAbi,
+    42161: ercAbi,
   };
 
   const fetchTokenBalances = async () => {
@@ -107,6 +111,8 @@ export default function TokenList({
       tokenListKey = "dogechainTokens";
     } else if (selectedChain === polychain) {
       tokenListKey = "polychainTokens";
+    } else if (selectedChain === arbitrumchain) {
+      tokenListKey = "arbitrumchainTokens";
     }
 
     const storedTokens = JSON.parse(localStorage.getItem(tokenListKey)) || [];
@@ -128,6 +134,8 @@ export default function TokenList({
       return "DOGECOIN";
     } else if (selectedChain === polychain) {
       return "Matic Token";
+    } else if (selectedChain === arbitrumchain) {
+      return "ETH Arbitrum";
     }
     return "";
   };

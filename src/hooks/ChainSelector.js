@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { bnbchain, ethchain, dogechain, polychain, chains } from "./utils.js";
+import {
+  bnbchain,
+  ethchain,
+  dogechain,
+  polychain,
+  arbitrumchain,
+  chains,
+} from "./utils.js";
 import { StyledBox } from "./styles.js";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
@@ -140,6 +147,14 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
                   value={polychain}
                 >
                   Polygon Mainnet
+                </MenuItem>
+                <MenuItem
+                  sx={{
+                    backgroundColor: theme.palette.button.hover,
+                  }}
+                  value={arbitrumchain}
+                >
+                  Arbitrum Chain
                 </MenuItem>
                 <MenuItem
                   sx={{

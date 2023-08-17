@@ -6,6 +6,7 @@ import {
   ethchain,
   dogechain,
   polychain,
+  arbitrumchain,
   getDefaultTokenForChain,
   getChainNameFromUrl,
 } from "../hooks/utils";
@@ -178,6 +179,7 @@ export default function Home() {
           bnbchain={bnbchain}
           dogechain={dogechain}
           polychain={polychain}
+          arbitrumchain={arbitrumchain}
         />
         <Actions
           onSendClick={() => setShowSendPopup(true)}
@@ -192,6 +194,7 @@ export default function Home() {
           bnbchain={bnbchain}
           dogechain={dogechain}
           polychain={polychain}
+          arbitrumchain={arbitrumchain}
           ethBalance={ethBalance}
           handleTokenClick={handleTokenClick}
         />
