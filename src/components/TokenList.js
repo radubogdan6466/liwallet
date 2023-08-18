@@ -15,6 +15,7 @@ import {
 import RefreshIcon from "@mui/icons-material/Refresh";
 import tokenLogos from "../JsonFiles/tokenLogo.json"; // import the JSON file
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
+import { useTranslation } from "react-i18next";
 
 export default function TokenList({
   userWallet,
@@ -29,7 +30,7 @@ export default function TokenList({
   handleTokenClick,
 }) {
   const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
-
+  const { t } = useTranslation();
   const [tokenBalances, setTokenBalances] = useState({});
   const [tokenAdded, setTokenAdded] = useState(false);
 
@@ -196,7 +197,7 @@ export default function TokenList({
                   }}
                   color="secondary"
                 >
-                  Hide
+                  {t("hide")}
                 </Button>
               </ListItem>
             );
@@ -216,7 +217,7 @@ export default function TokenList({
             fontSize: 40,
           }}
         />
-        Refresh list
+        {t("refresh")}
       </Button>
     </Box>
   );

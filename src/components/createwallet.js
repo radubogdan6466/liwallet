@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { ethers } from "ethers";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTranslation } from "react-i18next";
 
 import {
   CenterBox,
@@ -31,7 +32,7 @@ export default function CreateWallet({ mode }) {
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isPopup = mode === "popup";
-
+  const { t } = useTranslation();
   const [showMnemonicPopup, setShowMnemonicPopup] = useState(false);
   const [mnemonic, setMnemonic] = useState("");
   const [verificationIndices, setVerificationIndices] = useState([]);
@@ -207,8 +208,7 @@ export default function CreateWallet({ mode }) {
             color: theme.palette.text.secondary,
           }}
         >
-          Salveaza fraza pe o hartie. Odata ce ai creat portofelul, nu vei mai
-          avea acces la ea.
+          {t("savePhrase")}
         </Typography>
         <Typography
           sx={{
@@ -218,8 +218,7 @@ export default function CreateWallet({ mode }) {
             color: theme.palette.text.red,
           }}
         >
-          Nu suntem responsabili pentru pierderea frazei mnemonice sau a private
-          key si nu avem acces la aceste date.
+          {t("savePhraseWarning")}
         </Typography>
         <ActionsContainer>
           <Button
@@ -236,7 +235,7 @@ export default function CreateWallet({ mode }) {
               },
             }}
           >
-            Genereaza wallet
+            {t("generate")}
           </Button>
         </ActionsContainer>
 
@@ -261,7 +260,7 @@ export default function CreateWallet({ mode }) {
                 color: theme.palette.text.secondary,
               }}
             >
-              Secret Phrase
+              {t("sPhrase")}
             </DialogTitle>
             <Typography
               sx={{ fontSize: "15px", color: theme.palette.text.secondary }}
@@ -291,7 +290,9 @@ export default function CreateWallet({ mode }) {
                       alignItems: "center",
                     }}
                   >
-                    <Typography fontSize="12px">word {index + 1}</Typography>
+                    <Typography fontSize="12px">
+                      {t("word")} {index + 1}
+                    </Typography>
                     <TextField
                       type="password"
                       value={userInputWords[index] || ""}
@@ -324,7 +325,7 @@ export default function CreateWallet({ mode }) {
                 },
               }}
             >
-              Am salvat fraza secreta
+              {t("sPhraseSaved")}
             </Button>
           </StyledLoginDialogBox>
         </Dialog>

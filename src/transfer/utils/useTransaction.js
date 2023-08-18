@@ -16,8 +16,6 @@ export const useTransaction = (selectedToken, selectedChain) => {
   const [addressChecked, setAddressChecked] = useState(false);
   const [showCheckButton, setShowCheckButton] = useState(true);
   const [warningMessage, setWarningMessage] = useState("");
-  const [customGasPrice, setCustomGasPrice] = useState(null);
-  const [useCustomGasPrice, setUseCustomGasPrice] = useState(false);
 
   const provider = new ethers.providers.JsonRpcProvider(selectedChain);
   const { getDecryptedPrivateKey } = useWeb3();
@@ -150,9 +148,5 @@ export const useTransaction = (selectedToken, selectedChain) => {
     handleAddressCheck,
     transferToken,
     gasPrice,
-    customGasPrice,
-    setCustomGasPrice,
-    useCustomGasPrice,
-    setUseCustomGasPrice,
   };
 };

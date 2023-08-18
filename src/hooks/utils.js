@@ -11,6 +11,7 @@ export const chains = {
   "Ethereum chain": ethchain,
   "Dogecoin chain": dogechain,
   "Polygon chain": polychain,
+  "Arbitrum chain": arbitrumchain,
 };
 export const getChainNameFromUrl = (url) => {
   switch (url) {

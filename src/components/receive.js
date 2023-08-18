@@ -1,8 +1,11 @@
 import React from "react";
 import { Dialog, Typography, Box } from "@mui/material";
 import QRCode from "qrcode.react";
+import { useTranslation } from "react-i18next";
 
 const Receive = ({ onClose, userWallet }) => {
+  const { t } = useTranslation();
+
   const closePopup = () => {
     onClose();
   };
@@ -18,16 +21,16 @@ const Receive = ({ onClose, userWallet }) => {
           paddingBottom: "10px",
         }}
       >
-        <Typography>Trimite adresa sau scaneaza codul</Typography>
+        <Typography>{t("sendAddress")}</Typography>
         <Typography
           sx={{
-            maxWidth: "90%", // Se asigură că textul nu depășește 90% din lățimea containerului său
-            overflowWrap: "break-word", // Rupe adresa dacă aceasta nu se încadrează complet în spațiu
+            maxWidth: "90%",
+            overflowWrap: "break-word",
           }}
         >
           {userWallet.address}
         </Typography>
-        <Typography>Scaneaza codul QR</Typography>
+        <Typography>{t("scanQR")}</Typography>
         <QRCode value={userWallet.address} />
       </Box>
     </Dialog>

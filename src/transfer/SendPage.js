@@ -8,21 +8,20 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { useTranslation } from "react-i18next";
 import {
   StyledFormControl,
-  StyledGasTextfield,
-  DialogActionsCustomGas,
   StyledDialogSendContent,
   DialogContentSend,
-  TypographyCustomGas,
-  DialogActionsCustomGasCheck,
   DialogMain,
   InputLabelSend,
   AmountSendTextField,
   inputLabelPropsStyles,
   inputPropsStyles,
   ToAdrsSendTextField,
-  GasCheckBox,
   TransferDetailsBoxSendPage,
   CheckButton,
   CheckedAddressButton,
@@ -30,7 +29,6 @@ import {
   TypographyWarning,
 } from "../hooks/styles.js";
 import { getTokens, NativToken } from "./utils/chain.js";
-
 import TransferDetails from "../hooks/TransferDetails.js";
 import { useTheme } from "@mui/material/styles";
 import calculateTransactionFee from "./utils/calculateTransactionFee";
@@ -40,7 +38,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
   const gasLimit = ethers.BigNumber.from(21000); // Exemplu de limită de gaz
   const [transactionFee, setTransactionFee] = useState("0");
   const [nativeCurrencySymbol, setNativeCurrencySymbol] = useState("ETH");
-
+  const { t } = useTranslation();
   const {
     transferDetails,
     addressChecked,
@@ -49,22 +47,12 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
     handleAddressCheck,
     transferToken,
     gasPrice,
-    customGasPrice,
-    setCustomGasPrice,
-    useCustomGasPrice,
-    setUseCustomGasPrice,
   } = useTransaction(selectedTokenState, selectedChain);
-
   //andr        0xEC76CFF0C4992629f7Aa533BECc2783B9d420E68
   const closePopup = () => {
     onClose();
   };
-  const handleGasPriceChange = (e) => {
-    setCustomGasPrice(e.target.value);
-  };
-  const handleCheckboxChange = (e) => {
-    setUseCustomGasPrice(e.target.checked);
-  };
+
   useEffect(() => {
     const tokens = getTokens(selectedChain);
     if (!tokens.some((token) => token.symbol === selectedTokenState)) {
@@ -108,7 +96,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
           </StyledFormControl>
           <AmountSendTextField
             id="val"
-            placeholder="Amount"
+            placeholder={t("amountPlaceholder")}
             required
             size="small"
             InputLabelProps={{ style: inputLabelPropsStyles(theme) }}
@@ -118,37 +106,29 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             id="toadrs"
             required
             size="small"
-            placeholder="Sending to"
+            placeholder={t("sendToPlaceholder")}
             InputLabelProps={{ style: inputLabelPropsStyles(theme) }}
             inputProps={{ style: inputPropsStyles(theme) }}
           />
-          <DialogActionsCustomGas>
-            <DialogActionsCustomGasCheck>
-              <TypographyCustomGas>Custom Gas</TypographyCustomGas>
-              <GasCheckBox
-                checked={useCustomGasPrice}
-                onChange={handleCheckboxChange}
-              />
-            </DialogActionsCustomGasCheck>
-            <StyledGasTextfield
-              id="gasprice"
-              label="Gwei"
-              size="small"
-              value={useCustomGasPrice ? customGasPrice || "" : gasPrice || ""}
-              onChange={handleGasPriceChange}
-              placeholder="Gas Price (Gwei)"
-              disabled={!useCustomGasPrice}
-              InputLabelProps={{ style: inputLabelPropsStyles(theme) }}
-              inputProps={{ style: inputPropsStyles(theme) }}
-            />
-          </DialogActionsCustomGas>
+
           <Typography variant="caption">
-            Gas Price (Gwei): {gasPrice}
+            <Tooltip title={t("gasPriceTooltip")}>
+              <IconButton size="small" style={{ marginLeft: 4 }}>
+                <InfoOutlinedIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
+            {t("gasPrice")}: {gasPrice}
           </Typography>
           <Typography variant="caption">
-            Transaction Fee {nativeCurrencySymbol}:
+            <Tooltip title={t("transactionFeeTooltip")}>
+              <IconButton size="small" style={{ marginLeft: 4 }}>
+                <InfoOutlinedIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
+            {t("transactionFee")} {nativeCurrencySymbol}:
             {Number(transactionFee).toFixed(8)}
           </Typography>
+
           <TransferDetailsBoxSendPage>
             <TypographyWarning> {warningMessage}</TypographyWarning>
             {transferDetails && <TransferDetails details={transferDetails} />}
@@ -161,7 +141,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               size="small"
               onClick={handleAddressCheck}
             >
-              Check Address
+              {t("checkAddress")}
             </CheckButton>
           )}
           {addressChecked && (
@@ -170,7 +150,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               onClick={transferToken}
               size="small"
             >
-              Send {selectedTokenState}
+              {t("sendToken")} {selectedTokenState}
             </CheckedAddressButton>
           )}
           <UncheckedAddressButton
@@ -179,7 +159,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             onClick={transferToken}
             size="small"
           >
-            Send {selectedTokenState}
+            {t("sendToken")} {selectedTokenState}
           </UncheckedAddressButton>
         </StyledDialogSendContent>
       </DialogMain>

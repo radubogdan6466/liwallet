@@ -22,12 +22,13 @@ import {
   TypographyAmountDetails,
   TypographyToDetails,
 } from "./styles.js";
-import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
+import { useTheme } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
 
 const TransferDetails = ({ details }) => {
   const { toAddress, amount, gasPrice, txHash, token, chain } = details;
   const theme = useTheme();
-
+  const { t } = useTranslation();
   const getBaseUrl = (chain) => {
     if (chain === ethchain) {
       return ETHERSCAN_BASE_URL;
@@ -46,9 +47,9 @@ const TransferDetails = ({ details }) => {
 
   return (
     <TransferDetailsBox>
-      <TypographyTrDetails>Transfer Details:</TypographyTrDetails>
+      <TypographyTrDetails>{t("tDetailsTitles")}</TypographyTrDetails>
       <TypographyAmountDetails>
-        Amount: {amount} Token: {token}
+        {t("amountDetails")}: {amount} {t("tokenDetails")}: {token}
       </TypographyAmountDetails>
       <TypographyTxDetails>
         Txn Hash:
@@ -61,7 +62,7 @@ const TransferDetails = ({ details }) => {
         </LinkTransferDetails>
       </TypographyTxDetails>
       <TypographyToDetails>
-        To:
+        {t("to")}:
         <LinkTransferDetails
           href={`${baseUrl}/address/${toAddress}`}
           target="_blank"

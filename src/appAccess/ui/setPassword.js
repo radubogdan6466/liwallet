@@ -10,7 +10,7 @@ import {
   SetupPassBtn,
 } from "../../hooks/styles";
 import { Box } from "@mui/material";
-
+import { useTranslation } from "react-i18next";
 import { useTheme } from "@mui/material/styles";
 import logo from "../MIS.png";
 import { Logicp } from "../logic/logicp";
@@ -23,9 +23,8 @@ export default function SetPassword({ onPasswordSet }) {
     setConfirmPassword,
     handleSubmit,
   } = Logicp(onPasswordSet);
-
+  const { t } = useTranslation();
   const theme = useTheme();
-
   const handleFormSubmit = (event) => {
     event.preventDefault();
     handleSubmit();
@@ -34,11 +33,9 @@ export default function SetPassword({ onPasswordSet }) {
     <GridLoginPassword>
       <CenterBoxHome item xs={12} sm={6} md={4} lg={3}>
         <AvatarLoginPassword alt="liwallet Logo" src={logo} />
-        <TypographyLoginPass>Seteaza parola</TypographyLoginPass>
-        <TypographySetupPass>
-          Parola va fi folosita doar pe acest dispozitiv.
-        </TypographySetupPass>
-        <TypographySetupPass>Nu se poate recupera</TypographySetupPass>
+        <TypographyLoginPass>{t("setPassword")}</TypographyLoginPass>
+        <TypographySetupPass>{t("setPasswordInfo1")}</TypographySetupPass>
+        <TypographySetupPass>{t("setPasswordInfo2")}</TypographySetupPass>
         <Box
           component="form"
           onSubmit={handleFormSubmit}
@@ -48,14 +45,14 @@ export default function SetPassword({ onPasswordSet }) {
           justifyContent="center"
         >
           <PassSetupFormField
-            placeholder="Parola"
+            placeholder="Password"
             type="password"
             value={password}
             size="small"
             onChange={(e) => setPassword(e.target.value)}
           />
           <PassSetupFormField
-            placeholder="Confirmă Parola"
+            placeholder="Confirm Password"
             type="password"
             size="small"
             value={confirmPassword}
@@ -74,7 +71,7 @@ export default function SetPassword({ onPasswordSet }) {
             }}
             variant="contained"
           >
-            Setează Parola
+            {t("confirmSetPassword")}
           </SetupPassBtn>
         </Box>
       </CenterBoxHome>

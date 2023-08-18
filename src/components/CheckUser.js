@@ -4,12 +4,13 @@ import { CenterBox, ActionButton, TypographyTitle } from "../hooks/styles";
 import { Button, Dialog, Typography } from "@mui/material";
 import LoginWallet from "./loginwallet";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
+import { useTranslation } from "react-i18next";
 
 const CheckUser = ({ handleLogin, handleCreate }) => {
   const navigate = useNavigate();
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
   const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
-
+  const { t } = useTranslation();
   const gocreate = () => {
     navigate("/create");
   };
@@ -44,7 +45,7 @@ const CheckUser = ({ handleLogin, handleCreate }) => {
           color: theme.palette.text.secondary,
         }}
       >
-        Nu esti conectat cu nici o adresa
+        {t("notConnected")}
       </TypographyTitle>
       <Button
         variant="contained"
@@ -59,7 +60,7 @@ const CheckUser = ({ handleLogin, handleCreate }) => {
         }}
         onClick={openLoginDialog}
       >
-        <Typography>Intra cu private key</Typography>
+        <Typography>{t("pkeyLogin")}</Typography>
       </Button>
       <Dialog open={loginDialogOpen} onClose={handleClose}>
         <LoginWallet onClose={handleClose} />
@@ -84,7 +85,7 @@ const CheckUser = ({ handleLogin, handleCreate }) => {
           },
         }}
       >
-        <Typography>Creeaza un wallet nou</Typography>
+        <Typography>{t("createNewWallet")}</Typography>
       </Button>
     </CenterBox>
   );

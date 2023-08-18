@@ -3,7 +3,7 @@ import { Button, Dialog, DialogContent, DialogTitle, Box } from "@mui/material";
 import { TypographyTitle } from "../hooks/styles";
 import { useTheme } from "@mui/material/styles";
 import useWeb3 from "../hooks/useWeb3";
-
+import LanguageSelector from "./LanguageSelector";
 export default function Settings({ onClose }) {
   const theme = useTheme();
   const [openDialog, setOpenDialog] = useState(false);
@@ -67,6 +67,8 @@ export default function Settings({ onClose }) {
   };
   return (
     <Dialog open={true} onClose={closePopup}>
+      <LanguageSelector />
+
       <Box
         sx={{
           backgroundColor: theme.palette.background.light,
@@ -99,7 +101,7 @@ export default function Settings({ onClose }) {
             backgroundColor: theme.palette.button.normal,
             color: theme.palette.button.textNormal,
             "&:hover": {
-              backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+              backgroundColor: theme.palette.button.hover,
               color: theme.palette.button.textHover,
             },
           }}
@@ -116,7 +118,7 @@ export default function Settings({ onClose }) {
             backgroundColor: theme.palette.button.normal,
             color: theme.palette.button.textNormal,
             "&:hover": {
-              backgroundColor: theme.palette.button.hover, // adăugat pentru exemplificare, dar poți ajusta dacă ai alte culori preferate pentru hover
+              backgroundColor: theme.palette.button.hover,
               color: theme.palette.button.textHover,
             },
           }}
@@ -142,8 +144,8 @@ export default function Settings({ onClose }) {
               color: theme.palette.text.text,
               height: "130px",
               width: "270px",
-              overflowWrap: "break-word", // asigură-te că textul lung se rupe
-              maxWidth: "90%", // alegi procentajul dorit pentru lățimea maximă a textului
+              overflowWrap: "break-word",
+              maxWidth: "90%",
             }}
           >
             {dialogContent}

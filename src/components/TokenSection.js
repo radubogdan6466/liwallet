@@ -3,9 +3,11 @@ import React from "react";
 import { TypographyTitle } from "../hooks/styles";
 import TokenList from "./TokenList";
 import { useTheme } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
+
 export default function TokenSection(props) {
   const theme = useTheme();
-
+  const { t } = useTranslation();
   const {
     userWallet,
     web3,
@@ -25,7 +27,7 @@ export default function TokenSection(props) {
           color: theme.palette.text.secondary,
         }}
       >
-        Tokens
+        {t("tokens")}
       </TypographyTitle>
       <TokenList
         userWallet={userWallet}

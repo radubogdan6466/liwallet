@@ -25,16 +25,16 @@ export default function Balance({
       >
         {Number(ethBalance).toFixed(4)}
         {selectedChain === ethchain
-          ? "ETH Token"
+          ? "   ETH"
           : selectedChain === bnbchain
-          ? "BNB"
+          ? "   BNB"
           : selectedChain === polychain
-          ? "Matic Token"
+          ? "   MATIC"
           : selectedChain === dogechain
-          ? "DOGECOIN"
+          ? "   DOGECOIN"
           : selectedChain === arbitrumchain
-          ? "ETH Arbitrum"
-          : "Unknown Chain"}
+          ? "   ETH"
+          : "   Unknown Chain"}
       </TypographyTitle>
     </Box>
   );

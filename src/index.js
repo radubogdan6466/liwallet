@@ -4,6 +4,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import { ReadableStream } from "web-streams-polyfill/ponyfill";
+import "./i18n";
+
 global.ReadableStream = ReadableStream;
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

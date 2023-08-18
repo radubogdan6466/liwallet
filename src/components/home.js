@@ -14,7 +14,7 @@ import CheckUser from "./CheckUser";
 import { Grid, CircularProgress, Box } from "@mui/material";
 import TokenImport from "./TokenImport";
 import { CenterBox, CenterBoxHome } from "../hooks/styles";
-import useWeb3 from "../hooks/useWeb3"; // import the custom hook
+import useWeb3 from "../hooks/useWeb3";
 import { useTokenImportHandler } from "../hooks/tokenImportHandler";
 import NavBar from "./Navbar";
 import Balance from "./Balance";
@@ -23,7 +23,6 @@ import LoginWallet from "./loginwallet";
 import TokenSection from "./TokenSection";
 import { handleAsyncError } from "../hooks/errorHandler";
 import Receive from "./receive";
-import CryptoJS from "crypto-js";
 import Backdrop from "@mui/material/Backdrop";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 
