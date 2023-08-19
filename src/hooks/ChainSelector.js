@@ -9,6 +9,7 @@ import {
 } from "./utils.js";
 import { StyledBox } from "./styles.js";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
+import { useTranslation } from "react-i18next";
 
 import {
   Box,
@@ -29,7 +30,7 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(selectedChain);
   const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
-
+  const { t } = useTranslation();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -58,7 +59,7 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
         variant="text"
         onClick={handleClickOpen}
         sx={{
-          color: theme.palette.text.secondary, // Folosește culoarea principală din tema
+          color: theme.palette.text.secondary,
         }}
       >
         {Object.keys(chains).find((key) => chains[key] === selectedChain)}
@@ -78,7 +79,7 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
               color: theme.palette.text.secondary,
             }}
           >
-            Select Chain
+            {t("selectChain")}
           </DialogTitle>
           {isLoading ? (
             <Box
@@ -92,7 +93,7 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
             >
               <CircularProgress color="secondary" size={24} />
               <Box ml={2}>
-                Connecting to{" "}
+                {t("connectingTo")}{" "}
                 {Object.keys(chains).find((key) => chains[key] === value)}
               </Box>
             </Box>
@@ -130,7 +131,7 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
                   }}
                   value={bnbchain}
                 >
-                  Smart Chain
+                  BNB Smart Chain
                 </MenuItem>
                 <MenuItem
                   sx={{
@@ -154,7 +155,7 @@ const ChainSelector = ({ selectedChain, handleChainChange }) => {
                   }}
                   value={arbitrumchain}
                 >
-                  Arbitrum Chain
+                  Arbitrum One
                 </MenuItem>
                 <MenuItem
                   sx={{

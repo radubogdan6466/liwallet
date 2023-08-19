@@ -4,25 +4,25 @@ import { ethers } from "ethers";
 import { useTokenImportHandler } from "../hooks/tokenImportHandler.js";
 import { chainIds, getChainNameFromUrl } from "../hooks/utils.js";
 import { handleError } from "../hooks/errorHandler.js";
-import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
+import { useTheme } from "@mui/material/styles";
+import { Dialog, DialogTitle, CircularProgress } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import useLoading from "../hooks/useLoading.js";
 
 import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  Typography,
-} from "@mui/material";
-import {
   TypographyTitle,
-  FormField,
   ActionsContainer,
-  FormContainer,
+  TypographyErrImport,
+  DialogImportContent,
+  FormImport,
+  ImportBtn,
+  ImportFormField,
 } from "../hooks/styles.js";
 
 const TokenImport = ({ onClose, selectedChain }) => {
   const theme = useTheme();
-
+  const { t } = useTranslation();
+  const [isLoading, setIsLoading, LoadingIndicator] = useLoading(false, 500);
   const [loading, setLoading] = useState(false);
   const [importedTokens, setImportedTokens] = useState(
     JSON.parse(
@@ -63,10 +63,7 @@ const TokenImport = ({ onClose, selectedChain }) => {
     () => new ethers.providers.JsonRpcProvider(selectedChain),
     [selectedChain]
   );
-  const specialSymbols = {
-    //"0xba2ae424d960c26247dd6c32edc70b295c744c43": "BDOGE",
-    //"0xcc42724c6683b7e57334c4e856f4c9965ed682bd": "BMATIC",
-  };
+
   useEffect(() => {
     setIsValidAddress(EthereumAddress.isAddress(tokenAddress));
   }, [tokenAddress]);
@@ -82,24 +79,15 @@ const TokenImport = ({ onClose, selectedChain }) => {
         erc20Abi,
         provider
       );
-
       async function fetchTokenSymbolAndDecimals() {
         try {
           const symbol = await tokenContract.symbol();
-
-          // Verifică dacă adresa este în obiectul specialSymbols
-          const specialSymbol = specialSymbols[tokenAddress.toLowerCase()];
-          if (specialSymbol) {
-            setTokenSymbol(specialSymbol); // Setează simbolul special
-          } else {
-            setTokenSymbol(symbol);
-          }
-
+          setTokenSymbol(symbol);
           const decimals = await tokenContract.decimals();
           setTokenDecimals(decimals);
         } catch (err) {
           if (err.code === ethers.utils.Logger.errors.CALL_EXCEPTION) {
-            setError(handleError({ message: "CALL_EXCEPTION" }));
+            setError(handleError({ message: "CALL_EXCEPTION" }, t));
           } else {
             console.error(err);
           }
@@ -107,27 +95,19 @@ const TokenImport = ({ onClose, selectedChain }) => {
           setLoading(false);
         }
       }
-
       fetchTokenSymbolAndDecimals();
     }
-  }, [tokenAddress, provider]);
-
+  }, [tokenAddress, provider, t]);
   const handleSubmit = (submitEvent) => {
     submitEvent.preventDefault();
-
-    // Verifică dacă adresa este validă
     const validAddress = EthereumAddress.isAddress(tokenAddress);
     setIsValidAddress(validAddress);
 
     if (!isValidAddress) {
-      setError(handleError({ message: "invalid_address" }));
+      setError(t("InvalidAddress"));
       return;
     }
 
-    if (tokenChainId === null) {
-      setError("Introduceti un chainId valid.");
-      return;
-    }
     const chainId = parseInt(tokenChainId);
 
     const importResult = handleTokenImport(
@@ -151,114 +131,87 @@ const TokenImport = ({ onClose, selectedChain }) => {
     window.dispatchEvent(event);
     setTimeout(() => {
       window.location.reload();
-    }, 1000);
+    }, 500);
   };
-
+  useEffect(() => {
+    setIsLoading(loading);
+  }, [loading]);
   return (
     <Dialog open={true} onClose={closePopup}>
       <DialogTitle sx={{ backgroundColor: theme.palette.background.light }}>
-        <TypographyTitle>Import Token</TypographyTitle>
+        <TypographyTitle>{t("ImportToken")}</TypographyTitle>
       </DialogTitle>
-      {error && (
-        <Typography sx={{ backgroundColor: theme.palette.background.light }}>
-          {error}
-        </Typography>
+
+      <LoadingIndicator />
+      {!isLoading && (
+        <>
+          {error && <TypographyErrImport>{error}</TypographyErrImport>}
+          <DialogImportContent>
+            <FormImport onSubmit={handleSubmit}>
+              <ImportFormField
+                type="text"
+                label={t("EnterTokenAddress")}
+                value={tokenAddress}
+                onChange={(event) => setTokenAddress(event.target.value)}
+                error={
+                  error === t("error.callException") ||
+                  error === t("InvalidEthereumAddress")
+                }
+                helperText={
+                  error === t("IncorrectAddressCheckChain") ||
+                  error === t("InvalidEthereumAddress")
+                    ? error
+                    : ""
+                }
+                InputLabelProps={{
+                  style: { color: theme.palette.text.input },
+                }}
+                inputProps={{
+                  style: { color: theme.palette.text.input },
+                }}
+              />
+
+              <ImportFormField
+                type="text"
+                label="Symbol"
+                value={tokenSymbol}
+                disabled
+                onChange={(event) => setTokenSymbol(event.target.value)}
+              />
+              <ImportFormField
+                type="number"
+                label="Decimals"
+                disabled
+                value={tokenDecimals}
+                onChange={(event) => setTokenDecimals(event.target.value)}
+              />
+              <ImportFormField
+                type="number"
+                label="Network ID"
+                value={tokenChainId !== null ? tokenChainId : ""}
+                onChange={(event) => setTokenChainId(event.target.value)}
+                disabled
+                hidden
+                style={{ display: "none" }}
+              />
+              <ActionsContainer>
+                <ImportBtn
+                  type="submit"
+                  variant="contained"
+                  disabled={
+                    !isValidAddress ||
+                    tokenSymbol === "" ||
+                    tokenDecimals === "" ||
+                    tokenChainId === ""
+                  }
+                >
+                  {isTokenAdded ? t("successAddToken") : t("addToken")}
+                </ImportBtn>
+              </ActionsContainer>
+            </FormImport>
+          </DialogImportContent>
+        </>
       )}
-
-      <DialogContent sx={{ backgroundColor: theme.palette.background.light }}>
-        <FormContainer
-          onSubmit={handleSubmit}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <FormField
-            type="text"
-            label="Enter token address"
-            value={tokenAddress}
-            onChange={(event) => setTokenAddress(event.target.value)}
-            error={
-              error === "Adresa incorecta, verifica chain-ul" ||
-              error === "Adresa introdusă nu este o adresă Ethereum validă."
-            }
-            helperText={
-              error === "Adresa incorecta, verifica chain-ul" ||
-              error === "Adresa introdusă nu este o adresă Ethereum validă."
-                ? error
-                : ""
-            }
-            InputLabelProps={{
-              style: { color: theme.palette.text.input },
-            }}
-            inputProps={{
-              style: { color: theme.palette.text.input },
-            }}
-          />
-
-          <FormField
-            type="text"
-            label="Symbol"
-            value={tokenSymbol}
-            onChange={(event) => setTokenSymbol(event.target.value)}
-            InputLabelProps={{
-              style: { color: theme.palette.text.input },
-            }}
-            inputProps={{
-              style: { color: theme.palette.text.input },
-            }}
-          />
-          <FormField
-            type="number"
-            label="Decimals"
-            value={tokenDecimals}
-            onChange={(event) => setTokenDecimals(event.target.value)}
-            InputLabelProps={{
-              style: { color: theme.palette.text.input },
-            }}
-            inputProps={{
-              style: { color: theme.palette.text.input },
-            }}
-          />
-          <FormField
-            type="number"
-            label="Network ID"
-            value={tokenChainId !== null ? tokenChainId : ""}
-            onChange={(event) => setTokenChainId(event.target.value)}
-            disabled
-            hidden
-            style={{ display: "none" }}
-          />
-          <ActionsContainer>
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={
-                !isValidAddress ||
-                tokenSymbol == "" ||
-                tokenDecimals == "" ||
-                tokenChainId == ""
-              }
-              sx={{
-                marginRight: "5px", // adaugă spațiu între butoane
-                fontSize: "12px",
-                width: "100%",
-
-                backgroundColor: theme.palette.button.normal,
-                color: theme.palette.button.textNormal,
-                "&:hover": {
-                  backgroundColor: theme.palette.button.hover,
-                  color: theme.palette.button.textHover,
-                },
-              }}
-            >
-              {isTokenAdded ? "Token adăugat cu succes" : "Import Token"}
-            </Button>
-          </ActionsContainer>
-        </FormContainer>
-      </DialogContent>
     </Dialog>
   );
 };

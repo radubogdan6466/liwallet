@@ -10,13 +10,10 @@ export const reportAddress = async (address, details) => {
       }
     );
 
-    return response.data; // return response to the caller
+    return response.data;
   } catch (error) {
     console.error("A apărut o eroare", error);
     if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-
       return error.response;
     }
   }
@@ -26,13 +23,9 @@ export const checkAddress = async (address) => {
     const response = await axios.get(
       `https://busy-calf-earrings.cyclic.app/check/${address}`
     );
-    return response.data; // return response to the caller
+    return response.data;
   } catch (error) {
-    console.error("A apărut o eroare", error);
     if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-
       return error.response;
     }
   }

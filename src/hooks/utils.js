@@ -7,11 +7,11 @@ export const polychain = "https://rpc-mumbai.maticvigil.com/";
 export const arbitrumchain =
   "https://arb-goerli.g.alchemy.com/v2/t2cQiVI5X6yk0mZDgu1IrM90NAVhhMxi";
 export const chains = {
-  "Smart Chain": bnbchain,
-  "Ethereum chain": ethchain,
+  "BNB Smart Chain": bnbchain,
+  "Ethereum Mainnet": ethchain,
   "Dogecoin chain": dogechain,
-  "Polygon chain": polychain,
-  "Arbitrum chain": arbitrumchain,
+  "Polygon Mainnet": polychain,
+  "Arbitrum One": arbitrumchain,
 };
 export const getChainNameFromUrl = (url) => {
   switch (url) {

@@ -11,8 +11,10 @@ import ReportAddress from "./report/ReportAddress";
 import theme from "./theme/Theme"; // Importă tema creată
 import { AppLogic } from "./appAccess/logic/appLogic.js";
 import "./App.css";
+import useLoading from "./hooks/useLoading.js";
 
 function App() {
+  const [isLoading, setIsLoading, LoadingIndicator] = useLoading(true, 1000);
   const {
     isPasswordSet,
     setIsPasswordSet,
@@ -22,7 +24,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {!isPasswordSet ? (
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : !isPasswordSet ? (
         <SetPassword onPasswordSet={() => setIsPasswordSet(true)} />
       ) : !isPasswordMatched ? (
         <EnterPassword onPasswordMatch={() => setIsPasswordMatched(true)} />

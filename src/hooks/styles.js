@@ -449,3 +449,52 @@ export const SetupPassBtn = styled(Button)(({ theme }) => ({
     color: theme.palette.button.textHover,
   },
 }));
+// TOKEN IMPORT SECTION UI
+export const TypographyErrImport = styled(Typography)(({ theme }) => ({
+  backgroundColor: theme.palette.background.light,
+  color: theme.palette.text.red,
+  fontSize: "12px",
+  textAlign: "center",
+}));
+export const DialogImportContent = styled(DialogContent)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: theme.palette.background.light,
+}));
+export const FormImport = styled("form")({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  justifyContent: "center",
+  alignItems: "center",
+});
+export const ImportBtn = styled(Button)(({ theme }) => ({
+  marginRight: "5px",
+  fontSize: "12px",
+  width: "100%",
+
+  backgroundColor: theme.palette.button.normal,
+  color: theme.palette.button.textNormal,
+  "&:hover": {
+    backgroundColor: theme.palette.button.hover,
+    color: theme.palette.button.textHover,
+  },
+}));
+export const ImportFormField = styled(TextField)(({ theme }) => ({
+  marginBottom: "10px",
+  marginTop: "10px",
+  borderColor: theme.palette.primary.icon,
+  "& .MuiOutlinedInput-root": {
+    "&:hover fieldset": {
+      borderColor: theme.palette.primary.icon,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.primary.icon,
+    },
+  },
+  "& .MuiOutlinedInput-root fieldset": {
+    borderColor: theme.palette.primary.icon,
+  },
+}));

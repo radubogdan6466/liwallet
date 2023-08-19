@@ -10,7 +10,7 @@ import {
 } from "../hooks/styles.js";
 import { Button, Box, Typography, Dialog } from "@mui/material";
 import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
-
+import { useTranslation } from "react-i18next";
 import { useTheme } from "@mui/material/styles";
 
 export default function ReportAddress({ onClose }) {
@@ -19,7 +19,7 @@ export default function ReportAddress({ onClose }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
   const theme = useTheme();
-
+  const { t } = useTranslation();
   const closePopup = () => {
     onClose();
   };
@@ -27,7 +27,7 @@ export default function ReportAddress({ onClose }) {
     e.preventDefault();
 
     if (!EthereumAddress.isAddress(address)) {
-      setError("Adresa nu este validă");
+      setError(t("error.invalidAddress"));
       return;
     }
 
@@ -55,7 +55,7 @@ export default function ReportAddress({ onClose }) {
         }}
       >
         <TypographyTitle variant="h5" gutterBottom>
-          Raportează o adresă
+          {t("reportTitle")}
         </TypographyTitle>
         <FormContainer
           onSubmit={handleSubmit}
@@ -65,15 +65,14 @@ export default function ReportAddress({ onClose }) {
             justifyContent: "center",
             alignItems: "center",
             labelColor: theme.palette.text.input,
-            color: theme.palette.text.input, // Acesta setează culoarea textului
+            color: theme.palette.text.input,
             "& .MuiInputBase-input": {
-              // Acesta asigură că input-ul real este și el alb
               color: theme.palette.text.input,
             },
           }}
         >
           <FormField
-            label="Adresa"
+            label={t("addressRep")}
             variant="outlined"
             color="secondary"
             fullWidth
@@ -103,7 +102,7 @@ export default function ReportAddress({ onClose }) {
               id="details-label"
               sx={{ color: "#000" }}
             >
-              Detalii
+              {t("detailRep")}
             </InputLabel>
             <Select
               labelId="details-label"
@@ -112,21 +111,10 @@ export default function ReportAddress({ onClose }) {
               value={details}
               onChange={(e) => setDetails(e.target.value)}
             >
-              <MenuItem value={"Phishing"}>Phishing</MenuItem>
-              <MenuItem value={"PonziScheme"}>Scheme Ponzi</MenuItem>
-              <MenuItem value={"FakeICO"}>ICO-uri false</MenuItem>
-              <MenuItem value={"PumpAndDump"}>Pump and Dump</MenuItem>
-              <MenuItem value={"CloudMiningScam"}>
-                Scamuri de cloud mining
-              </MenuItem>
-              <MenuItem value={"FakeWallet"}>Portofele false</MenuItem>
-              <MenuItem value={"Shill"}>Promovări exagerate</MenuItem>
-              <MenuItem value={"Malware"}>
-                Malware pentru furtul de criptomonede
-              </MenuItem>
-              <MenuItem value={"Blackmail"}>
-                Blackmail and extortion scams
-              </MenuItem>
+              <MenuItem value={"FakeGiveaway"}>Fake Giveaway</MenuItem>
+              <MenuItem value={"StolenCrypto"}>Stolen Crypto</MenuItem>
+              <MenuItem value={"FakeInvestment"}>Fake Investment</MenuItem>
+              <MenuItem value={"RugPull"}>Rug Pull</MenuItem>
             </Select>
           </FormControl>
           {message && (
@@ -136,7 +124,7 @@ export default function ReportAddress({ onClose }) {
           )}
           <ActionsContainer>
             <Button variant="contained" color="secondary" type="submit">
-              Trimite
+              {t("sendRep")}
             </Button>
           </ActionsContainer>
         </FormContainer>

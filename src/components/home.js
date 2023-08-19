@@ -24,7 +24,8 @@ import TokenSection from "./TokenSection";
 import { handleAsyncError } from "../hooks/errorHandler";
 import Receive from "./receive";
 import Backdrop from "@mui/material/Backdrop";
-import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
+import { useTheme } from "@mui/material/styles";
+import useLoading from "../hooks/useLoading";
 
 export default function Home() {
   const {
@@ -40,8 +41,8 @@ export default function Home() {
     setImportedTokens,
     privateKey,
   } = useWeb3(bnbchain);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading, LoadingIndicator] = useLoading(true, 1000);
   const [showSendPopup, setShowSendPopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showReceivePopup, setShowReceivePopup] = useState(false);
@@ -122,33 +123,12 @@ export default function Home() {
     },
     [setSelectedChain]
   );
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false); // Set isLoading to false after 2 seconds
-    }, 1000);
-
-    // Cleanup function to clear the timeout when component unmounts
-    return () => clearTimeout(timer);
-  }, []); // Run once after initial render
-
   if (isLoading) {
-    return (
-      <Backdrop
-        sx={{
-          color: theme.palette.primary.icon,
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}
-        open
-      >
-        <CircularProgress color="inherit" size={150} />
-      </Backdrop>
-    );
+    return <LoadingIndicator />;
   }
-
   if (!userWallet) {
     return <CheckUser />;
   }
-
   return (
     <Grid
       container
@@ -157,14 +137,12 @@ export default function Home() {
       justifyContent="center"
       sx={{
         backgroundColor: theme.palette.primary.second,
-
-        //  minHeight: "640px",
         height: "100%",
-        // marginTop: 0,
-        //backgroundColor: "#24272a",
       }}
     >
       <CenterBoxHome item xs={12} sm={6} md={4} lg={3}>
+        <LoadingIndicator />
+
         <NavBar
           selectedChain={selectedChain}
           handleChainChange={handleChainChange}

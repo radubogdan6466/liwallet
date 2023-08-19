@@ -35,5 +35,56 @@
   "tDetailsTitles": "Detalii transfer:",
   "amountDetails": "Cantitate",
   "tokenDetails": "Moneda",
-  "to": "catre"
+  "to": "catre",
+  "ImportToken": "Importa Token",
+  "addToken": "Adaugă",
+  "successAddToken": "Token adăugat cu succes",
+  "EnterTokenAddress": "Introdu adresa tokenului",
+  "Symbol": "Simbol",
+  "Decimals": "Zecimale",
+  "NetworkID": "ID Rețea",
+  "TokenAddedSuccess": "Token adăugat cu succes",
+  "Import": "Importă Token",
+  "error": {
+    "unpredictableGasLimit": "Eroare la estimarea gazului. Poate fi necesară setarea manuală a limitelor.",
+    "insufficientFunds": "Fonduri insuficiente",
+    "numericFault": "Zecimale incorecte",
+    "invalidAddress": "Adresa introdusă nu este validă.",
+    "invalidValue": "Valoarea introdusă nu este validă.",
+    "gasPriceTooLow": "Prețul gazului este prea mic.",
+    "callException": "Adresa incorectă pentru chain-ul selectat",
+    "generic": "A apărut o eroare. Te rugăm să încerci din nou."
+  },
+  "selectChain": "Selecteaza reteaua",
+  "connectingTo": "Se conecteaza la",
+  "invalidEthereumAddress": "Adresa nu e corecta",
+  "warning": {
+    "unsafeAddress": "Alertă! Adresă Suspectă",
+    "details": "Info: {{details}}",
+    "noInformation": "Date Indisponibile"
+  },
+  "reportTitle": "Raporteaza adresa",
+  "addressRep": "Adresa",
+  "detailRep": "Motiv",
+  "sendRep": "Trimite",
+  "sec": {
+    "title": "Atentie",
+    "warning": "Ai accesat aplicația cu Pkey fara fraza mnemonica...",
+    "main": "Securitate",
+    "first": "Afiseaza cheia privata",
+    "second": "Afiseaza fraza secreta"
+  },
+  "languageSelector": {
+    "title": "Limba",
+    "en": "Engleza",
+    "ro": "Romana",
+    "it": "Italiana"
+  },
+  "nav": {
+    "create": "Creeaza wallet",
+    "login": "Login",
+    "settings": "Setari",
+    "report": "Raporteaza scam",
+    "expand": "Extinde vizualizarea"
+  }
 }

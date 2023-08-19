@@ -164,7 +164,7 @@ export default function CreateWallet({ mode }) {
       setShowMnemonicPopup(false);
       setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1000);
       navigate("/Home");
     } else {
       alert("Cuvintele introduse nu sunt corecte. Te rog să încerci din nou.");

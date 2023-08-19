@@ -4,13 +4,15 @@ import { TypographyTitle } from "../hooks/styles";
 import { useTheme } from "@mui/material/styles";
 import useWeb3 from "../hooks/useWeb3";
 import LanguageSelector from "./LanguageSelector";
+import { useTranslation } from "react-i18next";
+
 export default function Settings({ onClose }) {
   const theme = useTheme();
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogContent, setDialogContent] = useState("");
   const { getDecryptedData } = useWeb3();
-
+  const { t } = useTranslation();
   const keys = Array.from(
     { length: 12 },
     (_, i) => process.env[`REACT_APP_KEY${String.fromCharCode(65 + i)}`]
@@ -35,8 +37,8 @@ export default function Settings({ onClose }) {
     }
 
     if (mnemonicWords.some((word) => !word)) {
-      setDialogTitle("Atenție");
-      setDialogContent("Ai accesat aplicația cu Pkey fara fraza mnemonica...");
+      setDialogTitle(t("sec.title"));
+      setDialogContent(t("sec.warning"));
     } else {
       const mnemonic = mnemonicWords.join(" ");
       setDialogTitle("Secret words");
@@ -84,7 +86,7 @@ export default function Settings({ onClose }) {
             backgroundColor: theme.palette.background.light,
           }}
         >
-          Security
+          {t("sec.main")}
         </TypographyTitle>
         <Button
           variant="contained"
@@ -106,7 +108,7 @@ export default function Settings({ onClose }) {
             },
           }}
         >
-          Afiseaza private key
+          {t("sec.first")}
         </Button>
         <Button
           variant="contained"
@@ -123,7 +125,7 @@ export default function Settings({ onClose }) {
             },
           }}
         >
-          Afiseaza Secret words
+          {t("sec.second")}
         </Button>
         <Dialog onClose={() => setOpenDialog(false)} open={openDialog}>
           <DialogTitle

@@ -36,5 +36,56 @@
   "tDetailsTitles": "Transfer Details:",
   "amountDetails": "Amount",
   "tokenDetails": "Token",
-  "to": "to"
+  "to": "to",
+  "ImportToken": "Import Token",
+  "addToken": "Add",
+  "successAddToken": "Token added",
+  "EnterTokenAddress": "Enter token address",
+  "Symbol": "Symbol",
+  "Decimals": "Decimals",
+  "NetworkID": "Network ID",
+  "TokenAddedSuccess": "Token added successfully",
+  "Import": "Import Token",
+  "error": {
+    "unpredictableGasLimit": "Error estimating gas. Manual limits setting may be required.",
+    "insufficientFunds": "Insufficient funds",
+    "numericFault": "Incorrect decimals",
+    "invalidAddress": "The entered address is not valid.",
+    "invalidValue": "The entered value is not valid.",
+    "gasPriceTooLow": "The gas price is too low.",
+    "callException": "The address is incorrect for the selected chain",
+    "generic": "An error occurred. Please try again."
+  },
+  "selectChain": "Change network",
+  "connectingTo": "Connecting to",
+  "invalidEthereumAddress": "Invalid address",
+  "warning": {
+    "unsafeAddress": "Alert! Suspicious Address",
+    "details": "  Info: {{details}}",
+    "noInformation": "Data Unavailable"
+  },
+  "reportTitle": "Report address",
+  "addressRep": "Address",
+  "detailRep": "Reason",
+  "sendRep": "Send",
+  "sec": {
+    "title": "Warning",
+    "warning": "You have accessed the application with Pkey without the mnemonic phrase...",
+    "main": "Security",
+    "first": "Show private key",
+    "second": "Show phrase"
+  },
+  "languageSelector": {
+    "title": "Language",
+    "en": "English",
+    "ro": "Romanian",
+    "it": "Italian"
+  },
+  "nav": {
+    "create": "Create wallet",
+    "login": "Login",
+    "settings": "Settings",
+    "report": "Report scam",
+    "expand": "Expand view"
+  }
 }

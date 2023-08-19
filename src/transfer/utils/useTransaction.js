@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ethers } from "ethers";
 import useWeb3 from "../../hooks/useWeb3.js";
 import { getTokens } from "./chain";
-import { checkAddressBeforeTransfer } from "./adressCheck.js";
+import { CheckAddressBeforeTransfer } from "./adressCheck.js";
 import { useGasPrice } from "./useGasPrice";
 import { handleError } from "../../hooks/errorHandler";
 import bscAbi from "../../JsonFiles/testBnbAbi.json";
@@ -10,25 +10,36 @@ import ercAbi from "../../JsonFiles/testErcAbi.json";
 import dogeAbi from "../../JsonFiles/testDogeAbi.json";
 import polyAbi from "../../JsonFiles/testPolyAbi.json";
 import { eip1559Chains, getChainNameFromUrl } from "../../hooks/utils.js";
+import { useTranslation } from "react-i18next";
+import EthereumAddress from "ethereum-address";
 
 export const useTransaction = (selectedToken, selectedChain) => {
   const [transferDetails, setTransferDetails] = useState(null);
   const [addressChecked, setAddressChecked] = useState(false);
   const [showCheckButton, setShowCheckButton] = useState(true);
   const [warningMessage, setWarningMessage] = useState("");
-
+  const { t } = useTranslation();
   const provider = new ethers.providers.JsonRpcProvider(selectedChain);
   const { getDecryptedPrivateKey } = useWeb3();
   const userWallet = new ethers.Wallet(getDecryptedPrivateKey(), provider);
   const gasPrice = useGasPrice(provider);
   const chainName = getChainNameFromUrl(selectedChain);
   const isEIP1559Supported = eip1559Chains[chainName];
-
+  const [isValidAddress, setIsValidAddress] = useState(true);
+  const checkEthereumAddress = () => {
+    const toAddress = document.getElementById("toadrs").value;
+    if (EthereumAddress.isAddress(toAddress)) {
+      setIsValidAddress(true);
+    } else {
+      setIsValidAddress(false);
+    }
+  };
   const handleAddressCheck = async () => {
+    checkEthereumAddress();
     const toAddress = document.getElementById("toadrs").value;
     try {
       const { warningMessage, isAddressChecked } =
-        await checkAddressBeforeTransfer(toAddress);
+        await CheckAddressBeforeTransfer(toAddress, t);
 
       setWarningMessage(warningMessage);
       setAddressChecked(isAddressChecked);
@@ -39,9 +50,16 @@ export const useTransaction = (selectedToken, selectedChain) => {
   };
 
   const transferToken = async () => {
+    if (!isValidAddress) {
+      setWarningMessage(t("invalidEthereumAddress"));
+      return;
+    }
     try {
       const toAddress = document.getElementById("toadrs").value;
       const amount = document.getElementById("val").value;
+      if (!amount || isNaN(amount)) {
+        throw new Error("invalid_value");
+      }
       const selectedTokenData = getTokens(selectedChain).find(
         (token) => token.symbol === selectedToken
       );
@@ -102,8 +120,8 @@ export const useTransaction = (selectedToken, selectedChain) => {
         chain: selectedChain,
       });
     } catch (err) {
-      console.error(err);
-      setWarningMessage(handleError(err));
+      const errorMessage = handleError(err, t); // presupunem că `t` este funcția ta de traducere
+      setWarningMessage(errorMessage);
     }
   };
 
@@ -148,5 +166,6 @@ export const useTransaction = (selectedToken, selectedChain) => {
     handleAddressCheck,
     transferToken,
     gasPrice,
+    isValidAddress,
   };
 };

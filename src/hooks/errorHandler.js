@@ -9,59 +9,52 @@ export function handleAsyncError(func) {
     }
   };
 }
-export const handleError = (error) => {
+export const handleError = (error, t) => {
   let message;
   switch (error.code) {
     case "UNPREDICTABLE_GAS_LIMIT":
-      message =
-        "Eroare la estimarea gazului. Poate fi necesară setarea manuală a limitelor.";
+      message = "error.unpredictableGasLimit";
       break;
     case "INSUFFICIENT_FUNDS":
-      message = "Fonduri insuficiente";
+      message = "error.insufficientFunds";
       break;
     case "NUMERIC_FAULT":
-      message = "Incorrect decimals";
+      message = "error.numericFault";
+      break;
+    case " INVALID_ARGUMENT":
+      message = "error.invalidValue";
       break;
     default:
       switch (error.message) {
         case "invalid_address":
-          message = "Adresa introdusă nu este validă.";
+          message = "error.invalidAddress";
           break;
         case "invalid_value":
-          message = "Valoarea introdusă nu este validă.";
+          message = "error.invalidValue";
           break;
         case "gas_price_too_low":
-          message = "Prețul gazului este prea mic.";
+          message = "error.gasPriceTooLow";
           break;
         case "insufficient_funds":
-          message =
-            "Nu ai suficiente fonduri pentru a efectua această tranzacție.";
+          message = "error.insufficientFunds";
           break;
         case "CALL_EXCEPTION":
-          message = "Adresa incorecta pentru chain-ul selectat";
+          message = "error.callException";
           break;
         case "UNPREDICTABLE_GAS_LIMIT":
-          message = "Nu se poate estime Gas, introdu manual.";
+          message = "error.unpredictableGasLimit";
+          break;
+        case " INVALID_ARGUMENT":
+          message = "error.invalidValue";
           break;
         default:
-          message = "A apărut o eroare. Te rugăm să încerci din nou.";
+          message = "error.generic";
           break;
       }
       break;
   }
 
-  return message;
+  return t(message);
 };
-/**
- * 
- * 
- * de adaugat eroarea asta:
- * 
- * useTransaction.js:138 Error: fractional component exceeds decimals [ See: https://links.ethers.org/v5-errors-NUMERIC_FAULT ] (fault="underflow", operation="parseFixed", code=NUMERIC_FAULT, version=bignumber/5.7.0)
-    at Logger.makeError (index.ts:269:1)
-    at Logger.throwError (index.ts:281:1)
-    at throwFault (fixednumber.ts:19:1)
-    at parseFixed (fixednumber.ts:104:1)
-    at Module.parseUnits (index.ts:80:1)
-    at transferToken (useTransaction.js:79:1)
+/**     0x900B61C0b67bB3aBFAA6331Ebd2f2d08AE79cdE9
  */

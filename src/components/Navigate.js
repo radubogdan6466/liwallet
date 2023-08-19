@@ -6,19 +6,20 @@ import CreateWallet from "./createwallet.js";
 import LoginWallet from "./loginwallet.js";
 import ReportAddress from "../report/ReportAddress.js";
 import Settings from "./settings.js";
+import { useTranslation } from "react-i18next";
+
 const StyledBox = styled(Box)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   color: "white",
 });
-
 const Meniu = () => {
   const [showCreatePopup, setShowCreatePopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [showSettingsPopup, setShowSettingsPopup] = useState(false);
-
+  const { t } = useTranslation();
   const handleCreateClick = () => {
     setShowCreatePopup(true);
   };
@@ -73,15 +74,15 @@ const Meniu = () => {
         PaperProps={{
           style: {
             maxHeight: "210px",
-            width: "12ch",
+            width: "20ch",
           },
         }}
       >
-        <MenuItem onClick={handleCreateClick}>Create</MenuItem>
-        <MenuItem onClick={handleLoginClick}>Login</MenuItem>
-        <MenuItem onClick={handleSettingsClick}>Settings</MenuItem>
-        <MenuItem onClick={handleReportClick}>Report</MenuItem>
-        <MenuItem onClick={handleExpandView}>Expand</MenuItem>
+        <MenuItem onClick={handleCreateClick}>{t("nav.create")}</MenuItem>
+        <MenuItem onClick={handleLoginClick}>{t("nav.login")}</MenuItem>
+        <MenuItem onClick={handleSettingsClick}>{t("nav.settings")}</MenuItem>
+        <MenuItem onClick={handleReportClick}>{t("nav.report")}</MenuItem>
+        <MenuItem onClick={handleExpandView}>{t("nav.expand")}</MenuItem>
       </Menu>
 
       <Dialog open={showCreatePopup} onClose={() => setShowCreatePopup(false)}>

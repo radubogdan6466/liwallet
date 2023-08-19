@@ -39,6 +39,24 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
   const [transactionFee, setTransactionFee] = useState("0");
   const [nativeCurrencySymbol, setNativeCurrencySymbol] = useState("ETH");
   const { t } = useTranslation();
+  const [isValidAddress, setIsValidAddress] = useState(false);
+
+  const [openTooltips, setOpenTooltips] = useState({
+    gasPrice: false,
+    transactionFee: false,
+  });
+  const handleTooltipClick = (name) => {
+    setOpenTooltips({
+      ...openTooltips,
+      [name]: !openTooltips[name],
+    });
+    setTimeout(() => {
+      setOpenTooltips({
+        ...openTooltips,
+        [name]: false,
+      });
+    }, 2000);
+  };
   const {
     transferDetails,
     addressChecked,
@@ -47,7 +65,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
     handleAddressCheck,
     transferToken,
     gasPrice,
-  } = useTransaction(selectedTokenState, selectedChain);
+  } = useTransaction(selectedTokenState, selectedChain, t);
   //andr        0xEC76CFF0C4992629f7Aa533BECc2783B9d420E68
   const closePopup = () => {
     onClose();
@@ -109,19 +127,34 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             placeholder={t("sendToPlaceholder")}
             InputLabelProps={{ style: inputLabelPropsStyles(theme) }}
             inputProps={{ style: inputPropsStyles(theme) }}
+            onChange={(e) => {
+              const address = e.target.value;
+              setIsValidAddress(ethers.utils.isAddress(address));
+            }}
           />
 
           <Typography variant="caption">
-            <Tooltip title={t("gasPriceTooltip")}>
-              <IconButton size="small" style={{ marginLeft: 4 }}>
+            <Tooltip title={t("gasPriceTooltip")} open={openTooltips.gasPrice}>
+              <IconButton
+                size="small"
+                style={{ marginLeft: 4 }}
+                onClick={() => handleTooltipClick("gasPrice")}
+              >
                 <InfoOutlinedIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
-            {t("gasPrice")}: {gasPrice}
+            {t("gasPrice")} {gasPrice}
           </Typography>
           <Typography variant="caption">
-            <Tooltip title={t("transactionFeeTooltip")}>
-              <IconButton size="small" style={{ marginLeft: 4 }}>
+            <Tooltip
+              title={t("transactionFeeTooltip")}
+              open={openTooltips.transactionFee}
+            >
+              <IconButton
+                size="small"
+                style={{ marginLeft: 4 }}
+                onClick={() => handleTooltipClick("transactionFee")}
+              >
                 <InfoOutlinedIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
@@ -140,6 +173,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               variant="contained"
               size="small"
               onClick={handleAddressCheck}
+              disabled={!isValidAddress}
             >
               {t("checkAddress")}
             </CheckButton>
@@ -149,6 +183,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
               variant="contained"
               onClick={transferToken}
               size="small"
+              disabled={!isValidAddress}
             >
               {t("sendToken")} {selectedTokenState}
             </CheckedAddressButton>
@@ -158,6 +193,7 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             color="error"
             onClick={transferToken}
             size="small"
+            disabled={!isValidAddress}
           >
             {t("sendToken")} {selectedTokenState}
           </UncheckedAddressButton>
