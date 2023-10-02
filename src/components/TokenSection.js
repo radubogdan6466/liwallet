@@ -22,13 +22,7 @@ export default function TokenSection(props) {
   } = props;
   return (
     <React.Fragment>
-      <TypographyTitle
-        sx={{
-          color: theme.palette.text.secondary,
-        }}
-      >
-        {t("tokens")}
-      </TypographyTitle>
+      <TypographyTitle>{t("tokens")}</TypographyTitle>
       <TokenList
         userWallet={userWallet}
         web3={web3}

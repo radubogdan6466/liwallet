@@ -7,14 +7,12 @@ import LoginWallet from "./loginwallet.js";
 import ReportAddress from "../report/ReportAddress.js";
 import Settings from "./settings.js";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@mui/material/styles";
+import { NavigateBox, NavigateMenu, MenuItemImport } from "../hooks/styles.js";
+import CreateWalletUI from "../pages/CreateWalletUi.js";
 
-const StyledBox = styled(Box)({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  color: "white",
-});
 const Meniu = () => {
+  const theme = useTheme();
   const [showCreatePopup, setShowCreatePopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showReportPopup, setShowReportPopup] = useState(false);
@@ -50,7 +48,7 @@ const Meniu = () => {
   };
 
   return (
-    <StyledBox>
+    <NavigateBox>
       <IconButton
         color="secondary"
         size="large"
@@ -63,7 +61,7 @@ const Meniu = () => {
       >
         <MoreVertIcon />
       </IconButton>
-      <Menu
+      <NavigateMenu
         id="long-menu"
         MenuListProps={{
           "aria-labelledby": "long-button",
@@ -75,18 +73,29 @@ const Meniu = () => {
           style: {
             maxHeight: "210px",
             width: "20ch",
+            backgroundColor: theme.palette.primary.second, // Setăm culoarea de fundal folosind tema
           },
         }}
       >
-        <MenuItem onClick={handleCreateClick}>{t("nav.create")}</MenuItem>
-        <MenuItem onClick={handleLoginClick}>{t("nav.login")}</MenuItem>
-        <MenuItem onClick={handleSettingsClick}>{t("nav.settings")}</MenuItem>
-        <MenuItem onClick={handleReportClick}>{t("nav.report")}</MenuItem>
-        <MenuItem onClick={handleExpandView}>{t("nav.expand")}</MenuItem>
-      </Menu>
+        <MenuItemImport onClick={handleCreateClick}>
+          {t("nav.create")}
+        </MenuItemImport>
+        <MenuItemImport onClick={handleLoginClick}>
+          {t("nav.login")}
+        </MenuItemImport>
+        <MenuItemImport onClick={handleSettingsClick}>
+          {t("nav.settings")}
+        </MenuItemImport>
+        <MenuItemImport onClick={handleReportClick}>
+          {t("nav.report")}
+        </MenuItemImport>
+        <MenuItemImport onClick={handleExpandView}>
+          {t("nav.expand")}
+        </MenuItemImport>
+      </NavigateMenu>
 
       <Dialog open={showCreatePopup} onClose={() => setShowCreatePopup(false)}>
-        <CreateWallet mode="popup" />
+        <CreateWalletUI mode="popup" />
       </Dialog>
       <Dialog open={showLoginPopup} onClose={() => setShowLoginPopup(false)}>
         <LoginWallet />
@@ -97,7 +106,7 @@ const Meniu = () => {
       <Dialog open={showSettingsPopup}>
         <Settings onClose={() => setShowSettingsPopup(false)} />
       </Dialog>
-    </StyledBox>
+    </NavigateBox>
   );
 };
 

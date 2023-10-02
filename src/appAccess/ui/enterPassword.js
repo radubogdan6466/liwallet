@@ -1,37 +1,40 @@
 import React from "react";
-import {
-  CenterBoxHome,
-  GridLoginPassword,
-  AvatarLoginPassword,
-  LoginPassBtn,
-  PassLoginFormField,
-  TypographyLoginPass,
-} from "../../hooks/styles";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@mui/material/styles";
 import logo from "../MIS.png";
 import { usePasswordLogic } from "../logic/passwordLogic"; // <-- import the new hook
-
+import "./enter.css";
 export default function EnterPassword({ onPasswordMatch }) {
   const { enteredPassword, setEnteredPassword, handleSubmit } =
-    usePasswordLogic(onPasswordMatch); // <-- use the hook
+    usePasswordLogic(onPasswordMatch);
   const theme = useTheme();
   const { t } = useTranslation();
   return (
-    <GridLoginPassword>
-      <CenterBoxHome item xs={12} sm={6} md={4} lg={3}>
-        <AvatarLoginPassword alt="liwallet Logo" src={logo} />
-        <TypographyLoginPass>{t("enterPassword")}</TypographyLoginPass>
-        <PassLoginFormField
-          placeholder="Parola"
+    <div className="enter-content">
+      <h1 className="titleEnterPass">{t("enterPassword")}</h1>
+      <form className="form__group field">
+        <input
           type="password"
+          className="form__field"
+          placeholder="Name"
+          required
+          autoComplete="off"
           value={enteredPassword}
           onChange={(e) => setEnteredPassword(e.target.value)}
         />
-        <LoginPassBtn variant="contained" onClick={handleSubmit}>
+        <label htmlFor="name" className="form__label">
+          Password
+        </label>
+      </form>
+      <div className="enter-button-p">
+        <button
+          className="enter-button"
+          variant="contained"
+          onClick={handleSubmit}
+        >
           Login
-        </LoginPassBtn>
-      </CenterBoxHome>
-    </GridLoginPassword>
+        </button>
+      </div>
+    </div>
   );
 }

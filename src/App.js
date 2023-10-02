@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from "react";
+import { setupIonicReact } from "@ionic/react";
 import { HashRouter, Route, Routes, Navigate } from "react-router-dom";
-import { ThemeProvider, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import SetPassword from "./appAccess/ui/setPassword.js";
 import EnterPassword from "./appAccess/ui/enterPassword.js";
-import Createwallet from "./components/createwallet";
+import CreateWalletUI from "./pages/CreateWalletUi.js";
 import LoginWallet from "./components/loginwallet";
-import Home from "./components/home";
+import Home from "./pages/home.js";
 import Settings from "./components/settings";
 import ReportAddress from "./report/ReportAddress";
-import theme from "./theme/Theme"; // Importă tema creată
 import { AppLogic } from "./appAccess/logic/appLogic.js";
-import "./App.css";
 import useLoading from "./hooks/useLoading.js";
-
+import "./App.css";
+/* Core CSS required for Ionic components to work properly */
+import "@ionic/react/css/core.css";
+/* Basic CSS for apps built with Ionic */
+import "@ionic/react/css/normalize.css";
+import "@ionic/react/css/structure.css";
+import "@ionic/react/css/typography.css";
+/* Optional CSS utils that can be commented out */
+import "@ionic/react/css/padding.css";
+import "@ionic/react/css/float-elements.css";
+import "@ionic/react/css/text-alignment.css";
+import "@ionic/react/css/text-transformation.css";
+import "@ionic/react/css/flex-utils.css";
+import "@ionic/react/css/display.css";
+import "./ionicTheme/variable.css";
 function App() {
+  setupIonicReact();
+
   const [isLoading, setIsLoading, LoadingIndicator] = useLoading(true, 1000);
   const {
     isPasswordSet,
@@ -21,29 +36,25 @@ function App() {
     isPasswordMatched,
     setIsPasswordMatched,
   } = AppLogic();
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {isLoading ? (
-        <LoadingIndicator />
-      ) : !isPasswordSet ? (
-        <SetPassword onPasswordSet={() => setIsPasswordSet(true)} />
-      ) : !isPasswordMatched ? (
-        <EnterPassword onPasswordMatch={() => setIsPasswordMatched(true)} />
-      ) : (
-        <HashRouter>
-          <Routes>
-            <Route path="/" element={<Navigate to="/Home" />} />
-            <Route path="/connect" element={<EnterPassword />} />
-            <Route path="/Home" element={<Home />} />
-            <Route path="/create" element={<Createwallet />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/login" element={<LoginWallet />} />
-            <Route path="/report" element={<ReportAddress />} />
-          </Routes>
-        </HashRouter>
-      )}
-    </ThemeProvider>
+
+  return isLoading ? (
+    <LoadingIndicator />
+  ) : !isPasswordSet ? (
+    <SetPassword onPasswordSet={() => setIsPasswordSet(true)} />
+  ) : !isPasswordMatched ? (
+    <EnterPassword onPasswordMatch={() => setIsPasswordMatched(true)} />
+  ) : (
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/Home" />} />
+        <Route path="/connect" element={<EnterPassword />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="/create" element={<CreateWalletUI />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/login" element={<LoginWallet />} />
+        <Route path="/report" element={<ReportAddress />} />
+      </Routes>
+    </HashRouter>
   );
 }
 

@@ -17,12 +17,7 @@ export default function Balance({
 
   return (
     <Box sx={{ width: "100%" }}>
-      <TypographyTitle
-        variant="h5"
-        sx={{
-          color: theme.palette.text.secondary,
-        }}
-      >
+      <TypographyTitle variant="h5">
         {Number(ethBalance).toFixed(4)}
         {selectedChain === ethchain
           ? "   ETH"

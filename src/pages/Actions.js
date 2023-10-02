@@ -18,41 +18,18 @@ export default function Actions({
 
   return (
     <Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <ActionButton
-          sx={{
-            color: theme.palette.text.secondary,
-          }}
-          onClick={onSendClick}
-        >
-          <CallMadeIcon
-            sx={{
-              color: theme.palette.primary.icon,
-            }}
-          />
+      <Box>
+        <ActionButton onClick={onSendClick}>
+          <CallMadeIcon />
           {t("send")}
         </ActionButton>
 
         <ActionButton onClick={onReceiveClick}>
-          <CallReceivedIcon
-            sx={{
-              color: theme.palette.primary.icon,
-            }}
-          />
+          <CallReceivedIcon />
           {t("receive")}
         </ActionButton>
         <ActionButton onClick={onImportClick}>
-          <AddIcon
-            sx={{
-              color: theme.palette.primary.icon,
-            }}
-          />
+          <AddIcon />
           {t("import")}
         </ActionButton>
       </Box>

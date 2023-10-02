@@ -6,6 +6,7 @@ import {
   FormField,
   FormContainer,
   StyledFormControl,
+  LoginFormField,
 } from "../hooks/styles";
 import CryptoJS from "crypto-js";
 import { useNavigate } from "react-router-dom";
@@ -58,7 +59,7 @@ export default function LoginWallet({ onClose }) {
       setDisplayPrivateKey("");
       setTimeout(() => {
         window.location.reload();
-      }, 50);
+      }, 1000);
       gologin();
     } catch (error) {
       console.error("Error, try again:", error);
@@ -72,26 +73,13 @@ export default function LoginWallet({ onClose }) {
       direction="column"
       justifyContent="center"
       alignItems="center"
-      sx={{
-        position: "relative",
-        top: 0,
-        left: 0,
-        width: "260px",
-
-        backgroundColor: theme.palette.background.light,
-      }}
     >
       <TypographyTitle variant="h5" gutterBottom>
         Login
       </TypographyTitle>
-      <FormContainer
-        onSubmit={Login}
-        sx={{
-          width: "260px",
-        }}
-      >
+      <FormContainer onSubmit={Login}>
         <StyledFormControl>
-          <FormField
+          <LoginFormField
             id="privateKey"
             value={displayPrivateKey}
             placeholder="Enter private key"
@@ -99,9 +87,6 @@ export default function LoginWallet({ onClose }) {
             onChange={handlePrivateKeyChange}
             fullWidth
             autoComplete="off"
-            sx={{
-              width: "260px",
-            }}
           />
         </StyledFormControl>
         {errorMessage && (
@@ -115,18 +100,7 @@ export default function LoginWallet({ onClose }) {
           justifyContent="center"
           alignItems="center"
         >
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              backgroundColor: theme.palette.button.normal,
-              color: theme.palette.button.textNormal,
-              "&:hover": {
-                backgroundColor: theme.palette.button.hover,
-                color: theme.palette.button.textHover,
-              },
-            }}
-          >
+          <Button type="submit" variant="contained">
             Login
           </Button>
         </Grid>

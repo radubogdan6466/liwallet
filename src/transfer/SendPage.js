@@ -19,8 +19,8 @@ import {
   DialogMain,
   InputLabelSend,
   AmountSendTextField,
-  inputLabelPropsStyles,
-  inputPropsStyles,
+  inputLabelPropsStylesSend,
+  inputPropsStylesSend,
   ToAdrsSendTextField,
   TransferDetailsBoxSendPage,
   CheckButton,
@@ -35,7 +35,7 @@ import calculateTransactionFee from "./utils/calculateTransactionFee";
 const Send = ({ onClose, selectedToken, selectedChain }) => {
   const theme = useTheme();
   const [selectedTokenState, setSelectedTokenState] = useState(selectedToken);
-  const gasLimit = ethers.BigNumber.from(21000); // Exemplu de limită de gaz
+  const gasLimit = ethers.BigNumber.from(21000);
   const [transactionFee, setTransactionFee] = useState("0");
   const [nativeCurrencySymbol, setNativeCurrencySymbol] = useState("ETH");
   const { t } = useTranslation();
@@ -117,16 +117,16 @@ const Send = ({ onClose, selectedToken, selectedChain }) => {
             placeholder={t("amountPlaceholder")}
             required
             size="small"
-            InputLabelProps={{ style: inputLabelPropsStyles(theme) }}
-            inputProps={{ style: inputPropsStyles(theme) }}
+            InputLabelProps={{ style: inputLabelPropsStylesSend(theme) }}
+            inputProps={{ style: inputPropsStylesSend(theme) }}
           />
           <ToAdrsSendTextField
             id="toadrs"
             required
             size="small"
             placeholder={t("sendToPlaceholder")}
-            InputLabelProps={{ style: inputLabelPropsStyles(theme) }}
-            inputProps={{ style: inputPropsStyles(theme) }}
+            InputLabelProps={{ style: inputLabelPropsStylesSend(theme) }}
+            inputProps={{ style: inputPropsStylesSend(theme) }}
             onChange={(e) => {
               const address = e.target.value;
               setIsValidAddress(ethers.utils.isAddress(address));

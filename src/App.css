@@ -1,24 +1,8 @@
-html,
-body {
-  background-color: #24272a;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin: auto;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-}
-/* Pentru a ascunde scrollbar-ul pentru majoritatea browserelor */
-body::-webkit-scrollbar {
-  display: none; /* Ascunde scrollbar-ul pentru WebKit browsers */
-}
-
-body {
-  -ms-overflow-style: none; /* Ascunde scrollbar-ul pentru IE și Edge */
-  scrollbar-width: none; /* Ascunde scrollbar-ul pentru Firefox */
-  overflow: -moz-scrollbars-none; /* Pentru versiuni mai vechi de Firefox */
+body,
+html {
+  background: rgba(29, 35, 41);
+  min-height: 600px;
+  min-width: 357px;
+  margin: 0;
+  padding: 0;
 }

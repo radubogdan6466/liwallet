@@ -51,7 +51,7 @@ export default function ReportAddress({ onClose }) {
     <Dialog open={true} onClose={closePopup}>
       <StyledBoxx
         sx={{
-          backgroundColor: theme.palette.background.light,
+          backgroundColor: theme.palette.settings.bg,
         }}
       >
         <TypographyTitle variant="h5" gutterBottom>
@@ -74,7 +74,6 @@ export default function ReportAddress({ onClose }) {
           <FormField
             label={t("addressRep")}
             variant="outlined"
-            color="secondary"
             fullWidth
             value={address}
             onChange={(e) => setAddress(e.target.value)}
@@ -97,11 +96,7 @@ export default function ReportAddress({ onClose }) {
             }}
           />
           <FormControl variant="outlined" fullWidth>
-            <InputLabel
-              color="secondary"
-              id="details-label"
-              sx={{ color: "#000" }}
-            >
+            <InputLabel color="secondary" id="details-label">
               {t("detailRep")}
             </InputLabel>
             <Select
@@ -110,6 +105,14 @@ export default function ReportAddress({ onClose }) {
               color="secondary"
               value={details}
               onChange={(e) => setDetails(e.target.value)}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    backgroundColor: theme.palette.settings.bg,
+                    color: theme.palette.settings.text,
+                  },
+                },
+              }}
             >
               <MenuItem value={"FakeGiveaway"}>Fake Giveaway</MenuItem>
               <MenuItem value={"StolenCrypto"}>Stolen Crypto</MenuItem>

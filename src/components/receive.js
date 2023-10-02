@@ -2,7 +2,7 @@ import React from "react";
 import { Dialog, Typography, Box } from "@mui/material";
 import QRCode from "qrcode.react";
 import { useTranslation } from "react-i18next";
-
+import { ReceiveBox } from "../hooks/styles";
 const Receive = ({ onClose, userWallet }) => {
   const { t } = useTranslation();
 
@@ -12,27 +12,12 @@ const Receive = ({ onClose, userWallet }) => {
 
   return (
     <Dialog open={true} onClose={closePopup}>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          paddingBottom: "10px",
-        }}
-      >
+      <ReceiveBox>
         <Typography>{t("sendAddress")}</Typography>
-        <Typography
-          sx={{
-            maxWidth: "90%",
-            overflowWrap: "break-word",
-          }}
-        >
-          {userWallet.address}
-        </Typography>
+        <Typography>{userWallet.address}</Typography>
         <Typography>{t("scanQR")}</Typography>
         <QRCode value={userWallet.address} />
-      </Box>
+      </ReceiveBox>
     </Dialog>
   );
 };

@@ -69,89 +69,24 @@ export default function Settings({ onClose }) {
   };
   return (
     <Dialog open={true} onClose={closePopup}>
-      <LanguageSelector />
+      <Box>
+        <Box>
+          <LanguageSelector />
+        </Box>
 
-      <Box
-        sx={{
-          backgroundColor: theme.palette.background.light,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <TypographyTitle
-          variant="h6"
-          sx={{
-            backgroundColor: theme.palette.background.light,
-          }}
-        >
-          {t("sec.main")}
-        </TypographyTitle>
+        <TypographyTitle variant="h6">{t("sec.main")}</TypographyTitle>
         <Button
           variant="contained"
           onClick={() => showKey("pkey", "Secret Key")}
-          sx={{
-            borderRadius: 0,
-            margin: 1,
-            width: "230px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-
-            backgroundColor: theme.palette.button.normal,
-            color: theme.palette.button.textNormal,
-            "&:hover": {
-              backgroundColor: theme.palette.button.hover,
-              color: theme.palette.button.textHover,
-            },
-          }}
         >
           {t("sec.first")}
         </Button>
-        <Button
-          variant="contained"
-          onClick={showRecoveryPhrase}
-          sx={{
-            borderRadius: 0,
-            margin: 1,
-            width: "230px",
-            backgroundColor: theme.palette.button.normal,
-            color: theme.palette.button.textNormal,
-            "&:hover": {
-              backgroundColor: theme.palette.button.hover,
-              color: theme.palette.button.textHover,
-            },
-          }}
-        >
+        <Button variant="contained" onClick={showRecoveryPhrase}>
           {t("sec.second")}
         </Button>
         <Dialog onClose={() => setOpenDialog(false)} open={openDialog}>
-          <DialogTitle
-            style={{
-              color: theme.palette.text.text,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: "30px",
-            }}
-          >
-            {dialogTitle}
-          </DialogTitle>
-          <DialogContent
-            sx={{
-              padding: "20px",
-              color: theme.palette.text.text,
-              height: "130px",
-              width: "270px",
-              overflowWrap: "break-word",
-              maxWidth: "90%",
-            }}
-          >
-            {dialogContent}
-          </DialogContent>
+          <DialogTitle>{dialogTitle}</DialogTitle>
+          <DialogContent>{dialogContent}</DialogContent>
         </Dialog>
       </Box>
     </Dialog>

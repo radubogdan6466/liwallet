@@ -6,13 +6,29 @@ import ChainSelector from "../hooks/ChainSelector";
 import Meniu from "./Navigate";
 import { CenterBox } from "../hooks/styles";
 import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
-
+import { Clipboard } from "@capacitor/clipboard";
+import "./nav.css";
 export default function NavBar({
   selectedChain,
   handleChainChange,
   userWallet,
   copyAddress,
 }) {
+  function copyAddress(address) {
+    Clipboard.write({
+      string: address,
+    })
+      .then(() => {
+        const copyMessage = document.getElementById("copyMessage");
+        copyMessage.textContent = "Adresa copiată!";
+        setTimeout(() => {
+          copyMessage.textContent = "";
+        }, 1000);
+      })
+      .catch((error) => {
+        console.error("Eroare la copierea adresei:", error);
+      });
+  }
   const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
 
   const shortenedAddress = `${userWallet.address.substring(
@@ -21,15 +37,7 @@ export default function NavBar({
   )}...${userWallet.address.substring(userWallet.address.length - 4)}`;
 
   return (
-    <Box
-      className="nav"
-      sx={{
-        height: "100px",
-        display: "flex",
-        justifyContent: "space-between",
-        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.5)",
-      }}
-    >
+    <Box className="nav">
       <ChainSelector
         selectedChain={selectedChain}
         handleChainChange={handleChainChange}
@@ -37,25 +45,11 @@ export default function NavBar({
       <CenterBox>
         <Button
           onClick={() => copyAddress(userWallet.address)}
-          endIcon={
-            <ContentCopy
-              sx={{
-                color: theme.palette.primary.icon,
-              }}
-            />
-          }
-          sx={{
-            color: theme.palette.text.secondary,
-          }}
+          endIcon={<ContentCopy />}
         >
           {shortenedAddress}
         </Button>
-        <Typography
-          id="copyMessage"
-          sx={{
-            color: theme.palette.text.span,
-          }}
-        ></Typography>
+        <Typography id="copyMessage"></Typography>
       </CenterBox>
       <Meniu />
     </Box>

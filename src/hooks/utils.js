@@ -1,7 +1,7 @@
 //utils.js
-export const bnbchain = "https://bsc-testnet.publicnode.com";
+export const bnbchain = "https://bsc-dataseed2.bnbchain.org";
 export const ethchain =
-  "https://sepolia.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd";
+  "https://mainnet.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd";
 export const dogechain = "https://rpc-testnet.dogechain.dog";
 export const polychain = "https://rpc-mumbai.maticvigil.com/";
 export const arbitrumchain =
@@ -13,6 +13,12 @@ export const chains = {
   "Polygon Mainnet": polychain,
   "Arbitrum One": arbitrumchain,
 };
+
+//eth mainnet https://mainnet.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd
+// eth sepolia https://sepolia.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd
+
+// bnb mainnet https://bsc-dataseed2.bnbchain.org
+// bnb testnet https://bsc-testnet.publicnode.com
 export const getChainNameFromUrl = (url) => {
   switch (url) {
     case bnbchain:

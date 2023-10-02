@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useTheme } from "@mui/material/styles";
 import ro from "../flags/ro.svg";
 import en from "../flags/en.svg";
 import it from "../flags/it.svg";
 
+const LANGUAGES = [
+  { code: "ro", label: "Română", flag: ro },
+  { code: "en", label: "English", flag: en },
+  { code: "it", label: "Italiano", flag: it },
+];
+
 const LanguageSelector = () => {
   const { t, i18n } = useTranslation();
-  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const changeLanguage = (lang) => {
@@ -17,80 +21,42 @@ const LanguageSelector = () => {
     setAnchorEl(null);
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const flags = {
-    en: en,
-    ro: ro,
-    it: it,
-  };
   return (
-    <Box
-      sx={{
-        backgroundColor: theme.palette.background.light,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Typography variant="h6">{t("languageSelector.title")}</Typography>
-      <IconButton onClick={handleClick}>
+    <Box display="flex" alignItems="center">
+      <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
         <img
-          src={flags[i18n.language] || ro}
+          src={
+            LANGUAGES.find((lang) => lang.code === i18n.language)?.flag || ro
+          }
           alt="Flag"
           width="30"
           height="30"
           style={{ borderRadius: "50%" }}
         />
+        <Typography>
+          {LANGUAGES.find((lang) => lang.code === i18n.language)?.label ||
+            "Română"}
+        </Typography>
       </IconButton>
       <Menu
         anchorEl={anchorEl}
-        keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={() => setAnchorEl(null)}
       >
-        <MenuItem onClick={() => changeLanguage("ro")}>
-          <img
-            src={ro}
-            alt="RO Flag"
-            width="30"
-            height="30"
-            style={{ borderRadius: "50%" }}
-          />
-          <Typography variant="body1" style={{ paddingLeft: 8 }}>
-            {t("languageSelector.ro")}
-          </Typography>
-        </MenuItem>
-        <MenuItem onClick={() => changeLanguage("en")}>
-          <img
-            src={en}
-            alt="EN Flag"
-            width="30"
-            height="30"
-            style={{ borderRadius: "50%" }}
-          />
-          <Typography variant="body1" style={{ paddingLeft: 8 }}>
-            {t("languageSelector.en")}
-          </Typography>
-        </MenuItem>
-        <MenuItem onClick={() => changeLanguage("it")}>
-          <img
-            src={it}
-            alt="IT Flag"
-            width="30"
-            height="30"
-            style={{ borderRadius: "50%" }}
-          />
-          <Typography variant="body1" style={{ paddingLeft: 8 }}>
-            {t("languageSelector.it")}
-          </Typography>
-        </MenuItem>
+        {LANGUAGES.map((lang) => (
+          <MenuItem key={lang.code} onClick={() => changeLanguage(lang.code)}>
+            <img
+              src={lang.flag}
+              alt={`${lang.label} Flag`}
+              width="30"
+              height="30"
+              style={{ borderRadius: "50%" }}
+            />
+            <Typography variant="body1" style={{ paddingLeft: 8 }}>
+              {t(`languageSelector.${lang.code}`)}
+            </Typography>
+          </MenuItem>
+        ))}
       </Menu>
     </Box>
   );

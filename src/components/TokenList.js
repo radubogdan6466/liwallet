@@ -141,14 +141,8 @@ export default function TokenList({
     return "";
   };
   return (
-    <Box
-      sx={{ width: "100%", height: "100%", paddingLeft: 5, paddingRight: 5 }}
-    >
-      <List
-        sx={{
-          color: theme.palette.text.secondary,
-        }}
-      >
+    <Box>
+      <List>
         <ListItem
           button
           key={getNativeCurrency(selectedChain)}
@@ -211,12 +205,7 @@ export default function TokenList({
         color="primary"
         aria-label="refresh balance"
       >
-        <RefreshIcon
-          sx={{
-            color: theme.palette.primary.icon,
-            fontSize: 40,
-          }}
-        />
+        <RefreshIcon />
         {t("refresh")}
       </Button>
     </Box>

@@ -1,17 +1,7 @@
 // SetPassword.js
 import React from "react";
-import {
-  CenterBoxHome,
-  GridLoginPassword,
-  AvatarLoginPassword,
-  TypographyLoginPass,
-  TypographySetupPass,
-  PassSetupFormField,
-  SetupPassBtn,
-} from "../../hooks/styles";
-import { Box } from "@mui/material";
+import "./set.css";
 import { useTranslation } from "react-i18next";
-import { useTheme } from "@mui/material/styles";
 import logo from "../MIS.png";
 import { Logicp } from "../logic/logicp";
 
@@ -24,57 +14,50 @@ export default function SetPassword({ onPasswordSet }) {
     handleSubmit,
   } = Logicp(onPasswordSet);
   const { t } = useTranslation();
-  const theme = useTheme();
   const handleFormSubmit = (event) => {
     event.preventDefault();
     handleSubmit();
   };
   return (
-    <GridLoginPassword>
-      <CenterBoxHome item xs={12} sm={6} md={4} lg={3}>
-        <AvatarLoginPassword alt="liwallet Logo" src={logo} />
-        <TypographyLoginPass>{t("setPassword")}</TypographyLoginPass>
-        <TypographySetupPass>{t("setPasswordInfo1")}</TypographySetupPass>
-        <TypographySetupPass>{t("setPasswordInfo2")}</TypographySetupPass>
-        <Box
-          component="form"
-          onSubmit={handleFormSubmit}
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <PassSetupFormField
-            placeholder="Password"
-            type="password"
-            value={password}
-            size="small"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <PassSetupFormField
-            placeholder="Confirm Password"
-            type="password"
-            size="small"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <SetupPassBtn
-            type="submit"
-            sx={{
-              marginTop: "20px",
-              backgroundColor: theme.palette.button.normal,
-              color: theme.palette.button.textNormal,
-              "&:hover": {
-                backgroundColor: theme.palette.button.hover,
-                color: theme.palette.button.textHover,
-              },
-            }}
-            variant="contained"
-          >
-            {t("confirmSetPassword")}
-          </SetupPassBtn>
-        </Box>
-      </CenterBoxHome>
-    </GridLoginPassword>
+    <div className="set-content">
+      <div>
+        <h1 className="title1">{t("setPassword")}</h1>
+        <h2 className="title2">{t("setPasswordInfo1")}</h2>
+        <h2 className="title2">{t("setPasswordInfo2")}</h2>
+      </div>
+      <form className="form__group field" onSubmit={handleFormSubmit}>
+        <input
+          type="password"
+          className="form__field"
+          required
+          placeholder="Name"
+          autoComplete="off"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <label htmlFor="name" className="form__label">
+          Password
+        </label>
+      </form>
+      <form className="form__group field">
+        <input
+          type="password"
+          className="form__field"
+          required
+          placeholder="Name"
+          autoComplete="off"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        <label htmlFor="name" className="form__label">
+          Confirm
+        </label>
+      </form>
+      <div className="set-button-p">
+        <button className="noselect" onClick={handleSubmit}>
+          Continue
+        </button>
+      </div>
+    </div>
   );
 }

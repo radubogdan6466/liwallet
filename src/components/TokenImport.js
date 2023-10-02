@@ -17,12 +17,15 @@ import {
   FormImport,
   ImportBtn,
   ImportFormField,
+  inputLabelPropsStylesSend,
+  inputPropsStylesSend,
+  TypographyTitleImport,
 } from "../hooks/styles.js";
 
 const TokenImport = ({ onClose, selectedChain }) => {
   const theme = useTheme();
   const { t } = useTranslation();
-  const [isLoading, setIsLoading, LoadingIndicator] = useLoading(false, 500);
+  const [isLoading, setIsLoading, LoadingIndicator] = useLoading(false, 50);
   const [loading, setLoading] = useState(false);
   const [importedTokens, setImportedTokens] = useState(
     JSON.parse(
@@ -67,6 +70,7 @@ const TokenImport = ({ onClose, selectedChain }) => {
   useEffect(() => {
     setIsValidAddress(EthereumAddress.isAddress(tokenAddress));
   }, [tokenAddress]);
+
   useEffect(() => {
     if (EthereumAddress.isAddress(tokenAddress)) {
       setLoading(true); // Adauga aceasta linie
@@ -98,6 +102,7 @@ const TokenImport = ({ onClose, selectedChain }) => {
       fetchTokenSymbolAndDecimals();
     }
   }, [tokenAddress, provider, t]);
+
   const handleSubmit = (submitEvent) => {
     submitEvent.preventDefault();
     const validAddress = EthereumAddress.isAddress(tokenAddress);
@@ -131,15 +136,15 @@ const TokenImport = ({ onClose, selectedChain }) => {
     window.dispatchEvent(event);
     setTimeout(() => {
       window.location.reload();
-    }, 500);
+    }, 1000);
   };
   useEffect(() => {
     setIsLoading(loading);
   }, [loading]);
   return (
     <Dialog open={true} onClose={closePopup}>
-      <DialogTitle sx={{ backgroundColor: theme.palette.background.light }}>
-        <TypographyTitle>{t("ImportToken")}</TypographyTitle>
+      <DialogTitle>
+        <TypographyTitleImport>{t("ImportToken")}</TypographyTitleImport>
       </DialogTitle>
 
       <LoadingIndicator />
@@ -163,12 +168,6 @@ const TokenImport = ({ onClose, selectedChain }) => {
                     ? error
                     : ""
                 }
-                InputLabelProps={{
-                  style: { color: theme.palette.text.input },
-                }}
-                inputProps={{
-                  style: { color: theme.palette.text.input },
-                }}
               />
 
               <ImportFormField

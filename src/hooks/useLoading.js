@@ -5,7 +5,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useTheme } from "@mui/material/styles";
 
-function useLoading(initialState = true, delay = 1000) {
+function useLoading(initialState = true, delay = 50) {
   const [isLoading, setIsLoading] = useState(initialState);
   const theme = useTheme();
 
@@ -22,14 +22,8 @@ function useLoading(initialState = true, delay = 1000) {
     if (!isLoading) return null;
 
     return (
-      <Backdrop
-        sx={{
-          color: theme.palette.primary.icon,
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}
-        open
-      >
-        <CircularProgress color="inherit" size={150} />
+      <Backdrop open>
+        <CircularProgress color="success" size={150} />
       </Backdrop>
     );
   };

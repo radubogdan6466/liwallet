@@ -1175,7 +1175,12 @@
     tslib "^2.4.0"
     xml2js "^0.5.0"
 
-"@capacitor/core@^5.2.0", "@capacitor/core@^5.2.2":
+"@capacitor/clipboard@^5.0.6":
+  version "5.0.6"
+  resolved "https://registry.npmjs.org/@capacitor/clipboard/-/clipboard-5.0.6.tgz"
+  integrity sha512-VsokRAn+0HVWj6riSRdspczEfqFoHbrhS/XRhGoEPsj0uvYPSufy0Kb2dpnSqkeeElhh2Jvn8jmVAzII2XeR9w==
+
+"@capacitor/core@^5.0.0", "@capacitor/core@^5.2.0", "@capacitor/core@^5.2.2":
   version "5.2.2"
   resolved "https://registry.npmjs.org/@capacitor/core/-/core-5.2.2.tgz"
   integrity sha512-3jKECZC5+YD2rljMZm1e/K3AYyoxUmLDZCyofTPbRYPBSI0wJh5ZCkX+XIGzNM0o/Wokl3Voa1JB8xsLC0MPxA==
@@ -1846,6 +1851,24 @@
     debug "^4.0.0"
     tslib "^2.0.1"
 
+"@ionic/core@7.4.2":
+  version "7.4.2"
+  resolved "https://registry.npmjs.org/@ionic/core/-/core-7.4.2.tgz"
+  integrity sha512-ePuP+SxS6HY/nos267dBdAvL0kth1FYUWs8Y+DSM+FFTeRdEbvOsa2JeQCY7gCt/Ep9e7lSND95qfkX23pGNDA==
+  dependencies:
+    "@stencil/core" "^4.3.0"
+    ionicons "7.1.0"
+    tslib "^2.1.0"
+
+"@ionic/react@^7.4.2":
+  version "7.4.2"
+  resolved "https://registry.npmjs.org/@ionic/react/-/react-7.4.2.tgz"
+  integrity sha512-lU6rVunrEQhpgC4ftEzqNC30c8U2PQTQivzwDSkd2y/WsJSCzYyG/+ZHhACSWfa4dbGZizOHdFCWsnAjZjDJFw==
+  dependencies:
+    "@ionic/core" "7.4.2"
+    ionicons "^7.0.0"
+    tslib "*"
+
 "@ionic/utils-array@2.1.6":
   version "2.1.6"
   resolved "https://registry.npmjs.org/@ionic/utils-array/-/utils-array-2.1.6.tgz"
@@ -2379,10 +2402,10 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
-"@remix-run/router@1.3.3":
-  version "1.3.3"
-  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.3.3.tgz"
-  integrity sha512-YRHie1yQEj0kqqCTCJEfHqYSSNlZQ696QJG+MMiW4mxSl9I0ojz/eRhJS4fs88Z5i6D1SmoF9d3K99/QOhI8/w==
+"@remix-run/router@1.9.0":
+  version "1.9.0"
+  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.9.0.tgz"
+  integrity sha512-bV63itrKBC0zdT27qYm6SDZHlkXwFL1xMBuhkn+X7l0+IIhNaH5wuuvZKp6eKhCD4KFhujhfhCT1YxXW6esUIA==
 
 "@rollup/plugin-babel@^5.2.0":
   version "5.3.1"
@@ -2454,6 +2477,16 @@
   integrity sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
+
+"@stencil/core@^2.18.0":
+  version "2.22.3"
+  resolved "https://registry.npmjs.org/@stencil/core/-/core-2.22.3.tgz"
+  integrity sha512-kmVA0M/HojwsfkeHsifvHVIYe4l5tin7J5+DLgtl8h6WWfiMClND5K3ifCXXI2ETDNKiEk21p6jql3Fx9o2rng==
+
+"@stencil/core@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.npmjs.org/@stencil/core/-/core-4.3.0.tgz"
+  integrity sha512-WYjftKg5fuqO7mf3nTl1aCRurkeMmfEF38WcBG4VLF6UPQ+MA76/koedGR2LGhATGByx+pbxR4iRxAr2Bspc9A==
 
 "@storybook/addons@6.5.16":
   version "6.5.16"
@@ -9991,6 +10024,20 @@ invert-kv@^1.0.0:
   resolved "https://registry.npmjs.org/invert-kv/-/invert-kv-1.0.0.tgz"
   integrity sha512-xgs2NH9AE66ucSq4cNG1nhSFghr5l6tdL15Pk+jl46bmmBapgoaY/AacXyaDznAqmGL99TiLSQgO/XazFSKYeQ==
 
+ionicons@^7.0.0:
+  version "7.1.2"
+  resolved "https://registry.npmjs.org/ionicons/-/ionicons-7.1.2.tgz"
+  integrity sha512-zZ4njAqSP39H8RRvZhJvkHsv7cBjYE/VfInH218Osf2UVxJITSOutTTd25MW+tAXKN5fheYzclUXUsF55JHUDg==
+  dependencies:
+    "@stencil/core" "^2.18.0"
+
+ionicons@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.npmjs.org/ionicons/-/ionicons-7.1.0.tgz"
+  integrity sha512-iE4GuEdEHARJpp0sWL7WJZCzNCf5VxpNRhAjW0fLnZPnNL5qZOJUcfup2Z2Ty7Jk8Q5hacrHfGEB1lCwOdXqGg==
+  dependencies:
+    "@stencil/core" "^2.18.0"
+
 ip@^1.1.0, ip@^1.1.5:
   version "1.1.8"
   resolved "https://registry.npmjs.org/ip/-/ip-1.1.8.tgz"
@@ -14056,7 +14103,7 @@ react-dev-utils@^12.0.1:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
-"react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.0 || ^18.0.0", react-dom@^18.0.0, react-dom@^18.2.0, "react-dom@>= 16.8.0", react-dom@>=16.6.0, react-dom@>=16.8, "react-dom@16.8.0 - 18":
+"react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.0 || ^18.0.0", react-dom@^18.0.0, react-dom@^18.2.0, "react-dom@>= 16.8.0", react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.6, "react-dom@16.8.0 - 18":
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -14107,20 +14154,20 @@ react-refresh@^0.11.0, "react-refresh@>=0.10.0 <1.0.0":
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.11.0.tgz"
   integrity sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==
 
-react-router-dom@^6.8.2:
-  version "6.8.2"
-  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.8.2.tgz"
-  integrity sha512-N/oAF1Shd7g4tWy+75IIufCGsHBqT74tnzHQhbiUTYILYF0Blk65cg+HPZqwC+6SqEyx033nKqU7by38v3lBZg==
+react-router-dom@^6.16.0:
+  version "6.16.0"
+  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.16.0.tgz"
+  integrity sha512-aTfBLv3mk/gaKLxgRDUPbPw+s4Y/O+ma3rEN1u8EgEpLpPe6gNjIsWt9rxushMHHMb7mSwxRGdGlGdvmFsyPIg==
   dependencies:
-    "@remix-run/router" "1.3.3"
-    react-router "6.8.2"
+    "@remix-run/router" "1.9.0"
+    react-router "6.16.0"
 
-react-router@6.8.2:
-  version "6.8.2"
-  resolved "https://registry.npmjs.org/react-router/-/react-router-6.8.2.tgz"
-  integrity sha512-lF7S0UmXI5Pd8bmHvMdPKI4u4S5McxmHnzJhrYi9ZQ6wE+DA8JN5BzVC5EEBuduWWDaiJ8u6YhVOCmThBli+rw==
+react-router@6.16.0:
+  version "6.16.0"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-6.16.0.tgz"
+  integrity sha512-VT4Mmc4jj5YyjpOi5jOf0I+TYzGpvzERy4ckNSvSh2RArv8LLoCxlsZ2D+tc7zgjxcY34oTz2hZaeX5RVprKqA==
   dependencies:
-    "@remix-run/router" "1.3.3"
+    "@remix-run/router" "1.9.0"
 
 react-scripts@^5.0.1:
   version "5.0.1"
@@ -14187,7 +14234,7 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-"react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 16", "react@>= 16.8.0", react@>=16.6.0, react@>=16.8, react@>=16.8.0, "react@16.8.0 - 18":
+"react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 16", "react@>= 16.8.0", react@>=16.6.0, react@>=16.8, react@>=16.8.0, react@>=16.8.6, "react@16.8.0 - 18":
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -16212,15 +16259,15 @@ tsconfig-paths@^3.14.1:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
+tslib@*, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.4.0, tslib@^2.4.1, tslib@^2.5.0:
+  version "2.5.2"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.5.2.tgz"
+  integrity sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==
+
 tslib@^1.8.1:
   version "1.14.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
-
-tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.4.0, tslib@^2.4.1, tslib@^2.5.0:
-  version "2.5.2"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.5.2.tgz"
-  integrity sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==
 
 tsutils@^3.21.0:
   version "3.21.0"
