@@ -10,7 +10,6 @@ import {
   getChainNameFromUrl,
 } from "../hooks/utils";
 import CheckUser from "../components/CheckUser/CheckUser";
-import { Grid } from "@mui/material";
 import TokenImport from "../components/TokenImport";
 import { CenterBox, CenterBoxHome } from "../hooks/styles";
 import useWeb3 from "../hooks/useWeb3";
@@ -18,13 +17,13 @@ import { useTokenImportHandler } from "../hooks/tokenImportHandler";
 import NavBar from "../components/Navbar";
 import Balance from "../components/Balance";
 import Actions from "./Actions";
-import LoginWallet from "../components/loginwallet";
+import LoginWallet from "../components/Login/loginwallet";
 import TokenSection from "../components/TokenSection";
 import Receive from "../components/receive";
-import { useTheme } from "@mui/material/styles";
 import useLoading from "../hooks/useLoading";
 import { useChainLogic } from "../hooks/useChainLogic";
 import { useWalletLogic } from "../hooks/useWalletLogic";
+import Settings from "../components/settings";
 import "./home.css";
 export default function Home() {
   const { importedTokens, setImportedTokens, privateKey } = useWeb3(bnbchain);
@@ -35,7 +34,6 @@ export default function Home() {
   const [selectedToken, setSelectedToken] = useState(
     getDefaultTokenForChain(selectedChain)
   );
-  const theme = useTheme();
 
   useEffect(() => {
     setSelectedToken(
@@ -65,14 +63,8 @@ export default function Home() {
     return <CheckUser />;
   }
   return (
-    <div
-      className="gridHome"
-      container
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <CenterBoxHome className="inHome" item xs={12} sm={6} md={4} lg={3}>
+    <div className="home-container">
+      <div className="home-container">
         <LoadingIndicator />
 
         <NavBar
@@ -89,11 +81,7 @@ export default function Home() {
           polychain={polychain}
           arbitrumchain={arbitrumchain}
         />
-        <Actions
-          onSendClick={() => setCurrentPopup("send")}
-          onImportClick={() => setCurrentPopup("import")}
-          onReceiveClick={() => setCurrentPopup("receive")}
-        />
+
         <TokenSection
           userWallet={userWallet}
           web3={web3}
@@ -106,42 +94,49 @@ export default function Home() {
           ethBalance={ethBalance}
           handleTokenClick={handleTokenClick}
         />
+        <Actions
+          onSendClick={() => setCurrentPopup("send")}
+          onImportClick={() => setCurrentPopup("import")}
+          onReceiveClick={() => setCurrentPopup("receive")}
+        />
+
         {currentPopup === "import" && (
-          <CenterBox>
+          <div>
             <TokenImport
               onClose={() => setCurrentPopup(null)}
               onTokenImport={onTokenImport}
               selectedChain={selectedChain}
             />
-          </CenterBox>
+          </div>
         )}
 
         {currentPopup === "send" && (
-          <CenterBox>
+          <div>
             <Send
               onClose={() => setCurrentPopup(null)}
               selectedToken={selectedToken}
               selectedChain={selectedChain}
             />
-          </CenterBox>
+          </div>
         )}
         {currentPopup === "receive" && (
-          <CenterBox>
+          <div>
             <Receive
               onClose={() => setCurrentPopup(null)}
               userWallet={userWallet}
             />
-          </CenterBox>
+          </div>
         )}
+
         {currentPopup === "login" && (
-          <CenterBox>
+          <div>
             <LoginWallet
               onClose={() => setCurrentPopup(null)}
               userWallet={userWallet}
             />
-          </CenterBox>
+          </div>
         )}
-      </CenterBoxHome>
+      </div>
     </div>
   );
 }

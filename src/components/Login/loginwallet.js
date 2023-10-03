@@ -1,13 +1,6 @@
 import React, { useState } from "react";
+import "./loginwallet.css";
 import { ethers } from "ethers";
-import { Button, Typography, Box, Grid } from "@mui/material";
-import {
-  TypographyTitle,
-  FormField,
-  FormContainer,
-  StyledFormControl,
-  LoginFormField,
-} from "../hooks/styles";
 import CryptoJS from "crypto-js";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
@@ -18,9 +11,11 @@ export default function LoginWallet({ onClose }) {
   const [displayPrivateKey, setDisplayPrivateKey] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const theme = useTheme();
-
   const navigate = useNavigate();
 
+  const goBack = () => {
+    navigate(-1);
+  };
   const isValidPrivateKey = (privateKey) => {
     try {
       new ethers.Wallet(privateKey);
@@ -67,44 +62,35 @@ export default function LoginWallet({ onClose }) {
   };
 
   return (
-    <Grid
-      position="relative"
-      container
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <TypographyTitle variant="h5" gutterBottom>
-        Login
-      </TypographyTitle>
-      <FormContainer onSubmit={Login}>
-        <StyledFormControl>
-          <LoginFormField
-            id="privateKey"
-            value={displayPrivateKey}
-            placeholder="Enter private key"
-            type="text"
-            onChange={handlePrivateKeyChange}
-            fullWidth
-            autoComplete="off"
-          />
-        </StyledFormControl>
-        {errorMessage && (
-          <Typography color="error" variant="body2" gutterBottom>
-            {errorMessage}
-          </Typography>
-        )}
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Button type="submit" variant="contained">
+    <div className="login-container">
+      <h1 className="login-title"> Enter your private key</h1>
+
+      <form className="form__group field" onSubmit={Login}>
+        <input
+          className="form__field"
+          type="password"
+          id="privateKey"
+          value={displayPrivateKey}
+          placeholder="Name"
+          autoComplete="off"
+          onChange={handlePrivateKeyChange}
+        />
+
+        <label htmlFor="name" className="form__label">
+          Password
+        </label>
+        <div className="login-button-p">
+          <button className="login-button" type="submit">
             Login
-          </Button>
-        </Grid>
-      </FormContainer>
-    </Grid>
+          </button>
+        </div>
+      </form>
+      <div className="login-button-p">
+        <button className="login-button-return" onClick={goBack}>
+          Return
+        </button>
+      </div>
+      <div> {errorMessage && <p>{errorMessage}</p>}</div>
+    </div>
   );
 }

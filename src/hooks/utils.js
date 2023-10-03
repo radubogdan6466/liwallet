@@ -1,7 +1,7 @@
 //utils.js
-export const bnbchain = "https://bsc-dataseed2.bnbchain.org";
+export const bnbchain = "https://bsc-testnet.publicnode.com";
 export const ethchain =
-  "https://mainnet.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd";
+  "https://sepolia.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd";
 export const dogechain = "https://rpc-testnet.dogechain.dog";
 export const polychain = "https://rpc-mumbai.maticvigil.com/";
 export const arbitrumchain =

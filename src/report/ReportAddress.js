@@ -49,28 +49,11 @@ export default function ReportAddress({ onClose }) {
 
   return (
     <Dialog open={true} onClose={closePopup}>
-      <StyledBoxx
-        sx={{
-          backgroundColor: theme.palette.settings.bg,
-        }}
-      >
+      <StyledBoxx>
         <TypographyTitle variant="h5" gutterBottom>
           {t("reportTitle")}
         </TypographyTitle>
-        <FormContainer
-          onSubmit={handleSubmit}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            labelColor: theme.palette.text.input,
-            color: theme.palette.text.input,
-            "& .MuiInputBase-input": {
-              color: theme.palette.text.input,
-            },
-          }}
-        >
+        <FormContainer onSubmit={handleSubmit}>
           <FormField
             label={t("addressRep")}
             variant="outlined"
@@ -80,20 +63,6 @@ export default function ReportAddress({ onClose }) {
             error={!!error}
             helperText={error}
             required
-            InputLabelProps={{
-              style: { color: theme.palette.text.input },
-            }}
-            inputProps={{
-              style: { color: theme.palette.text.input },
-            }}
-            sx={{
-              labelColor: theme.palette.text.input,
-              color: theme.palette.text.input, // Acesta setează culoarea textului
-              "& .MuiInputBase-input": {
-                // Acesta asigură că input-ul real este și el alb
-                color: theme.palette.text.input,
-              },
-            }}
           />
           <FormControl variant="outlined" fullWidth>
             <InputLabel color="secondary" id="details-label">
@@ -105,14 +74,6 @@ export default function ReportAddress({ onClose }) {
               color="secondary"
               value={details}
               onChange={(e) => setDetails(e.target.value)}
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    backgroundColor: theme.palette.settings.bg,
-                    color: theme.palette.settings.text,
-                  },
-                },
-              }}
             >
               <MenuItem value={"FakeGiveaway"}>Fake Giveaway</MenuItem>
               <MenuItem value={"StolenCrypto"}>Stolen Crypto</MenuItem>

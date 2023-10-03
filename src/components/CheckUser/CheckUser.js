@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Dialog } from "@mui/material";
-import LoginWallet from "../loginwallet";
+import LoginWallet from "../Login/loginwallet";
 import { useTranslation } from "react-i18next";
 import "./CheckUser.css";
-const CheckUser = ({ handleLogin, handleCreate }) => {
+
+const CheckUser = () => {
   const navigate = useNavigate();
-  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+  const [showLoginWallet, setShowLoginWallet] = useState(false); // Starea pentru afișarea componentei LoginWallet
   const { t } = useTranslation();
+
   const gocreate = () => {
     navigate("/create");
   };
-  const openLoginDialog = () => {
-    setLoginDialogOpen(true);
+  const gologin = () => {
+    navigate("/login");
   };
-  const handleClose = () => {
-    setLoginDialogOpen(false);
+
+  const openLoginWallet = () => {
+    setShowLoginWallet(true); // Deschidem componenta LoginWallet
+  };
+
+  const closeLoginWallet = () => {
+    setShowLoginWallet(false); // Închidem componenta LoginWallet
   };
 
   return (
@@ -23,23 +29,17 @@ const CheckUser = ({ handleLogin, handleCreate }) => {
       <h1 className="checkUser-title">{t("notConnected")}</h1>
       <div className="checkUser-button-content">
         <div className="checkUser-button-p">
-          <button className="checkUser-button" onClick={openLoginDialog}>
+          <button className="checkUser-button" onClick={gologin}>
             <p>{t("pkeyLogin")}</p>
           </button>
         </div>
-        <Dialog open={loginDialogOpen} onClose={handleClose}>
-          <LoginWallet onClose={handleClose} />
-        </Dialog>
         <div className="checkUser-button-p">
-          <button
-            className="checkUser-button"
-            variant="contained"
-            onClick={gocreate}
-          >
+          <button className="checkUser-button" onClick={gocreate}>
             <p>{t("createNewWallet")}</p>
           </button>
         </div>
       </div>
+      {showLoginWallet && <LoginWallet onClose={closeLoginWallet} />}
     </div>
   );
 };

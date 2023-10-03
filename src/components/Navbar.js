@@ -1,13 +1,11 @@
 // NavBar.js
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
 import ChainSelector from "../hooks/ChainSelector";
 import Meniu from "./Navigate";
-import { CenterBox } from "../hooks/styles";
-import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
 import { Clipboard } from "@capacitor/clipboard";
 import "./nav.css";
+
 export default function NavBar({
   selectedChain,
   handleChainChange,
@@ -29,7 +27,6 @@ export default function NavBar({
         console.error("Eroare la copierea adresei:", error);
       });
   }
-  const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
 
   const shortenedAddress = `${userWallet.address.substring(
     0,
@@ -37,21 +34,26 @@ export default function NavBar({
   )}...${userWallet.address.substring(userWallet.address.length - 4)}`;
 
   return (
-    <Box className="nav">
-      <ChainSelector
-        selectedChain={selectedChain}
-        handleChainChange={handleChainChange}
-      />
-      <CenterBox>
-        <Button
+    <div className="nav-container">
+      <div className="nav-chain">
+        <ChainSelector
+          selectedChain={selectedChain}
+          handleChainChange={handleChainChange}
+        />
+      </div>
+      <div className="nav-address">
+        <button
+          className="account-button"
           onClick={() => copyAddress(userWallet.address)}
           endIcon={<ContentCopy />}
         >
           {shortenedAddress}
-        </Button>
-        <Typography id="copyMessage"></Typography>
-      </CenterBox>
-      <Meniu />
-    </Box>
+        </button>
+        <p id="copyMessage"></p>
+      </div>
+      <div className="nav-menu">
+        <Meniu />
+      </div>
+    </div>
   );
 }

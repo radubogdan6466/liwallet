@@ -1,34 +1,44 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, MenuItem, IconButton, Menu, Dialog } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CreateWallet from "./createwallet.js";
-import LoginWallet from "./loginwallet.js";
+import LoginWallet from "./Login/loginwallet.js";
 import ReportAddress from "../report/ReportAddress.js";
 import Settings from "./settings.js";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@mui/material/styles";
 import { NavigateBox, NavigateMenu, MenuItemImport } from "../hooks/styles.js";
-import CreateWalletUI from "../pages/CreateWalletUi.js";
+import CreateNewWallet from "./createNewWallet/createNewWallet.js";
+import { IonButton, IonActionSheet } from "@ionic/react";
+import settingsLogo from "../logos/settings.png";
+import Popup from "reactjs-popup";
 
 const Meniu = () => {
   const theme = useTheme();
+  const [showActionSheet, setShowActionSheet] = useState(false);
+
   const [showCreatePopup, setShowCreatePopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [showSettingsPopup, setShowSettingsPopup] = useState(false);
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const handleCreateClick = () => {
     setShowCreatePopup(true);
+    navigate("/create/new");
   };
   const handleLoginClick = () => {
     setShowLoginPopup(true);
+    navigate("/Login");
   };
   const handleReportClick = () => {
     setShowReportPopup(true);
   };
   const handleSettingsClick = () => {
     setShowSettingsPopup(true);
+    navigate("/settings");
   };
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -37,9 +47,6 @@ const Meniu = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (menuItem) => {
-    setAnchorEl(null);
-  };
   const handleExpandView = () => {
     window.open(
       "chrome-extension://edlbpjmiidgfnmblcaildocjliemkfkc/index.html",
@@ -47,65 +54,76 @@ const Meniu = () => {
     );
   };
 
+  const handleOpenActionSheet = () => {
+    setShowActionSheet(true);
+  };
+
+  const handleCloseActionSheet = () => {
+    setShowActionSheet(false);
+  };
+
   return (
     <NavigateBox>
-      <IconButton
-        color="secondary"
-        size="large"
-        aria-label="more"
-        id="long-button"
-        aria-controls={open ? "long-menu" : undefined}
-        aria-expanded={open ? "true" : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
+      <IonButton
+        fill="clear"
+        id="open-action-sheet"
+        onClick={handleOpenActionSheet}
       >
-        <MoreVertIcon />
-      </IconButton>
-      <NavigateMenu
-        id="long-menu"
-        MenuListProps={{
-          "aria-labelledby": "long-button",
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: "210px",
-            width: "20ch",
-            backgroundColor: theme.palette.primary.second, // Setăm culoarea de fundal folosind tema
-          },
-        }}
-      >
-        <MenuItemImport onClick={handleCreateClick}>
-          {t("nav.create")}
-        </MenuItemImport>
-        <MenuItemImport onClick={handleLoginClick}>
-          {t("nav.login")}
-        </MenuItemImport>
-        <MenuItemImport onClick={handleSettingsClick}>
-          {t("nav.settings")}
-        </MenuItemImport>
-        <MenuItemImport onClick={handleReportClick}>
-          {t("nav.report")}
-        </MenuItemImport>
-        <MenuItemImport onClick={handleExpandView}>
-          {t("nav.expand")}
-        </MenuItemImport>
-      </NavigateMenu>
+        <img
+          src={settingsLogo}
+          alt="Settings Logo"
+          style={{ height: "40px" }}
+        />
+      </IonButton>
 
-      <Dialog open={showCreatePopup} onClose={() => setShowCreatePopup(false)}>
-        <CreateWalletUI mode="popup" />
-      </Dialog>
-      <Dialog open={showLoginPopup} onClose={() => setShowLoginPopup(false)}>
+      <Popup open={showCreatePopup} onClose={() => setShowCreatePopup(false)}>
+        <CreateNewWallet />
+      </Popup>
+      <Popup open={showLoginPopup} onClose={() => setShowLoginPopup(false)}>
         <LoginWallet />
-      </Dialog>
-      <Dialog open={showReportPopup}>
+      </Popup>
+      <Popup open={showReportPopup}>
         <ReportAddress onClose={() => setShowReportPopup(false)} />
-      </Dialog>
-      <Dialog open={showSettingsPopup}>
-        <Settings onClose={() => setShowSettingsPopup(false)} />
-      </Dialog>
+      </Popup>
+      <Popup
+        open={showSettingsPopup}
+        onClose={() => setShowSettingsPopup(false)}
+      >
+        <Settings />
+      </Popup>
+
+      <IonActionSheet
+        isOpen={showActionSheet}
+        onDidDismiss={handleCloseActionSheet}
+        header="Actions"
+        buttons={[
+          {
+            text: "Create",
+            handler: handleCreateClick,
+          },
+          {
+            text: "Import wallet",
+            handler: handleLoginClick,
+          },
+          {
+            text: "Settings",
+            handler: handleSettingsClick,
+          },
+          {
+            text: "Report",
+            handler: handleReportClick,
+          },
+          {
+            text: "Expand",
+            handler: handleExpandView,
+          },
+          {
+            text: "Cancel",
+            role: "cancel",
+            handler: handleCloseActionSheet,
+          },
+        ]}
+      />
     </NavigateBox>
   );
 };

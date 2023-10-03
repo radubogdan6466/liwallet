@@ -3,9 +3,11 @@
   --secondary: #38ef7d;
   --white: #f2f2f2;
   --gray: #9b9b9b;
+  --returnPrimary: #38ef7d;
+  --returnSecondary: #11998e;
 }
-/* setPassword PAGE begin*/
-.set-content {
+
+.login-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,16 +15,14 @@
   height: 100vh;
   text-align: center;
 }
+
 /* title*/
-.title1 {
+.login-title {
   color: var(--white);
   font-size: 24px;
   margin-bottom: 1rem;
 }
-.title2 {
-  color: var(--gray);
-  font-size: 14px;
-}
+
 /* title*/
 /* INPUT*/
 .form__group {
@@ -87,10 +87,11 @@
 .form__field:invalid {
   box-shadow: none;
 }
+/* INPUT*/
 
 /* button setPassword*/
-.noselect {
-  width: 150px;
+.login-button {
+  width: 200px;
   height: 50px;
   cursor: pointer;
   border: none;
@@ -100,15 +101,40 @@
     0px 0px 10px rgba(0, 0, 0, 0.15);
   background: linear-gradient(to right, var(--primary), var(--secondary));
   color: var(--white);
-  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
+  transition: 0.5s, color 0.5s, box-shadow 0.5s;
 }
 
-.noselect:hover {
+.login-button:hover {
   color: rgba(255, 255, 255, 0.5);
   box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 1),
     0px 0px 10px rgba(0, 0, 0, 0.25);
 }
-.set-button-p {
+.login-button-p {
   padding: 20px;
 }
 /*button set password end*/
+/*return login button begin*/
+.login-button-return {
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+  border-radius: 4px;
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 0.5),
+    0px 0px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(
+    to right,
+    var(--returnPrimary),
+    var(--returnSecondary)
+  );
+  color: var(--white);
+  transition: 0.5s, color 0.5s, box-shadow 0.5s;
+}
+
+.login-button-return:hover {
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 1),
+    0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+/*return login button end*/

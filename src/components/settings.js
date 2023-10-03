@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import { Button, Dialog, DialogContent, DialogTitle, Box } from "@mui/material";
-import { TypographyTitle } from "../hooks/styles";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useWeb3 from "../hooks/useWeb3";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
+import "./settings.css";
+import {
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+} from "@ionic/react";
 
 export default function Settings({ onClose }) {
+  const navigate = useNavigate();
   const theme = useTheme();
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogTitle, setDialogTitle] = useState("");
@@ -17,7 +25,9 @@ export default function Settings({ onClose }) {
     { length: 12 },
     (_, i) => process.env[`REACT_APP_KEY${String.fromCharCode(65 + i)}`]
   );
-
+  const goBack = () => {
+    navigate(-1);
+  };
   const showRecoveryPhrase = () => {
     let mnemonicWords = [];
 
@@ -64,31 +74,50 @@ export default function Settings({ onClose }) {
       console.error(`Encrypted ${title.toLowerCase()} is missing.`);
     }
   };
-  const closePopup = () => {
-    onClose();
-  };
-  return (
-    <Dialog open={true} onClose={closePopup}>
-      <Box>
-        <Box>
-          <LanguageSelector />
-        </Box>
 
-        <TypographyTitle variant="h6">{t("sec.main")}</TypographyTitle>
-        <Button
-          variant="contained"
+  return (
+    <div className="settings-container">
+      <div>
+        <LanguageSelector />
+      </div>
+
+      <h6>{t("sec.main")}</h6>
+      <div className="settings-button-ui-p">
+        <button
+          className="settings-button-ui"
           onClick={() => showKey("pkey", "Secret Key")}
         >
           {t("sec.first")}
-        </Button>
-        <Button variant="contained" onClick={showRecoveryPhrase}>
+        </button>
+      </div>
+      <div className="settings-button-ui-p">
+        <button className="settings-button-ui" onClick={showRecoveryPhrase}>
           {t("sec.second")}
-        </Button>
-        <Dialog onClose={() => setOpenDialog(false)} open={openDialog}>
-          <DialogTitle>{dialogTitle}</DialogTitle>
-          <DialogContent>{dialogContent}</DialogContent>
-        </Dialog>
-      </Box>
-    </Dialog>
+        </button>
+      </div>
+
+      {openDialog && (
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>{dialogTitle}</IonCardTitle>
+          </IonCardHeader>
+
+          <IonCardContent>{dialogContent}</IonCardContent>
+          <div className="settings-button-ui-p">
+            <button
+              className="settings-button-ui"
+              onClick={() => setOpenDialog(false)}
+            >
+              Close
+            </button>
+          </div>
+        </IonCard>
+      )}
+      <div className="settings-button-ui-p">
+        <button className="settings-button-return" onClick={goBack}>
+          Return
+        </button>
+      </div>
+    </div>
   );
 }
