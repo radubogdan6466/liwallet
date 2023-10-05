@@ -91,13 +91,15 @@ function ChainSelector({ selectedChain, handleChainChange }) {
         size="large"
         fill="clear"
         onClick={() => {
-          const actionSheet = document.querySelector("ion-action-sheet");
+          const actionSheet = document.querySelector("#chain-selector-sheet");
           actionSheet.present();
+          console.log("Button clicked!"); // Adăugați acest console log
         }}
       >
         <img src={logo} alt="Chain Logo" style={{ height: "40px" }} />
       </IonButton>
       <IonActionSheet
+        id="chain-selector-sheet"
         header="Select Chain"
         buttons={buttons}
         onDidDismiss={(event) => logResult(event.detail)}

@@ -24,7 +24,11 @@ import useLoading from "../hooks/useLoading";
 import { useChainLogic } from "../hooks/useChainLogic";
 import { useWalletLogic } from "../hooks/useWalletLogic";
 import Settings from "../components/settings";
+import ChainSelectorUi from "../components/ChainSelector/ChainSelectorUi";
+import ChainSelector from "../hooks/ChainSelector";
+
 import "./home.css";
+import Meniu from "../components/Navigate";
 export default function Home() {
   const { importedTokens, setImportedTokens, privateKey } = useWeb3(bnbchain);
   const { selectedChain, web3, handleChainChange } = useChainLogic(bnbchain);
@@ -66,21 +70,40 @@ export default function Home() {
     <div className="home-container">
       <div className="home-container">
         <LoadingIndicator />
+        <div className="menu-settings-chain-selector-btn-home">
+          <Meniu />
+          <ChainSelector
+            selectedChain={selectedChain}
+            handleChainChange={handleChainChange}
+          />
+        </div>
 
         <NavBar
           selectedChain={selectedChain}
           handleChainChange={handleChainChange}
           userWallet={userWallet}
-        />
-        <Balance
+          //-nav
           ethBalance={ethBalance}
-          selectedChain={selectedChain}
           ethchain={ethchain}
           bnbchain={bnbchain}
           dogechain={dogechain}
           polychain={polychain}
           arbitrumchain={arbitrumchain}
         />
+        {/**
+         *  <div className="balance-native-home">
+          <Balance
+            ethBalance={ethBalance}
+            selectedChain={selectedChain}
+            ethchain={ethchain}
+            bnbchain={bnbchain}
+            dogechain={dogechain}
+            polychain={polychain}
+            arbitrumchain={arbitrumchain}
+          />
+        </div>
+         * 
+         */}
 
         <TokenSection
           userWallet={userWallet}

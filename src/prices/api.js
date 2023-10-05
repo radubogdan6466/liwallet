@@ -1,0 +1,3 @@
+var liveprice: {
+  async: true,
+};

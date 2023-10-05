@@ -6,120 +6,69 @@
   --returnPrimary: #38ef7d;
   --returnSecondary: #11998e;
   --box: rgb(26, 32, 37);
+  --bcg: rgb(173, 216, 230);
 }
 .nav-container {
-  width: 70%;
+  position: absolute;
   left: 10px;
+  top: 10px;
+  width: 70%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: rgb(26, 32, 37);
   max-width: 600px;
   height: 150px;
-  position: absolute;
-  top: 50px;
   border-radius: 25px;
-
   box-shadow: inset 0px 0px 0px var(--primary), 10px 10px 10px var(--primary),
     10px 10px 10px var(--box);
 }
-
-/*
- box-shadow: inset 0px 0px 0px var(--box), 10px 10px 10px var(--box),
-    10px 10px 10px var(--gray);
-    */
-:root {
-  --primary: #11998e;
-  --secondary: #38ef7d;
-  --white: #f2f2f2;
-  --gray: #9b9b9b;
-  --returnPrimary: #38ef7d;
-  --returnSecondary: #11998e;
-}
-/* title*/
-.account-title {
-  color: var(--white);
-  font-size: 24px;
-  margin-bottom: 1rem;
-}
-
-/* title*/
-/* INPUT*/
-.form__group {
-  position: relative;
-  padding: 15px 0 0;
-  margin-top: 10px;
-  width: 100vh/2;
-  margin: 1rem;
-}
-
-.form__field {
-  font-family: inherit;
-  width: 100%;
-  border: 0;
-  border-bottom: 2px solid var(--gray);
-  outline: 0;
-  font-size: 1.3rem;
-  color: var(--white);
-  padding: 7px 0;
-  background: transparent;
-  transition: border-color 0.2s;
-}
-
-.form__field::placeholder {
-  color: transparent;
-}
-
-.form__field:placeholder-shown ~ .form__label {
-  font-size: 1.3rem;
-  cursor: text;
-  top: 20px;
-}
-
-.form__label {
-  position: absolute;
-  top: 0;
-  display: block;
-  transition: 0.2s;
-  font-size: 1rem;
-  color: var(--gray);
-}
-
-.form__field:focus ~ .form__label {
-  position: absolute;
-  top: 0;
-  display: block;
-  transition: 0.2s;
-  font-size: 1rem;
-  color: var(--primary);
-  font-weight: 700;
-  padding-bottom: 6px;
-}
-
-.form__field:focus {
-  font-weight: 700;
-  border-width: 3px;
-  border-image: linear-gradient(to right, var(--primary), var(--secondary));
-  border-image-slice: 1;
-}
-
-.form__field:required,
-.form__field:invalid {
-  box-shadow: none;
-}
-/* INPUT*/
-
 /* button setPassword*/
-.account-button {
-  width: 100x;
-  cursor: pointer;
-  border: none;
-  font-size: 20px;
-  border-radius: 4px;
-  color: var(--white);
+.account-button-title {
+  display: flex;
   background: none;
+  position: absolute;
+  top: 0;
+  left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.account-button-title p {
+  margin: 14px 14px 14px 14px;
+  color: var(--white);
+}
+.account-button-nav {
+  margin: 14px 14px 14px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--white);
+  border-radius: 25px;
+  border: 0;
+  font-weight: bold;
+}
+.span-copy-address {
+  position: absolute;
+  top: 30px;
+  left: 107px;
+  font-size: 14px;
+
+  color: rgba(255, 255, 255, 0.5);
 }
 
+.balance-in-usd-container {
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  margin: 0px 14px 14px 14px;
+  left: 10px;
+}
+.balance-text {
+  color: white;
+}
+.value-price {
+  color: white;
+  font-weight: bold;
+}
 .account-button:hover {
   color: rgba(255, 255, 255, 0.5);
 }
@@ -127,3 +76,17 @@
   padding: 20px;
 }
 /*button set password end*/
+/* Balance section begin*/
+.balance-native-navbar {
+  background: none;
+  position: absolute;
+  top: 20px;
+}
+.balance-native-navbar-title {
+  color: var(--white);
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  margin: 20px 20px 0px 20px;
+}
+/*Balance section end*/
