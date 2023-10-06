@@ -1,5 +1,7 @@
 {
   "name": "liwallet",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react"
 }

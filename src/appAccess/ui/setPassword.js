@@ -1,5 +1,4 @@
-// SetPassword.js
-import React from "react";
+import React, { useState } from "react";
 import "./set.css";
 import { useTranslation } from "react-i18next";
 import logo from "../MIS.png";
@@ -14,6 +13,8 @@ export default function SetPassword({ onPasswordSet }) {
     handleSubmit,
   } = Logicp(onPasswordSet);
   const { t } = useTranslation();
+  const [privacyChecked, setPrivacyChecked] = useState(false);
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     handleSubmit();
@@ -53,8 +54,30 @@ export default function SetPassword({ onPasswordSet }) {
           Confirm
         </label>
       </form>
+      <div>
+        <input
+          type="checkbox"
+          required
+          id="privacyCheckbox"
+          checked={privacyChecked}
+          onChange={() => setPrivacyChecked(!privacyChecked)}
+        />
+        <label htmlFor="privacyCheckbox">
+          {t("I agree to the Privacy Policy")}
+        </label>
+        <a
+          href="https://radubogdan6466.github.io/privacy-policy/"
+          target="_blank"
+        >
+          Privacy Policy
+        </a>
+      </div>
       <div className="set-button-p">
-        <button className="noselect" onClick={handleSubmit}>
+        <button
+          className="noselect"
+          onClick={handleSubmit}
+          disabled={!privacyChecked}
+        >
           Continue
         </button>
       </div>

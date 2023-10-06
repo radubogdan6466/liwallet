@@ -17,6 +17,7 @@ import Popup from "reactjs-popup";
 
 const Meniu = () => {
   const theme = useTheme();
+
   const [showActionSheet, setShowActionSheet] = useState(false);
 
   const [showCreatePopup, setShowCreatePopup] = useState(false);
@@ -114,8 +115,8 @@ const Meniu = () => {
             handler: handleReportClick,
           },
           {
-            text: "Expand",
-            handler: handleExpandView,
+            text: "Expand ( coming soon )",
+            //handler: handleExpandView,
           },
           {
             text: "Cancel",

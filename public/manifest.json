@@ -3,6 +3,8 @@
   "description": "liwallet is a wallet",
   "version": "0.0.1",
   "manifest_version": 3,
+  "privacy_policy": "https://radubogdan6466.github.io/privacy-policy/",
+
   "action": {
     "default_title": "liwallet",
     "default_popup": "index.html",
@@ -11,6 +13,6 @@
       "128": "logo192.png"
     }
   },
-  "permissions": ["scripting", "storage"],
+  "permissions": ["storage"],
   "host_permissions": ["http://*/", "https://*/"]
 }

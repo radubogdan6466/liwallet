@@ -104,7 +104,9 @@ export default function Home() {
         </div>
          * 
          */}
-
+        <div>
+          <h1 style={{ color: "red" }}>ONLY TEST NETWORK</h1>
+        </div>
         <TokenSection
           userWallet={userWallet}
           web3={web3}
