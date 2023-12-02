@@ -11,6 +11,8 @@ function Balance({
   polychain,
   dogechain,
   arbitrumchain,
+  goerlichain,
+  sepoliachain,
 }) {
   const [coinPrice, setCoinPrice] = useState(null);
   const chainToCoinID = {
@@ -19,6 +21,8 @@ function Balance({
     [polychain]: "matic-network",
     [dogechain]: "dogecoin",
     [arbitrumchain]: "arbitrum",
+    [goerlichain]: "ethereum",
+    [sepoliachain]: "ethereum",
   };
 
   useEffect(() => {
@@ -52,6 +56,10 @@ function Balance({
           ? "   DOGECOIN"
           : selectedChain === arbitrumchain
           ? "   ETH"
+          : selectedChain === goerlichain
+          ? "   ETH Goerli"
+          : selectedChain === sepoliachain
+          ? "   ETH Sepolia"
           : "   Unknown Chain"}
       </h1>
       <div>
@@ -79,6 +87,8 @@ export default function NavBar({
   dogechain,
   polychain,
   arbitrumchain,
+  goerlichain,
+  sepoliachain,
 }) {
   function copyAddress(address) {
     Clipboard.write({
@@ -112,7 +122,6 @@ export default function NavBar({
           {shortenedAddress}
         </p>
       </div>
-      <span className="span-copy-address" id="copyMessage"></span>
       <div>
         <Balance
           className="balance-native-navbar-component"
@@ -123,6 +132,8 @@ export default function NavBar({
           dogechain={dogechain}
           polychain={polychain}
           arbitrumchain={arbitrumchain}
+          goerlichain={goerlichain}
+          sepoliachain={sepoliachain}
         />
       </div>
     </div>

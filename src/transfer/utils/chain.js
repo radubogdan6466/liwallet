@@ -4,6 +4,8 @@ import {
   dogechain,
   polychain,
   arbitrumchain,
+  goerlichain,
+  sepoliachain,
 } from "../../hooks/utils";
 import {
   bnbchainTokens,
@@ -11,6 +13,8 @@ import {
   dogechainTokens,
   polychainTokens,
   arbitrumchainTokens,
+  goerlichainTokens,
+  sepoliachainTokens,
 } from "../constants/tokens";
 
 export const getTokens = (chain) => {
@@ -33,6 +37,16 @@ export const getTokens = (chain) => {
       { symbol: "ETH Arbitrum", address: "", abi: null },
       ...arbitrumchainTokens,
     ];
+  } else if (chain === goerlichain) {
+    return [
+      { symbol: "ETH Goerli", address: "", abi: null },
+      ...goerlichainTokens,
+    ];
+  } else if (chain === sepoliachain) {
+    return [
+      { symbol: "ETH Sepolia", address: "", abi: null },
+      ...sepoliachainTokens,
+    ];
   }
   return [];
 };
@@ -47,6 +61,10 @@ export const NativToken = (chain) => {
   } else if (chain === polychain) {
     return "MATIC";
   } else if (chain === arbitrumchain) {
+    return "ETH";
+  } else if (chain === goerlichain) {
+    return "ETH";
+  } else if (chain === sepoliachain) {
     return "ETH";
   }
   return [];

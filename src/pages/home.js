@@ -6,6 +6,8 @@ import {
   dogechain,
   polychain,
   arbitrumchain,
+  goerlichain,
+  sepoliachain,
   getDefaultTokenForChain,
   getChainNameFromUrl,
 } from "../hooks/utils";
@@ -89,6 +91,8 @@ export default function Home() {
           dogechain={dogechain}
           polychain={polychain}
           arbitrumchain={arbitrumchain}
+          goerlichain={goerlichain}
+          sepoliachain={sepoliachain}
         />
         {/**
          *  <div className="balance-native-home">
@@ -103,10 +107,13 @@ export default function Home() {
           />
         </div>
          * 
-         */}
-        <div>
+
+
+         <div>
           <h1 style={{ color: "red" }}>ONLY TEST NETWORK</h1>
         </div>
+         */}
+
         <TokenSection
           userWallet={userWallet}
           web3={web3}
@@ -116,6 +123,8 @@ export default function Home() {
           dogechain={dogechain}
           polychain={polychain}
           arbitrumchain={arbitrumchain}
+          goerlichain={goerlichain}
+          sepoliachain={sepoliachain}
           ethBalance={ethBalance}
           handleTokenClick={handleTokenClick}
         />

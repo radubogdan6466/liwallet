@@ -1,0 +1,16 @@
+:root {
+  --primary: #11998e;
+  --secondary: #38ef7d;
+  --white: #f2f2f2;
+  --gray: #9b9b9b;
+  --returnPrimary: #38ef7d;
+  --returnSecondary: #11998e;
+}
+.logoimg {
+  height: 50px;
+  width: 50px;
+}
+.tokenList {
+  width: 100%;
+  padding: 0 20px 0 20px;
+}

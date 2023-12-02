@@ -1,17 +1,22 @@
 //utils.js
 export const bnbchain = "https://bsc-testnet.publicnode.com";
-export const ethchain =
-  "https://sepolia.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd";
+export const ethchain = "https://eth.llamarpc.com	";
 export const dogechain = "https://rpc-testnet.dogechain.dog";
 export const polychain = "https://rpc-mumbai.maticvigil.com/";
 export const arbitrumchain =
   "https://arb-goerli.g.alchemy.com/v2/t2cQiVI5X6yk0mZDgu1IrM90NAVhhMxi";
+// test chains
+export const goerlichain = "https://rpc.ankr.com/eth_goerli";
+export const sepoliachain = "https://ethereum-sepolia.publicnode.com";
+
 export const chains = {
   "BNB Smart Chain": bnbchain,
   "Ethereum Mainnet": ethchain,
   "Dogecoin chain": dogechain,
   "Polygon Mainnet": polychain,
   "Arbitrum One": arbitrumchain,
+  "Goerli Chain": goerlichain,
+  "Sepolia Chain": sepoliachain,
 };
 
 //eth mainnet https://mainnet.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd
@@ -31,16 +36,22 @@ export const getChainNameFromUrl = (url) => {
       return "polychain";
     case arbitrumchain:
       return "polychain";
+    case goerlichain:
+      return "goerlichain";
+    case sepoliachain:
+      return "sepoliachain";
     default:
       return "";
   }
 };
 export const chainIds = {
   bnbchain: 56,
-  ethchain: 11155111,
+  ethchain: 1,
   dogechain: 568,
   polychain: 137,
   arbitrumchain: 42161,
+  goerlichain: 5,
+  sepoliachain: 11155111,
 };
 export const eip1559Chains = {
   bnbchain: false,
@@ -48,6 +59,8 @@ export const eip1559Chains = {
   dogechain: false,
   polychain: false,
   arbitrumchain: false,
+  goerlichain: true,
+  sepoliachain: true,
 };
 
 export function getDefaultTokenForChain(chain) {
@@ -57,6 +70,8 @@ export function getDefaultTokenForChain(chain) {
     polychain: "Matic Token",
     dogechain: "DOGECOIN",
     arbitrumchain: "ETH Arbitrum",
+    goerlichain: "ETH Goerli",
+    sepoliachain: "ETH Sepolia",
   };
 
   return defaultTokens[chain];

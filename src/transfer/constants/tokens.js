@@ -5,3 +5,5 @@ export const ethchainTokens = getLocalStorageItem("ethchainTokens");
 export const dogechainTokens = getLocalStorageItem("dogechainTokens");
 export const polychainTokens = getLocalStorageItem("polychainTokens");
 export const arbitrumchainTokens = getLocalStorageItem("arbitrumchainTokens");
+export const goerlichainTokens = getLocalStorageItem("goerlichainTokens");
+export const sepoliachainTokens = getLocalStorageItem("sepoliachainTokens");

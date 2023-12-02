@@ -6,6 +6,8 @@ import {
   DOGECHAIN_BASE_URL,
   POLYCHAIN_BASE_URL,
   ARBITRUMCHAIN_BASE_URL,
+  GOERLICHAIN_BASE_URL,
+  SEPOLIACHAIN_BASE_URL,
 } from "./links.js";
 import {
   ethchain,
@@ -13,6 +15,8 @@ import {
   dogechain,
   polychain,
   arbitrumchain,
+  goerlichain,
+  sepoliachain,
 } from "./utils.js";
 import {
   TransferDetailsBox,
@@ -40,6 +44,10 @@ const TransferDetails = ({ details }) => {
       return POLYCHAIN_BASE_URL;
     } else if (chain === arbitrumchain) {
       return ARBITRUMCHAIN_BASE_URL;
+    } else if (chain === goerlichain) {
+      return GOERLICHAIN_BASE_URL;
+    } else if (chain === sepoliachain) {
+      return SEPOLIACHAIN_BASE_URL;
     }
   };
 

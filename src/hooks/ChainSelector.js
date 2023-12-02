@@ -5,6 +5,8 @@ import {
   dogechain,
   polychain,
   arbitrumchain,
+  goerlichain,
+  sepoliachain,
 } from "./utils.js";
 import { IonActionSheet, IonButton } from "@ionic/react";
 
@@ -16,6 +18,7 @@ import dogeLogo from "../logos/dogecoin.png";
 
 function ChainSelector({ selectedChain, handleChainChange }) {
   const [logo, setLogo] = useState(binanceLogo); // Stare pentru a ține logo-ul curent
+  const [showTestChains, setShowTestChains] = useState(false);
 
   const logResult = (result) => {
     console.log(JSON.stringify(result, null, 2));
@@ -37,6 +40,12 @@ function ChainSelector({ selectedChain, handleChainChange }) {
         break;
       case dogechain:
         setLogo(dogeLogo);
+        break;
+      case goerlichain:
+        setLogo(ethereumLogo);
+        break;
+      case sepoliachain:
+        setLogo(ethereumLogo);
         break;
       default:
         setLogo(binanceLogo); // Setează un logo implicit în cazul unui chain necunoscut
@@ -84,6 +93,32 @@ function ChainSelector({ selectedChain, handleChainChange }) {
       role: "cancel",
     },
   ];
+  // test chain
+  const testButtons = [
+    {
+      text: "Goerli Testnet", // Schimbați aceste nume cu chain-urile de test pe care doriți să le adăugați
+      handler: () => {
+        handleChainChange(goerlichain); // Schimbați cu identificatorul corect pentru chain-ul de test
+        handleLogoChange(goerlichain); // Schimbați cu identificatorul corect pentru chain-ul de test
+      },
+    },
+    {
+      text: "Sepolia Testnet",
+      handler: () => {
+        handleChainChange(sepoliachain);
+        handleLogoChange(sepoliachain);
+      },
+    }, // Adăugați aici alte chain-uri de test după aceeași structură
+    {
+      text: "Cancel",
+      role: "cancel",
+    },
+  ];
+  const combinedButtons = [
+    ...buttons,
+    { text: "Test Chains", handler: () => {} },
+    ...testButtons,
+  ];
 
   return (
     <div className="container">
@@ -101,7 +136,7 @@ function ChainSelector({ selectedChain, handleChainChange }) {
       <IonActionSheet
         id="chain-selector-sheet"
         header="Select Chain"
-        buttons={buttons}
+        buttons={combinedButtons}
         onDidDismiss={(event) => logResult(event.detail)}
       ></IonActionSheet>
     </div>

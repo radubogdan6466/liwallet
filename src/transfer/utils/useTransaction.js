@@ -91,6 +91,8 @@ export const useTransaction = (selectedToken, selectedChain) => {
           "Matic Token",
           "ETH Arbitrum",
           "DOGECOIN",
+          "ETH Goerli",
+          "ETH Sepolia",
         ].includes(selectedToken)
       ) {
         tx = await userWallet.sendTransaction({
@@ -133,6 +135,8 @@ export const useTransaction = (selectedToken, selectedChain) => {
 
   const getTokenABI = (chainId) => {
     switch (chainId) {
+      case 1:
+        return ercAbi;
       case 11155111:
         return ercAbi;
       case 56:
@@ -142,6 +146,8 @@ export const useTransaction = (selectedToken, selectedChain) => {
       case 137:
         return polyAbi;
       case 42161:
+        return ercAbi;
+      case 5:
         return ercAbi;
       default:
         throw new Error("Token has no ABI data");

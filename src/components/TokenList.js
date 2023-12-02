@@ -13,9 +13,10 @@ import {
   Button,
 } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import tokenLogos from "../JsonFiles/tokenLogo.json"; // import the JSON file
-import { useTheme } from "@mui/material/styles"; // Importă useTheme hook
+import tokenLogos from "../JsonFiles/tokenLogo.json";
+import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
+import { Clipboard } from "@capacitor/clipboard";
 
 export default function TokenList({
   userWallet,
@@ -27,13 +28,14 @@ export default function TokenList({
   polychain,
   ethBalance,
   arbitrumchain,
+  goerlichain,
+  sepoliachain,
   handleTokenClick,
 }) {
-  const theme = useTheme(); // Folosește useTheme hook pentru a obține tema
+  const theme = useTheme();
   const { t } = useTranslation();
   const [tokenBalances, setTokenBalances] = useState({});
   const [tokenAdded, setTokenAdded] = useState(false);
-
   let tokens;
   if (selectedChain === ethchain) {
     tokens = JSON.parse(localStorage.getItem("ethchainTokens")) || [];
@@ -45,22 +47,27 @@ export default function TokenList({
     tokens = JSON.parse(localStorage.getItem("polychainTokens")) || [];
   } else if (selectedChain === arbitrumchain) {
     tokens = JSON.parse(localStorage.getItem("arbitrumchainTokens")) || [];
+  } else if (selectedChain === goerlichain) {
+    tokens = JSON.parse(localStorage.getItem("goerlichainTokens")) || [];
+  } else if (selectedChain === sepoliachain) {
+    tokens = JSON.parse(localStorage.getItem("sepoliachainTokens")) || [];
   } else {
     tokens = [];
   }
 
-  // Function to find a token's logo URL from the imported JSON file
   const findLogoUrl = (symbol) => {
     const tokenLogoObject = tokenLogos.find((token) => token.symbol === symbol);
     return tokenLogoObject ? tokenLogoObject.logo : null;
   };
 
   const abis = {
+    1: ercAbi,
     11155111: ercAbi,
     56: bscAbi,
     568: dogeAbi,
     137: polyAbi,
     42161: ercAbi,
+    5: ercAbi,
   };
 
   const fetchTokenBalances = async () => {
@@ -114,18 +121,26 @@ export default function TokenList({
       tokenListKey = "polychainTokens";
     } else if (selectedChain === arbitrumchain) {
       tokenListKey = "arbitrumchainTokens";
+    } else if (selectedChain === goerlichain) {
+      tokenListKey = "goerlichainTokens";
+    } else if (selectedChain === sepoliachain) {
+      tokenListKey = "sepoliachainTokens";
     }
 
     const storedTokens = JSON.parse(localStorage.getItem(tokenListKey)) || [];
     const updatedTokens = storedTokens.filter(
       (token) => token.symbol !== symbol
     );
-    localStorage.setItem(tokenListKey, JSON.stringify(updatedTokens));
-    fetchTokenBalances();
+    // Amână ștergerea după 5 secunde
+    setTimeout(() => {
+      localStorage.setItem(tokenListKey, JSON.stringify(updatedTokens));
+      fetchTokenBalances();
+    }, 500);
   };
   const handleRefresh = () => {
     window.location.reload();
   };
+
   const getNativeCurrency = (selectedChain) => {
     if (selectedChain === ethchain) {
       return "ETH Token";
@@ -137,77 +152,90 @@ export default function TokenList({
       return "Matic Token";
     } else if (selectedChain === arbitrumchain) {
       return "ETH Arbitrum";
+    } else if (selectedChain === goerlichain) {
+      return "ETH Goerli";
+    } else if (selectedChain === sepoliachain) {
+      return "ETH Sepolia";
     }
     return "";
   };
   return (
-    <Box>
-      <List>
-        <ListItem
-          button
-          key={getNativeCurrency(selectedChain)}
-          onClick={() => handleTokenClick(getNativeCurrency(selectedChain))}
-        >
-          <ListItemAvatar>
-            <Avatar
-              alt={getNativeCurrency(selectedChain)}
-              src={findLogoUrl(getNativeCurrency(selectedChain))}
+    <div className="tokenList">
+      <Box>
+        <List style={{ maxHeight: "300px", overflowY: "auto" }}>
+          <ListItem
+            className="token"
+            button
+            key={getNativeCurrency(selectedChain)}
+            onClick={() => handleTokenClick(getNativeCurrency(selectedChain))}
+          >
+            <ListItemAvatar>
+              <Avatar
+                alt={getNativeCurrency(selectedChain)}
+                src={findLogoUrl(getNativeCurrency(selectedChain))}
+              />
+            </ListItemAvatar>
+            <ListItemText
+              primary={ethBalance}
+              secondary={getNativeCurrency(selectedChain)}
+              primaryTypographyProps={{
+                style: { color: "#f4f3f2", fontWeight: "bold" },
+              }}
+              secondaryTypographyProps={{
+                style: { color: "#f4f3f2" },
+              }}
             />
-          </ListItemAvatar>
-          <ListItemText
-            primary={ethBalance}
-            secondary={getNativeCurrency(selectedChain)}
-            secondaryTypographyProps={{
-              style: { color: theme.palette.text.symbol },
-            }}
-          />
-        </ListItem>
-        {Object.keys(tokenBalances).map((symbol) => {
-          const token = tokens.find((token) => token.symbol === symbol);
-          const logoUrl = findLogoUrl(symbol);
+          </ListItem>
+          {Object.keys(tokenBalances).map((symbol) => {
+            const token = tokens.find((token) => token.symbol === symbol);
+            const logoUrl = findLogoUrl(symbol);
 
-          if (token && symbol) {
-            return (
-              <ListItem
-                button
-                key={symbol}
-                onClick={() => handleTokenClick(symbol)}
-              >
-                <ListItemAvatar>
-                  <Avatar alt={tokenBalances[symbol].name} src={logoUrl} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={tokenBalances[symbol].balance}
-                  secondary={tokenBalances[symbol].name}
-                  secondaryTypographyProps={{
-                    style: { color: theme.palette.text.symbol },
-                  }}
-                />
-
-                <Button
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    handleTokenRemove(symbol);
-                  }}
-                  color="secondary"
+            if (token && symbol) {
+              return (
+                <ListItem
+                  className="token"
+                  button
+                  key={symbol}
+                  onClick={() => handleTokenClick(symbol)}
                 >
-                  {t("hide")}
-                </Button>
-              </ListItem>
-            );
-          }
-          return null;
-        })}
-      </List>
+                  <ListItemAvatar>
+                    <Avatar alt={tokenBalances[symbol].name} src={logoUrl} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={tokenBalances[symbol].balance}
+                    secondary={tokenBalances[symbol].name}
+                    primaryTypographyProps={{
+                      style: { color: "#f4f3f2", fontWeight: "bold" },
+                    }}
+                    secondaryTypographyProps={{
+                      style: { color: "#f4f3f2" },
+                    }}
+                  />
+                  <Button
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleTokenRemove(symbol);
+                    }}
+                    sx={{ color: "#f4f3f2" }}
+                  >
+                    {t("hide")}
+                  </Button>
+                </ListItem>
+              );
+            }
+            return null;
+          })}
+        </List>
 
-      <Button
-        onClick={handleRefresh}
-        color="primary"
-        aria-label="refresh balance"
-      >
-        <RefreshIcon />
-        {t("refresh")}
-      </Button>
-    </Box>
+        <Button
+          onClick={handleRefresh}
+          color="primary"
+          aria-label="refresh balance"
+        >
+          <RefreshIcon />
+          {t("refresh")}
+        </Button>
+      </Box>
+    </div>
   );
 }

@@ -1,12 +1,9 @@
 // TokenSection.js
 import React from "react";
-import { TypographyTitle } from "../hooks/styles";
 import TokenList from "./TokenList";
-import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
-
+import "./tokenList.css";
 export default function TokenSection(props) {
-  const theme = useTheme();
   const { t } = useTranslation();
   const {
     userWallet,
@@ -17,12 +14,14 @@ export default function TokenSection(props) {
     dogechain,
     polychain,
     arbitrumchain,
+    goerlichain,
+    sepoliachain,
     ethBalance,
     handleTokenClick,
   } = props;
   return (
-    <React.Fragment>
-      <TypographyTitle>{t("tokens")}</TypographyTitle>
+    <div className="tokenList">
+      <h1 style={{ color: "#f4f3f2" }}>{t("tokens")}</h1>
       <TokenList
         userWallet={userWallet}
         web3={web3}
@@ -32,9 +31,11 @@ export default function TokenSection(props) {
         polychain={polychain}
         dogechain={dogechain}
         arbitrumchain={arbitrumchain}
+        goerlichain={goerlichain}
+        sepoliachain={sepoliachain}
         ethBalance={ethBalance}
         handleTokenClick={handleTokenClick}
       />
-    </React.Fragment>
+    </div>
   );
 }

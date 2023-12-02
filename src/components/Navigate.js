@@ -116,7 +116,7 @@ const Meniu = () => {
           },
           {
             text: "Expand ( coming soon )",
-            //handler: handleExpandView,
+            handler: handleExpandView,
           },
           {
             text: "Cancel",

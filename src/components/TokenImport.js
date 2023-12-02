@@ -27,6 +27,8 @@ const TokenImport = ({ onClose, selectedChain }) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading, LoadingIndicator] = useLoading(false, 50);
   const [loading, setLoading] = useState(false);
+  const [closeDialog, setCloseDialog] = useState(false);
+
   const [importedTokens, setImportedTokens] = useState(
     JSON.parse(
       localStorage.getItem(getChainNameFromUrl(selectedChain) + "Tokens")
@@ -122,7 +124,7 @@ const TokenImport = ({ onClose, selectedChain }) => {
       chainId
     );
     if (importResult.tokenAlreadyImported) {
-      setError("Tokenul este deja importat!");
+      setError("Toke already imported!");
       return;
     }
 
@@ -132,12 +134,25 @@ const TokenImport = ({ onClose, selectedChain }) => {
     setTokenChainId("");
     setError("");
     setIsTokenAdded(true);
+    setCloseDialog(true); // dialog close after import
+
     const event = new CustomEvent("tokenAdded", { detail: tokenAddress });
     window.dispatchEvent(event);
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    //screen reload after token import, won't auto refresh if commented
+
+    //setTimeout(() => {
+    //window.location.reload();
+    //}, 1000);
   };
+  useEffect(() => {
+    if (closeDialog) {
+      const timeoutId = setTimeout(() => {
+        closePopup();
+      }, 1000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [closeDialog]);
   useEffect(() => {
     setIsLoading(loading);
   }, [loading]);

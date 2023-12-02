@@ -12,6 +12,8 @@ export default function Balance({
   polychain,
   dogechain,
   arbitrumchain,
+  goerlichain,
+  sepoliachain,
 }) {
   const theme = useTheme();
 
@@ -28,6 +30,10 @@ export default function Balance({
           : selectedChain === dogechain
           ? "   DOGECOIN"
           : selectedChain === arbitrumchain
+          ? "   ETH"
+          : selectedChain === goerlichain
+          ? "   ETH"
+          : selectedChain === sepoliachain
           ? "   ETH"
           : "   Unknown Chain"}
       </TypographyTitle>
