@@ -31,6 +31,7 @@ export default function TokenList({
   goerlichain,
   sepoliachain,
   handleTokenClick,
+  onTokenBalanceClick,
 }) {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -159,6 +160,7 @@ export default function TokenList({
     }
     return "";
   };
+
   return (
     <div className="tokenList">
       <Box>
@@ -196,7 +198,11 @@ export default function TokenList({
                   className="token"
                   button
                   key={symbol}
-                  onClick={() => handleTokenClick(symbol)}
+                  onClick={() => {
+                    handleTokenClick(symbol);
+                    // Adaugă apelul către onTokenBalanceClick pentru a transmite datele către Send
+                    onTokenBalanceClick(tokenBalances[symbol]);
+                  }}
                 >
                   <ListItemAvatar>
                     <Avatar alt={tokenBalances[symbol].name} src={logoUrl} />

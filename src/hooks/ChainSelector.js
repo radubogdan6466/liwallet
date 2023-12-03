@@ -17,12 +17,12 @@ import polygonLogo from "../logos/polygon.png";
 import dogeLogo from "../logos/dogecoin.png";
 
 function ChainSelector({ selectedChain, handleChainChange }) {
-  const [logo, setLogo] = useState(binanceLogo); // Stare pentru a ține logo-ul curent
+  const [logo, setLogo] = useState(binanceLogo);
   const [showTestChains, setShowTestChains] = useState(false);
 
-  const logResult = (result) => {
-    console.log(JSON.stringify(result, null, 2));
-  };
+  // const logResult = (result) => {
+  //   console.log(JSON.stringify(result, null, 2));
+  // };
 
   const handleLogoChange = (chain) => {
     switch (chain) {
@@ -48,7 +48,7 @@ function ChainSelector({ selectedChain, handleChainChange }) {
         setLogo(ethereumLogo);
         break;
       default:
-        setLogo(binanceLogo); // Setează un logo implicit în cazul unui chain necunoscut
+        setLogo(binanceLogo);
     }
   };
 
@@ -96,10 +96,10 @@ function ChainSelector({ selectedChain, handleChainChange }) {
   // test chain
   const testButtons = [
     {
-      text: "Goerli Testnet", // Schimbați aceste nume cu chain-urile de test pe care doriți să le adăugați
+      text: "Goerli Testnet",
       handler: () => {
-        handleChainChange(goerlichain); // Schimbați cu identificatorul corect pentru chain-ul de test
-        handleLogoChange(goerlichain); // Schimbați cu identificatorul corect pentru chain-ul de test
+        handleChainChange(goerlichain);
+        handleLogoChange(goerlichain);
       },
     },
     {
@@ -108,7 +108,7 @@ function ChainSelector({ selectedChain, handleChainChange }) {
         handleChainChange(sepoliachain);
         handleLogoChange(sepoliachain);
       },
-    }, // Adăugați aici alte chain-uri de test după aceeași structură
+    },
     {
       text: "Cancel",
       role: "cancel",
@@ -128,7 +128,7 @@ function ChainSelector({ selectedChain, handleChainChange }) {
         onClick={() => {
           const actionSheet = document.querySelector("#chain-selector-sheet");
           actionSheet.present();
-          console.log("Button clicked!"); // Adăugați acest console log
+          //console.log("Button clicked!");
         }}
       >
         <img src={logo} alt="Chain Logo" style={{ height: "40px" }} />
@@ -137,7 +137,7 @@ function ChainSelector({ selectedChain, handleChainChange }) {
         id="chain-selector-sheet"
         header="Select Chain"
         buttons={combinedButtons}
-        onDidDismiss={(event) => logResult(event.detail)}
+        // onDidDismiss={(event) => logResult(event.detail)}
       ></IonActionSheet>
     </div>
   );

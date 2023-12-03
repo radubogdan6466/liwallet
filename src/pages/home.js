@@ -21,6 +21,7 @@ import Balance from "../components/Balance";
 import Actions from "./Actions";
 import LoginWallet from "../components/Login/loginwallet";
 import TokenSection from "../components/TokenSection";
+import TokenList from "../components/TokenList";
 import Receive from "../components/receive";
 import useLoading from "../hooks/useLoading";
 import { useChainLogic } from "../hooks/useChainLogic";
@@ -28,15 +29,18 @@ import { useWalletLogic } from "../hooks/useWalletLogic";
 import Settings from "../components/settings";
 import ChainSelectorUi from "../components/ChainSelector/ChainSelectorUi";
 import ChainSelector from "../hooks/ChainSelector";
-
 import "./home.css";
 import Meniu from "../components/Navigate";
+
 export default function Home() {
   const { importedTokens, setImportedTokens, privateKey } = useWeb3(bnbchain);
   const { selectedChain, web3, handleChainChange } = useChainLogic(bnbchain);
   const { userWallet, ethBalance } = useWalletLogic(web3, privateKey);
   const [isLoading, setIsLoading, LoadingIndicator] = useLoading(true, 50);
   const [currentPopup, setCurrentPopup] = useState(null);
+  const [selectedTokenBalance, setSelectedTokenBalance] = useState(null);
+  const [nativeTokenBalance, setNativeTokenBalance] = useState({});
+
   const [selectedToken, setSelectedToken] = useState(
     getDefaultTokenForChain(selectedChain)
   );
@@ -60,9 +64,18 @@ export default function Home() {
     },
     [setSelectedToken]
   );
+  const handleTokenBalanceClick = (tokenBalance) => {
+    if (tokenBalance.isNative) {
+      // Este balanța pentru tokenul nativ
+      setNativeTokenBalance(tokenBalance);
+    } else {
+      // Este balanța pentru un alt token non-native
+      setSelectedTokenBalance(tokenBalance);
+    }
+    setCurrentPopup("send");
+  };
 
   if (isLoading) {
-    console.log("Loading");
     return <LoadingIndicator />;
   }
   if (!userWallet) {
@@ -94,27 +107,7 @@ export default function Home() {
           goerlichain={goerlichain}
           sepoliachain={sepoliachain}
         />
-        {/**
-         *  <div className="balance-native-home">
-          <Balance
-            ethBalance={ethBalance}
-            selectedChain={selectedChain}
-            ethchain={ethchain}
-            bnbchain={bnbchain}
-            dogechain={dogechain}
-            polychain={polychain}
-            arbitrumchain={arbitrumchain}
-          />
-        </div>
-         * 
-
-
-         <div>
-          <h1 style={{ color: "red" }}>ONLY TEST NETWORK</h1>
-        </div>
-         */}
-
-        <TokenSection
+        <TokenList
           userWallet={userWallet}
           web3={web3}
           selectedChain={selectedChain}
@@ -127,6 +120,7 @@ export default function Home() {
           sepoliachain={sepoliachain}
           ethBalance={ethBalance}
           handleTokenClick={handleTokenClick}
+          onTokenBalanceClick={handleTokenBalanceClick} // Adaugă prop-ul pentru transmiterea datelor
         />
         <Actions
           onSendClick={() => setCurrentPopup("send")}
@@ -147,9 +141,15 @@ export default function Home() {
         {currentPopup === "send" && (
           <div>
             <Send
-              onClose={() => setCurrentPopup(null)}
+              onClose={() => {
+                setCurrentPopup(null);
+                // Resetează starea pentru tokenBalance după închiderea Send
+                setSelectedTokenBalance(null);
+              }}
               selectedToken={selectedToken}
               selectedChain={selectedChain}
+              selectedTokenBalance={selectedTokenBalance} // Transmitere date către Send
+              ethBalance={ethBalance}
             />
           </div>
         )}

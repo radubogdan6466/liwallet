@@ -35,7 +35,7 @@ function Balance({
           setCoinPrice(response.data[chainToCoinID[selectedChain]].usd);
         })
         .catch((error) => {
-          console.error(`Error fetching ${selectedChain} price: `, error);
+          //console.error(`Error fetching ${selectedChain} price: `, error);
           setCoinPrice(null);
         });
     } else {
@@ -45,6 +45,7 @@ function Balance({
   return (
     <div className="balance-native-navbar">
       <h1 className="balance-native-navbar-title">
+        {/**Display native balance */}
         {Number(ethBalance).toFixed(4)}
         {selectedChain === ethchain
           ? "   ETH"
@@ -105,7 +106,6 @@ export default function NavBar({
         console.error("Eroare la copierea adresei:", error);
       });
   }
-
   const shortenedAddress = `${userWallet.address.substring(
     0,
     6
@@ -122,6 +122,7 @@ export default function NavBar({
           {shortenedAddress}
         </p>
       </div>
+      <span className="span-copy-address" id="copyMessage"></span>
       <div>
         <Balance
           className="balance-native-navbar-component"

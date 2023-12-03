@@ -1,5 +1,5 @@
 //utils.js
-export const bnbchain = "https://bsc-testnet.publicnode.com";
+export const bnbchain = "https://data-seed-prebsc-1-s1.binance.org:8545/";
 export const ethchain = "https://eth.llamarpc.com	";
 export const dogechain = "https://rpc-testnet.dogechain.dog";
 export const polychain = "https://rpc-mumbai.maticvigil.com/";
@@ -23,7 +23,12 @@ export const chains = {
 // eth sepolia https://sepolia.infura.io/v3/74bc4d4122e04aedba2a6d8bcc3164fd
 
 // bnb mainnet https://bsc-dataseed2.bnbchain.org
+
 // bnb testnet https://bsc-testnet.publicnode.com
+// bnb testnet https://data-seed-prebsc-1-s1.binance.org:8545/
+// bnb testnet
+// bnb testnet
+// bnb testnet
 export const getChainNameFromUrl = (url) => {
   switch (url) {
     case bnbchain:
