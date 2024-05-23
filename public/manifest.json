@@ -13,6 +13,5 @@
       "128": "logo192.png"
     }
   },
-  "permissions": ["storage"],
   "host_permissions": ["http://*/", "https://*/"]
 }
