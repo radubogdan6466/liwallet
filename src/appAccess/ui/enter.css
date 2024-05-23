@@ -1,0 +1,47 @@
+:root {
+  --primary: #11998e;
+  --secondary: #38ef7d;
+  --white: #f2f2f2;
+  --gray: #9b9b9b;
+}
+.enter-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+/* title*/
+.titleEnterPass {
+  color: var(--white);
+  font-size: 24px;
+  margin-bottom: 1rem;
+}
+
+/* title*/
+/* button setPassword*/
+.enter-button {
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+  border-radius: 4px;
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 0.5),
+    0px 0px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: var(--white);
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
+}
+
+.enter-button:hover {
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 1),
+    0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+.enter-button-p {
+  padding: 20px;
+}
+/*button set password end*/

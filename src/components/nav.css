@@ -1,0 +1,93 @@
+:root {
+  --primary: #11998e;
+  --secondary: #38ef7d;
+  --white: #f2f2f2;
+  --gray: #9b9b9b;
+  --returnPrimary: #38ef7d;
+  --returnSecondary: #11998e;
+  --box: rgb(26, 32, 37);
+  --bcg: rgb(173, 216, 230);
+}
+.nav-container {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(26, 32, 37);
+  max-width: 600px;
+  height: 150px;
+  border-radius: 25px;
+  box-shadow: inset 0px 0px 0px var(--primary), 10px 10px 10px var(--primary),
+    10px 10px 10px var(--box);
+}
+/* button setPassword*/
+.account-button-title {
+  display: flex;
+  background: none;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.account-button-title p {
+  margin: 14px 0 14px 14px;
+  color: var(--white);
+}
+.account-button-nav {
+  margin: 14px 14px 14px 14px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--white);
+  border-radius: 25px;
+  border: 0;
+  font-weight: bold;
+}
+.span-copy-address {
+  position: absolute;
+  top: 40px;
+  left: 115px;
+  font-size: 12px;
+
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.balance-in-usd-container {
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  margin: 0px 14px 14px 14px;
+  left: 10px;
+  font-size: 18px;
+}
+.balance-text {
+  color: white;
+}
+.value-price {
+  color: white;
+  font-weight: bold;
+}
+.account-button:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+.account-button-p {
+  padding: 20px;
+}
+/*button set password end*/
+/* Balance section begin*/
+.balance-native-navbar {
+  background: none;
+  position: absolute;
+  top: 40px;
+}
+.balance-native-navbar-title {
+  color: var(--white);
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  margin: 20px 20px 0px 20px;
+}
+/*Balance section end*/

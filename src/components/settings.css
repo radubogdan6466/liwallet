@@ -1,0 +1,174 @@
+:root {
+  --primary: #11998e;
+  --secondary: #38ef7d;
+  --white: #f2f2f2;
+  --gray: #9b9b9b;
+  --returnPrimary: #38ef7d;
+  --returnSecondary: #11998e;
+}
+.bottom-nav {
+  max-width: 600px;
+  width: 90%;
+  position: absolute;
+  bottom: 0;
+  color: white;
+  margin-bottom: 10px;
+  border-radius: 50px;
+  background: linear-gradient(
+    90deg,
+    rgba(38, 200, 133, 1) 0%,
+    rgba(17, 153, 142, 1) 50%,
+    rgba(38, 200, 133, 1) 100%
+  );
+}
+
+.settings-container {
+  top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.createPage-container-dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background: rgba(29, 35, 41);
+}
+
+/* title*/
+.create-p {
+  color: var(--white);
+  font-size: 20px;
+  margin-bottom: 1rem;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.create-p-sl {
+  color: var(--gray);
+  font-size: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.word-sl {
+  color: var(--white);
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+/* title*/
+/* INPUT*/
+.form__group-create-wallet {
+  position: relative;
+  width: 100vh/2;
+  margin: 1rem;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid var(--gray);
+  outline: 0;
+  font-size: 1.3rem;
+  color: var(--white);
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.form__field::placeholder {
+  color: transparent;
+}
+
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: var(--gray);
+}
+
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: var(--primary);
+  font-weight: 700;
+  padding-bottom: 6px;
+}
+
+.form__field:focus {
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, var(--primary), var(--secondary));
+  border-image-slice: 1;
+}
+
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
+}
+/* INPUT*/
+
+/* button setPassword*/
+.settings-button-ui {
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+  border-radius: 4px;
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 0.5),
+    0px 0px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: var(--white);
+  transition: 0.5s, color 0.5s, box-shadow 0.5s;
+}
+
+.settings-button-ui:hover {
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 1),
+    0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+.settings-button-ui-p {
+  padding: 20px;
+}
+/*button set password end*/
+/*return createwallet button begin*/
+.settings-button-return {
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+  border-radius: 4px;
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 0.5),
+    0px 0px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(
+    to right,
+    var(--returnPrimary),
+    var(--returnSecondary)
+  );
+  color: var(--white);
+  transition: 0.5s, color 0.5s, box-shadow 0.5s;
+}
+
+.settings-button-return:hover {
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 1),
+    0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+/*return createwallet button end*/

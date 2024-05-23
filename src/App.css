@@ -1,0 +1,8 @@
+body,
+html {
+  background: rgba(29, 35, 41);
+  min-height: 600px;
+  min-width: 357px;
+  margin: 0;
+  padding: 0;
+}

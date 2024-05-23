@@ -1,0 +1,272 @@
+[
+  {
+    "symbol": "ZIX",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/22107.png"
+  },
+  {
+    "symbol": "DOGE",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/74.png"
+  },
+
+  {
+    "symbol": "MTK",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/74.png"
+  },
+  {
+    "symbol": "BDOGE",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/74.png"
+  },
+  {
+    "symbol": "WISTA",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/24991.png"
+  },
+  {
+    "symbol": "ETH",
+    "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
+  },
+  {
+    "symbol": "ETH Sepolia",
+    "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
+  },
+  {
+    "symbol": "ETHER",
+    "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
+  },
+  {
+    "symbol": "ETH Token",
+    "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
+  },
+  {
+    "symbol": "ETH Arbitrum",
+    "logo": "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
+  },
+  {
+    "symbol": "BNB",
+    "logo": "https://cryptologos.cc/logos/bnb-bnb-logo.png?v=025"
+  },
+  {
+    "symbol": "MATIC",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png"
+  },
+  {
+    "symbol": "Matic Token",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png"
+  },
+  {
+    "symbol": "BMATIC",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png"
+  },
+  {
+    "symbol": "Cake",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/7186.png"
+  },
+  {
+    "symbol": "MTA",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/7186.png"
+  },
+  {
+    "symbol": "dincoin",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/24991.png"
+  },
+  {
+    "symbol": "ENF",
+    "logo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ7IHzBYCfSnr1iPAvFuT4X_4lcKlWvPeBfvdiT9mjSJZGYHvU4"
+  },
+  {
+    "symbol": "LCK",
+    "logo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ7IHzBYCfSnr1iPAvFuT4X_4lcKlWvPeBfvdiT9mjSJZGYHvU4"
+  },
+  {
+    "symbol": "mim",
+    "logo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ7IHzBYCfSnr1iPAvFuT4X_4lcKlWvPeBfvdiT9mjSJZGYHvU4"
+  },
+  {
+    "symbol": "MANEA",
+    "logo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ7IHzBYCfSnr1iPAvFuT4X_4lcKlWvPeBfvdiT9mjSJZGYHvU4"
+  },
+  {
+    "symbol": "BTC",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+  },
+  {
+    "symbol": "WBTC",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+  },
+  {
+    "symbol": "XRP",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/52.png"
+  },
+  {
+    "symbol": "USDT",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+  },
+  {
+    "symbol": "USDC",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+  },
+  {
+    "symbol": "ADA",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/2010.png"
+  },
+  {
+    "symbol": "SOL",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png"
+  },
+  {
+    "symbol": "TRX",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/1958.png"
+  },
+  {
+    "symbol": "DOT",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/6636.png"
+  },
+  {
+    "symbol": "XDAI",
+    "logo": "https://gnosisscan.io/images/svg/brands/mainbrand-1.svg?v=24.5.1.0"
+  },
+  {
+    "symbol": "DOGE",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/74.png"
+  },
+  {
+    "symbol": "DOGECOIN",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/74.png"
+  },
+  {
+    "symbol": "SHIB",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/5994.png"
+  },
+  {
+    "symbol": "LTC",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/2.png"
+  },
+  {
+    "symbol": "AVAX",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/5805.png"
+  },
+  {
+    "symbol": "LINK",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/1975.png"
+  },
+  {
+    "symbol": "UNI",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/7083.png"
+  },
+  {
+    "symbol": "ATOM",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3794.png"
+  },
+  {
+    "symbol": "ARB",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/11841.png"
+  },
+  {
+    "symbol": "OP",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/11840.png"
+  },
+  {
+    "symbol": "AAVE",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/7278.png"
+  },
+  {
+    "symbol": "EGLD",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/6892.png"
+  },
+  {
+    "symbol": "INJ",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/7226.png"
+  },
+  {
+    "symbol": "THETA",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/2416.png"
+  },
+  {
+    "symbol": "MANA",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/1966.png"
+  },
+  {
+    "symbol": "FTM",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3513.png"
+  },
+  {
+    "symbol": "GALA",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/7080.png"
+  },
+  {
+    "symbol": "PEPE",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/24478.png"
+  },
+  {
+    "symbol": "SUI",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/20947.png"
+  },
+  {
+    "symbol": "1INCH",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/8104.png"
+  },
+  {
+    "symbol": "ENJ",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/2130.png"
+  },
+  {
+    "symbol": "ANKR",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3783.png"
+  },
+  {
+    "symbol": "OCEAN",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3911.png"
+  },
+  {
+    "symbol": "GMT",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/18069.png"
+  },
+  {
+    "symbol": "SUSHI",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/6758.png"
+  },
+  {
+    "symbol": "ONE",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3945.png"
+  },
+  {
+    "symbol": "DAO",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/8420.png"
+  },
+  {
+    "symbol": "GAL",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/11877.png"
+  },
+  {
+    "symbol": "CTSI",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/5444.png"
+  },
+  {
+    "symbol": "FDUSD",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/26081.png"
+  },
+  {
+    "symbol": "ZBC",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/18860.png"
+  },
+  {
+    "symbol": "STRX",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/9220.png"
+  },
+  {
+    "symbol": "BeAi",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/24906.png"
+  },
+  {
+    "symbol": "CHESS",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/10974.png"
+  },
+  {
+    "symbol": "VIDT",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/22710.png"
+  },
+
+  {
+    "symbol": "TORN",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/8049.png"
+  }
+]

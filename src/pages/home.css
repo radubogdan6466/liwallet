@@ -1,0 +1,87 @@
+:root {
+  --primary: #11998e;
+  --secondary: #38ef7d;
+  --white: #f2f2f2;
+  --gray: #9b9b9b;
+  --returnPrimary: #38ef7d;
+  --returnSecondary: #11998e;
+}
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  width: 100%;
+}
+.createPage-container-dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background: rgba(29, 35, 41);
+}
+
+/* title*/
+.balance-native-home {
+  color: var(--white);
+  font-size: 20px;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+.create-p-sl {
+  color: var(--gray);
+  font-size: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.word-sl {
+  color: var(--white);
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+/* title*/
+/* button setPassword*/
+.create-button-ui {
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+  border-radius: 4px;
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 0.5),
+    0px 0px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: var(--white);
+  transition: 0.5s, color 0.5s, box-shadow 0.5s;
+}
+
+.create-button-ui:hover {
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 1),
+    0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+.create-button-ui-p {
+  padding: 20px;
+}
+/*button set password end*/
+/*return createwallet button end*/
+.menu-settings-chain-selector-btn-home {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.tohis {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 160px;
+  margin: 5px;
+  padding: 5px;
+}
+.tohis h3 {
+  margin: 20px;
+}

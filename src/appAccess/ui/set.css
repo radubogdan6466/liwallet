@@ -1,0 +1,114 @@
+:root {
+  --primary: #11998e;
+  --secondary: #38ef7d;
+  --white: #f2f2f2;
+  --gray: #9b9b9b;
+}
+/* setPassword PAGE begin*/
+.set-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+/* title*/
+.title1 {
+  color: var(--white);
+  font-size: 24px;
+  margin-bottom: 1rem;
+}
+.title2 {
+  color: var(--gray);
+  font-size: 14px;
+}
+/* title*/
+/* INPUT*/
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 100vh/2;
+  margin: 1rem;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid var(--gray);
+  outline: 0;
+  font-size: 1.3rem;
+  color: var(--white);
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.form__field::placeholder {
+  color: transparent;
+}
+
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: var(--gray);
+}
+
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: var(--primary);
+  font-weight: 700;
+  padding-bottom: 6px;
+}
+
+.form__field:focus {
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, var(--primary), var(--secondary));
+  border-image-slice: 1;
+}
+
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
+}
+
+/* button setPassword*/
+.noselect {
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+  border-radius: 4px;
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 0.5),
+    0px 0px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: var(--white);
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
+}
+
+.noselect:hover {
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 1),
+    0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+.set-button-p {
+  padding: 20px;
+}
+/*button set password end*/

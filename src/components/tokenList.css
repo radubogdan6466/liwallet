@@ -1,0 +1,29 @@
+:root {
+  --primary: #11998e;
+  --secondary: #38ef7d;
+  --white: #f2f2f2;
+  --gray: #9b9b9b;
+  --returnPrimary: #38ef7d;
+  --returnSecondary: #11998e;
+}
+.logoimg {
+  height: 20px;
+  width: 20px;
+}
+.tokenList {
+  top: 220px;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  margin: 5px;
+  padding: 5px;
+}
+.tokenListTitle {
+  cursor: pointer;
+}
+/* .tohis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+} */
