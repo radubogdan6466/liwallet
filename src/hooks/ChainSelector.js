@@ -22,7 +22,7 @@ import {
   zetaChain,
 } from "./utils.js";
 import { IonActionSheet, IonButton } from "@ionic/react";
-
+import "./ChainSelector.css";
 import binanceLogo from "../logos/bnbChain.png";
 import ethereumLogo from "../logos/ethLogo.png";
 import arbitrumLogo from "../logos/arbitrum.png";
@@ -228,6 +228,26 @@ function ChainSelector({ selectedChain, handleChainChange }) {
         handleLogoChange(zetaChain);
       },
     },
+    {
+      text: "TEST NETWORKS",
+      data: {
+        action: "delete",
+      },
+    },
+    {
+      text: "Sepolia testnet",
+      handler: () => {
+        handleChainChange(sepoliachain);
+        handleLogoChange(sepoliachain);
+      },
+    },
+    {
+      text: "Goerli testnet",
+      handler: () => {
+        handleChainChange(goerlichain);
+        handleLogoChange(goerlichain);
+      },
+    },
 
     {
       text: "Cancel",
@@ -248,6 +268,7 @@ function ChainSelector({ selectedChain, handleChainChange }) {
         <img src={logo} alt="Chain Logo" style={{ height: "40px" }} />
       </IonButton>
       <IonActionSheet
+        className="my-custom-class"
         id="chain-selector-sheet"
         header="Select Chain"
         buttons={buttons}

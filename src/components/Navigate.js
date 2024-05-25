@@ -95,6 +95,7 @@ const Meniu = () => {
       </Popup>
 
       <IonActionSheet
+        className="my-custom-class"
         isOpen={showActionSheet}
         onDidDismiss={handleCloseActionSheet}
         header="Actions"
