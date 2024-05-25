@@ -18,6 +18,63 @@
   margin: 5px;
   padding: 5px;
 }
+
+@media (min-width: 793px) {
+  .tokenList {
+    top: 26%;
+    transition: 0.2s;
+  }
+}
+@media (min-width: 850px) {
+  .tokenList {
+    top: 27%;
+    transition: 0.2s;
+  }
+}
+@media (min-width: 920px) {
+  .tokenList {
+    top: 28%;
+    transition: 0.2s;
+  }
+}
+
+@media (min-width: 1000px) {
+  .tokenList {
+    top: 29%;
+    transition: 0.2s;
+  }
+}
+@media (min-width: 1200px) {
+  .tokenList {
+    top: 30%;
+    transition: 0.2s;
+  }
+}
+@media (min-width: 1400px) {
+  .tokenList {
+    top: 31%;
+    transition: 0.2s;
+  }
+}
+
+@media (min-width: 1500px) {
+  .tokenList {
+    top: 32%;
+    transition: 0.2s;
+  }
+}
+@media (min-width: 1600px) {
+  .tokenList {
+    top: 33%;
+    transition: 0.2s;
+  }
+}
+@media (min-width: 1700px) {
+  .tokenList {
+    top: 34%;
+    transition: 0.2s;
+  }
+}
 .tokenListTitle {
   cursor: pointer;
 }
@@ -27,3 +84,22 @@
   justify-content: center;
   justify-content: space-around;
 } */
+/* Customize the scrollbar for webkit browsers (Chrome, Safari, etc.) */
+/* Customize the scrollbar for webkit browsers (Chrome, Safari, etc.) */
+.tokenList .MuiList-ro {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #888 transparent; /* For Firefox */
+}
+
+.tokenList .MuiList-root::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+}
+
+.tokenList .MuiList-root::-webkit-scrollbar-track {
+  background: transparent; /* Track color */
+}
+
+.tokenList .MuiList-root::-webkit-scrollbar-thumb {
+  background-color: #888; /* Thumb color */
+  border-radius: 2px; /* Rounded corners */
+}

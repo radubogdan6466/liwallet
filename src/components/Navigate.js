@@ -51,7 +51,7 @@ const Meniu = () => {
 
   const handleExpandView = () => {
     window.open(
-      "chrome-extension://edlbpjmiidgfnmblcaildocjliemkfkc/index.html",
+      "chrome-extension://kmlbkiknogfenebpeaohpljdpbicijim/index.html",
       "_blank"
     );
   };

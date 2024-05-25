@@ -65,10 +65,7 @@ export default function SetPassword({ onPasswordSet }) {
         <label htmlFor="privacyCheckbox">
           {t("I agree to the Privacy Policy")}
         </label>
-        <a
-          href="https://radubogdan6466.github.io/privacy-policy/"
-          target="_blank"
-        >
+        <a href="https://liwallet.xyz/privacy-policy" target="_blank">
           Privacy Policy
         </a>
       </div>

@@ -23,6 +23,117 @@
   box-shadow: inset 0px 0px 0px var(--primary), 10px 10px 10px var(--primary),
     10px 10px 10px var(--box);
 }
+/* Styles for screens wider than 700px */
+@media (min-width: 601px) {
+  .nav-container {
+    transition: 0.2s;
+    position: absolute;
+    left: 10%;
+    top: 10px;
+    width: 65%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(26, 32, 37);
+    max-width: 500px;
+    height: 150px;
+    border-radius: 25px;
+    box-shadow: inset 0px 0px 0px var(--primary), 10px 10px 10px var(--primary),
+      10px 10px 10px var(--box);
+  }
+}
+@media (min-width: 793px) {
+  .nav-container {
+    transition: 0.2s;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(26, 32, 37);
+    max-width: 500px;
+    height: 150px;
+    border-radius: 25px;
+    box-shadow: inset 0px 0px 0px var(--primary), 10px 10px 10px var(--primary),
+      10px 10px 10px var(--box);
+  }
+}
+@media (min-width: 850px) {
+  .nav-container {
+    transition: 0.2s;
+    position: absolute;
+    left: 10px;
+    width: 100%;
+    max-width: 500px;
+  }
+}
+@media (min-width: 920px) {
+  .nav-container {
+    transition: 0.2s;
+    position: absolute;
+    left: 10px;
+    width: 100%;
+  }
+}
+@media (min-width: 1000px) {
+  .nav-container {
+    transition: 0.2s;
+    position: absolute;
+    left: 10px;
+    width: 100%;
+  }
+}
+@media (min-width: 1100px) {
+  .nav-container {
+    transition: 0.2s;
+    position: absolute;
+    left: 10px;
+    width: 100%;
+  }
+}
+@media (min-width: 1200px) {
+  .nav-container {
+    transition: 0.2s;
+    position: absolute;
+    left: 10px;
+    width: 100%;
+  }
+}
+@media (min-width: 1400px) {
+  .nav-container {
+    transition: 0.2s;
+    position: absolute;
+    left: 10px;
+    width: 100%;
+  }
+}
+@media (min-width: 1500px) {
+  .nav-container {
+    transition: 0.2s;
+    position: absolute;
+    left: 10px;
+    width: 100%;
+  }
+}
+@media (min-width: 1600px) {
+  .nav-container {
+    transition: 0.2s;
+    position: absolute;
+    left: 10px;
+    width: 100%;
+  }
+}
+@media (min-width: 1700px) {
+  .nav-container {
+    transition: 0.2s;
+    position: absolute;
+    left: 10px;
+    width: 100%;
+  }
+}
+
 /* button setPassword*/
 .account-button-title {
   display: flex;

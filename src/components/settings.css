@@ -21,7 +21,69 @@
     rgba(38, 200, 133, 1) 100%
   );
 }
+@media (min-width: 793px) {
+  .bottom-nav {
+    transition: 0.2s;
 
+    width: 100%;
+  }
+}
+@media (min-width: 850px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 920px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1000px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1200px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1400px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1500px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1600px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1700px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
 .settings-container {
   top: 10px;
   display: flex;
@@ -135,7 +197,7 @@
     0px 0px 10px rgba(0, 0, 0, 0.15);
   background: linear-gradient(to right, var(--primary), var(--secondary));
   color: var(--white);
-  transition: 0.5s, color 0.5s, box-shadow 0.5s;
+  transition: 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 .settings-button-ui:hover {
@@ -163,7 +225,7 @@
     var(--returnSecondary)
   );
   color: var(--white);
-  transition: 0.5s, color 0.5s, box-shadow 0.5s;
+  transition: 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 .settings-button-return:hover {

@@ -269,11 +269,11 @@ export default function TokenList({
 
   return (
     <div className="tokenList">
-      <Box>
+      <div>
         <List
           style={{
-            height: "200px",
-            width: "100%",
+            height: "250px",
+            width: "300px",
             overflowY: "auto",
           }}
         >
@@ -375,7 +375,7 @@ export default function TokenList({
           <RefreshIcon />
           {t("refresh")}
         </Button>
-      </Box>
+      </div>
     </div>
   );
 }
