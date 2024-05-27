@@ -69,9 +69,7 @@ export const UncheckedAddressButton = styled(Button)(({ theme }) => ({}));
 //END NEW
 export const StyledBoxx = styled(Box)({});
 export const StyledDialogContent = styled(DialogContent)({});
-export const StyledDialogSendContent = styled(DialogContent)(
-  ({ theme }) => ({})
-);
+
 export const StyledTextField = styled(TextField)({});
 
 export const StyledFormControl = styled(FormControl)({});

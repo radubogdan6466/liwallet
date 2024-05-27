@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Send from "../transfer/SendPage";
+import { IonPage } from "@ionic/react";
 import {
   bnbchain,
   ethchain,
@@ -103,78 +104,29 @@ export default function Home() {
     return <CheckUser />;
   }
   return (
-    <div className="all">
-      <div className="home-container">
+    <IonPage className="main-content" id="main-content">
+      <div className="all">
         <div className="home-container">
-          <LoadingIndicator />
-          <div className="menu-settings-chain-selector-btn-home">
-            <Meniu />
-            <ChainSelector
+          <div className="home-container">
+            <LoadingIndicator />
+            <div className="menu-settings-chain-selector-btn-home">
+              <Meniu />
+              <ChainSelector
+                selectedChain={selectedChain}
+                handleChainChange={handleChainChange}
+              />
+            </div>
+
+            <NavBar
               selectedChain={selectedChain}
               handleChainChange={handleChainChange}
-            />
-          </div>
-
-          <NavBar
-            selectedChain={selectedChain}
-            handleChainChange={handleChainChange}
-            userWallet={userWallet}
-            //-nav
-            ethBalance={ethBalance}
-            ethchain={ethchain}
-            bnbchain={bnbchain}
-            dogechain={dogechain}
-            polychain={polychain}
-            arbitrumchain={arbitrumchain}
-            goerlichain={goerlichain}
-            sepoliachain={sepoliachain}
-            opMainnetChain={opMainnetChain}
-            basechain={basechain}
-            avalanchechain={avalanchechain}
-            cronosMainnetChain={cronosMainnetChain}
-            lineaMainnetChain={lineaMainnetChain}
-            mantleMainnetChain={mantleMainnetChain}
-            pulseMainnetChain={pulseMainnetChain}
-            fantomChain={fantomChain}
-            gnosisChain={gnosisChain}
-            celoChain={celoChain}
-            harmonyChain={harmonyChain}
-            blastChain={blastChain}
-            zetaChain={zetaChain}
-          />
-          <div className="tohis">
-            <h3
-              className={`tokenListTitle ${
-                selectedOption === "tokens" ? "selected" : ""
-              }`}
-              style={{
-                color: selectedOption === "tokens" ? "#11998e" : "#f4f3f2",
-              }}
-              onClick={() => handleOptionClick("tokens")}
-            >
-              Tokens
-            </h3>
-            <h3
-              className={`tokenListTitle ${
-                selectedOption === "history" ? "selected" : ""
-              }`}
-              style={{
-                color: selectedOption === "history" ? "#11998e" : "#f4f3f2",
-              }}
-              onClick={() => handleOptionClick("history")}
-            >
-              History
-            </h3>
-          </div>
-          {selectedOption === "tokens" && (
-            <TokenSection
               userWallet={userWallet}
-              web3={web3}
-              selectedChain={selectedChain}
+              //-nav
+              ethBalance={ethBalance}
               ethchain={ethchain}
               bnbchain={bnbchain}
-              polychain={polychain}
               dogechain={dogechain}
+              polychain={polychain}
               arbitrumchain={arbitrumchain}
               goerlichain={goerlichain}
               sepoliachain={sepoliachain}
@@ -191,38 +143,88 @@ export default function Home() {
               harmonyChain={harmonyChain}
               blastChain={blastChain}
               zetaChain={zetaChain}
-              ethBalance={ethBalance}
-              handleTokenClick={handleTokenClick}
-              onTokenBalanceClick={handleTokenBalanceClick}
             />
-          )}
-          {selectedOption === "history" && (
-            <History
-              selectedChain={selectedChain}
-              ethchain={ethchain}
-              bnbchain={bnbchain}
-              polychain={polychain}
-              dogechain={dogechain}
-              arbitrumchain={arbitrumchain}
-              goerlichain={goerlichain}
-              sepoliachain={sepoliachain}
-              opMainnetChain={opMainnetChain}
-              basechain={basechain}
-              avalanchechain={avalanchechain}
-              cronosMainnetChain={cronosMainnetChain}
-              lineaMainnetChain={lineaMainnetChain}
-              mantleMainnetChain={mantleMainnetChain}
-              pulseMainnetChain={pulseMainnetChain}
-              fantomChain={fantomChain}
-              gnosisChain={gnosisChain}
-              celoChain={celoChain}
-              harmonyChain={harmonyChain}
-              blastChain={blastChain}
-              zetaChain={zetaChain}
-              ethBalance={ethBalance}
-            />
-          )}
-          {/* <TokenSection
+            <div className="tohis">
+              <h3
+                className={`tokenListTitle ${
+                  selectedOption === "tokens" ? "selected" : ""
+                }`}
+                style={{
+                  color: selectedOption === "tokens" ? "#11998e" : "#f4f3f2",
+                }}
+                onClick={() => handleOptionClick("tokens")}
+              >
+                Tokens
+              </h3>
+              <h3
+                className={`tokenListTitle ${
+                  selectedOption === "history" ? "selected" : ""
+                }`}
+                style={{
+                  color: selectedOption === "history" ? "#11998e" : "#f4f3f2",
+                }}
+                onClick={() => handleOptionClick("history")}
+              >
+                History
+              </h3>
+            </div>
+            {selectedOption === "tokens" && (
+              <TokenSection
+                userWallet={userWallet}
+                web3={web3}
+                selectedChain={selectedChain}
+                ethchain={ethchain}
+                bnbchain={bnbchain}
+                polychain={polychain}
+                dogechain={dogechain}
+                arbitrumchain={arbitrumchain}
+                goerlichain={goerlichain}
+                sepoliachain={sepoliachain}
+                opMainnetChain={opMainnetChain}
+                basechain={basechain}
+                avalanchechain={avalanchechain}
+                cronosMainnetChain={cronosMainnetChain}
+                lineaMainnetChain={lineaMainnetChain}
+                mantleMainnetChain={mantleMainnetChain}
+                pulseMainnetChain={pulseMainnetChain}
+                fantomChain={fantomChain}
+                gnosisChain={gnosisChain}
+                celoChain={celoChain}
+                harmonyChain={harmonyChain}
+                blastChain={blastChain}
+                zetaChain={zetaChain}
+                ethBalance={ethBalance}
+                handleTokenClick={handleTokenClick}
+                onTokenBalanceClick={handleTokenBalanceClick}
+              />
+            )}
+            {selectedOption === "history" && (
+              <History
+                selectedChain={selectedChain}
+                ethchain={ethchain}
+                bnbchain={bnbchain}
+                polychain={polychain}
+                dogechain={dogechain}
+                arbitrumchain={arbitrumchain}
+                goerlichain={goerlichain}
+                sepoliachain={sepoliachain}
+                opMainnetChain={opMainnetChain}
+                basechain={basechain}
+                avalanchechain={avalanchechain}
+                cronosMainnetChain={cronosMainnetChain}
+                lineaMainnetChain={lineaMainnetChain}
+                mantleMainnetChain={mantleMainnetChain}
+                pulseMainnetChain={pulseMainnetChain}
+                fantomChain={fantomChain}
+                gnosisChain={gnosisChain}
+                celoChain={celoChain}
+                harmonyChain={harmonyChain}
+                blastChain={blastChain}
+                zetaChain={zetaChain}
+                ethBalance={ethBalance}
+              />
+            )}
+            {/* <TokenSection
           userWallet={userWallet}
           web3={web3}
           selectedChain={selectedChain}
@@ -237,56 +239,57 @@ export default function Home() {
           handleTokenClick={handleTokenClick}
           onTokenBalanceClick={handleTokenBalanceClick} // Adaugă prop-ul pentru transmiterea datelor
         /> */}
-          <Actions
-            onSendClick={() => setCurrentPopup("send")}
-            onImportClick={() => setCurrentPopup("import")}
-            onReceiveClick={() => setCurrentPopup("receive")}
-          />
+            <Actions
+              onSendClick={() => setCurrentPopup("send")}
+              onImportClick={() => setCurrentPopup("import")}
+              onReceiveClick={() => setCurrentPopup("receive")}
+            />
 
-          {currentPopup === "import" && (
-            <div>
-              <TokenImport
-                onClose={() => setCurrentPopup(null)}
-                onTokenImport={onTokenImport}
-                selectedChain={selectedChain}
-              />
-            </div>
-          )}
+            {currentPopup === "import" && (
+              <div>
+                <TokenImport
+                  onClose={() => setCurrentPopup(null)}
+                  onTokenImport={onTokenImport}
+                  selectedChain={selectedChain}
+                />
+              </div>
+            )}
 
-          {currentPopup === "send" && (
-            <div>
-              <Send
-                onClose={() => {
-                  setCurrentPopup(null);
-                  // Resetează starea pentru tokenBalance după închiderea Send
-                  setSelectedTokenBalance(null);
-                }}
-                selectedToken={selectedToken}
-                selectedChain={selectedChain}
-                selectedTokenBalance={selectedTokenBalance} // Transmitere date către Send
-                ethBalance={ethBalance}
-              />
-            </div>
-          )}
-          {currentPopup === "receive" && (
-            <div>
-              <Receive
-                onClose={() => setCurrentPopup(null)}
-                userWallet={userWallet}
-              />
-            </div>
-          )}
+            {currentPopup === "send" && (
+              <div>
+                <Send
+                  onClose={() => {
+                    setCurrentPopup(null);
+                    // Resetează starea pentru tokenBalance după închiderea Send
+                    setSelectedTokenBalance(null);
+                  }}
+                  selectedToken={selectedToken}
+                  selectedChain={selectedChain}
+                  selectedTokenBalance={selectedTokenBalance} // Transmitere date către Send
+                  ethBalance={ethBalance}
+                />
+              </div>
+            )}
+            {currentPopup === "receive" && (
+              <div>
+                <Receive
+                  onClose={() => setCurrentPopup(null)}
+                  userWallet={userWallet}
+                />
+              </div>
+            )}
 
-          {currentPopup === "login" && (
-            <div>
-              <LoginWallet
-                onClose={() => setCurrentPopup(null)}
-                userWallet={userWallet}
-              />
-            </div>
-          )}
+            {currentPopup === "login" && (
+              <div>
+                <LoginWallet
+                  onClose={() => setCurrentPopup(null)}
+                  userWallet={userWallet}
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </IonPage>
   );
 }

@@ -54,7 +54,7 @@
 
   "error": {
     "unpredictableGasLimit": "Error estimating gas. Manual limits setting may be required.",
-    "insufficientFunds": "Insufficientdaa funds",
+    "insufficientFunds": "Insufficient Funds",
     "numericFault": "Incorrect decimals",
     "invalidAddress": "The entered address is not valid.",
     "invalidValue": "The entered value is not valid.",

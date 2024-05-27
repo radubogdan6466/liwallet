@@ -284,6 +284,7 @@ export default function TokenList({
             onClick={() => handleTokenClick(getNativeCurrency(selectedChain))}
             sx={{ padding: "5px", margin: "0" }}
           >
+            {" "}
             <ListItemAvatar sx={{ width: "30px", height: "30px" }}>
               <Avatar
                 className="logoimg"

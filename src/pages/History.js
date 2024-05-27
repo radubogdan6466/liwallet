@@ -13,7 +13,7 @@ import {
 import up from "../logos/up.png";
 // import { getAllTransactions } from "../transfer/utils/localStorageService";
 import { getAllTransactionsByChain } from "../transfer/utils/localStorageService";
-
+import "./History.css";
 import { format } from "date-fns";
 import {
   ETHERSCAN_BASE_URL,
@@ -149,7 +149,20 @@ export default function ({
           You have no transactions.
         </Typography>
       ) : (
-        <List sx={{ height: "200px", width: "100%", overflowY: "auto" }}>
+        <List
+          className="listhis"
+          sx={{
+            marginTop: "30px",
+            display: "inline-block",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "280px",
+            width: "100%",
+            maxWidth: "600px",
+            overflowY: "auto",
+          }}
+        >
           {transactions.map((transaction, index) => (
             <React.Fragment key={index}>
               <ListItem

@@ -38,7 +38,7 @@ import AppBar from "@mui/material/AppBar";
 import Slide from "@mui/material/Slide";
 import { addTransaction } from "./utils/localStorageService"; // Importă funcția
 import { color } from "@mui/system";
-
+import "./SendPage.css";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -87,6 +87,7 @@ const Send = ({
     buttonText,
   } = useTransaction(selectedTokenState, selectedChain, t);
   const closePopup = () => {
+    setOpen(false); // Close the modal
     onClose();
   };
   // console.log(
@@ -151,28 +152,30 @@ const Send = ({
   }, [transferDetails]);
   return (
     <Dialog
+      className="SendDialogTransfer"
       fullScreen
       open={open}
       onClose={closePopup}
       TransitionComponent={Transition}
       sx={{
-        position: "fixed",
-        top: "64px",
-        background: "rgba(29, 35, 41)",
         "& .MuiPaper-root": {
-          background: "rgba(29, 35, 41)",
+          background:
+            "linear-gradient(90deg, rgba(6, 7, 9, 0.5), rgba(23, 9, 34, 0.5))",
         },
       }}
     >
       <DialogMain
+        className="SendDialogTransfer"
         sx={{
+          position: "sticky",
+          height: "90%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignContent: "center",
         }}
       >
-        <DialogContentSend>
+        <div className="secmainHome">
           <div style={{ textAlign: "center" }}>
             <Typography
               sx={{ textAlign: "center", color: "#f2f2f2", fontSize: "16px" }}
@@ -190,22 +193,6 @@ const Send = ({
                 ? formatBalance(selectedTokenBalance.balance)
                 : formatBalance(ethBalance)}
             </Typography>{" "}
-            {error && (
-              <TypographyErrImport
-                sx={{
-                  backgroundColor: "rgba(29, 35, 41)",
-                  color: "red",
-                  "& input:focus": {
-                    borderColor: "#38ef7d",
-                  },
-                  "& fieldset": {
-                    borderColor: "#38ef7d",
-                  },
-                }}
-              >
-                {error}
-              </TypographyErrImport>
-            )}
           </div>
           {/*  */}
           <div
@@ -336,12 +323,7 @@ const Send = ({
               {Number(transactionFee).toFixed(6)}
             </Typography>
           </Box>
-          <TypographyWarning
-            sx={{ color: "red", display: "center", marginLeft: "60px" }}
-          >
-            {" "}
-            {/* {(console.log(warningMessage), warningMessage)} */}
-          </TypographyWarning>
+
           {/* <TransferDetailsBoxSendPage>
             <TypographyWarning> {warningMessage}</TypographyWarning>
             {transferDetails && <TransferDetails details={transferDetails} />}
@@ -350,56 +332,57 @@ const Send = ({
           {/* <p style={{ color: "#ffffff" }}>
             Adresa raportata pentru Fake Investment
           </p> */}
-        </DialogContentSend>
-        <StyledDialogSendContent>
+        </div>
+        <div className="transfer-dial">
           <TransferDetailsDialog
             open={isDetailsDialogOpen}
             onClose={() => setDetailsDialogOpen(false)}
             transferDetails={transferDetails}
             warningMessage={warningMessage}
-          />{" "}
-          {showCheckButton && (
-            <CheckButton
-              variant="contained"
-              size="small"
-              onClick={handleAddressCheck}
-              disabled={!isValidAddress}
-              //disabled
-            >
-              {t("checkAddress")}
-            </CheckButton>
-          )}
-          {addressChecked && (
-            <CheckedAddressButton
-              variant="contained"
-              onClick={transferToken}
-              size="small"
-              //disabled={!isValidAddress}
-              disabled
-            >
-              {t("sendToken")} {selectedTokenState}::--::{buttonText}
-            </CheckedAddressButton>
-          )}
-          <UncheckedAddressButton
+          />
+          <button
             variant="contained"
             color="error"
             onClick={transferToken}
             size="small"
             disabled={!isValidAddress}
+            className="send-btn"
           >
-            {/* {t("sendToken")} {selectedTokenState}
-            ::--:: */}
-
             {buttonText}
-          </UncheckedAddressButton>
-        </StyledDialogSendContent>
+          </button>
+          {error && (
+            <TypographyErrImport
+              sx={{
+                backgroundColor: "rgba(29, 35, 41)",
+                color: "red",
+                "& input:focus": {
+                  borderColor: "#38ef7d",
+                },
+                "& fieldset": {
+                  borderColor: "#38ef7d",
+                },
+              }}
+            >
+              {error}
+            </TypographyErrImport>
+          )}
+          <TypographyWarning sx={{ color: "red", display: "center" }}>
+            {warningMessage}
+            {/* {(console.log(warningMessage), warningMessage)} */}
+          </TypographyWarning>
+        </div>
       </DialogMain>
       <AppBar sx={{ position: "relative", height: "64px" }}>
         <Button
           autoFocus
           //color="secondary"
           onClick={closePopup}
-          sx={{ position: "center", height: "64px", color: "#f2f2f2" }}
+          sx={{
+            position: "center",
+            height: "64px",
+            color: "red",
+            fontWeight: "bold",
+          }}
         >
           Close
         </Button>
