@@ -1,6 +1,6 @@
 {
   "name": "Liwallet",
-  "description": "Our secure crypto wallet extension app, now featuring a fresh and intuitive interface, lets you create wallets, store your digital assets securely, and send & receive crypto on over 10 EVM-compatible chains (including Ethereum, Binance Smart Chain, Polygon-Matic, Arbitrum). Enjoy a streamlined experience for managing your crypto portfolio across a vast ecosystem.",
+  "description": "Liwallet, send & receive & store cryptocurrencies",
   "version": "0.0.3",
   "manifest_version": 3,
   "privacy_policy": "https://radubogdan6466.github.io/privacy-policy/",
