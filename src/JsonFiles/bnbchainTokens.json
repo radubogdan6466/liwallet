@@ -1,0 +1,27 @@
+[
+  {
+    "symbol": "ZIX",
+    "name": "Coinzix",
+    "address": "0x48077400FAF11183c043Feb5184a13ea628Bb0DB",
+    "decimals": 18,
+    "chainId": 56,
+    "logo": "https://www.svgviewer.dev/static-svgs/34387/binance.svg"
+  },
+
+  {
+    "symbol": "WISTA",
+    "name": "WISTAVERSE",
+    "address": "0x3720E3C827daB665383b32bC49766D2d24C1Ed35",
+    "decimals": 18,
+    "chainId": 56,
+    "logo": "https://www.svgviewer.dev/static-svgs/34387/binance.svg"
+  },
+  {
+    "symbol": "ETH",
+    "name": "ETHEREUM",
+    "address": "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+    "decimals": 18,
+    "chainId": 56,
+    "logo": "https://www.svgviewer.dev/static-svgs/34387/binance.svg"
+  }
+]

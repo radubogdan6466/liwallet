@@ -1,0 +1,40 @@
+/* In your CSS file */
+ion-action-sheet.my-custom-class .action-sheet-group {
+  background: linear-gradient(90deg, rgba(6, 7, 9), rgba(23, 9, 34));
+  border-radius: 25px;
+}
+
+ion-action-sheet.my-custom-class .action-sheet-title {
+  color: rgba(38, 200, 133, 1);
+  text-align: center;
+}
+
+ion-action-sheet.my-custom-class .action-sheet-cancel {
+  background: linear-gradient(90deg, rgba(6, 7, 9), rgba(23, 9, 34));
+}
+
+ion-action-sheet.my-custom-class .action-sheet-button,
+ion-action-sheet.my-custom-class .action-sheet-button.ion-focused {
+  color: #f0f0f0;
+}
+
+@media (any-hover: hover) {
+  ion-action-sheet.my-custom-class .action-sheet-button:hover {
+    color: rgba(38, 200, 133, 1);
+  }
+}
+
+ion-action-sheet.my-custom-class ion-backdrop {
+  opacity: 0.6;
+}
+ion-action-sheet.my-custom-class
+  .action-sheet-cancel
+  .action-sheet-button-inner {
+  color: red;
+  font-weight: bold;
+  justify-content: center;
+}
+ion-action-sheet.my-custom-class .action-sheet-wrapper {
+  /* Set the height for the list container */
+  height: 60%;
+}

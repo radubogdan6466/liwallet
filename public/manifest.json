@@ -1,0 +1,17 @@
+{
+  "name": "Liwallet",
+  "description": "Liwallet, send & receive & store cryptocurrencies",
+  "version": "0.0.3",
+  "manifest_version": 3,
+  "privacy_policy": "https://radubogdan6466.github.io/privacy-policy/",
+
+  "action": {
+    "default_title": "liwallet",
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "logo192.png",
+      "128": "logo192.png"
+    }
+  },
+  "host_permissions": ["http://*/", "https://*/"]
+}

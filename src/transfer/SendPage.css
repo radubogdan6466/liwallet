@@ -1,0 +1,107 @@
+.SendDialogTransfer {
+  background: linear-gradient(90deg, rgba(6, 7, 9, 0.5), rgba(23, 9, 34, 0.5));
+}
+
+@media (min-width: 793px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 850px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 920px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1000px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1200px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1400px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1500px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1600px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+@media (min-width: 1700px) {
+  .bottom-nav {
+    transition: 0.2s;
+
+    width: 100%;
+  }
+}
+.send-btn {
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+  border-radius: 4px;
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 0.5),
+    0px 0px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(
+    to right,
+    var(--returnPrimary),
+    var(--returnSecondary)
+  );
+  color: var(--white);
+  transition: 0.5s, color 0.5s, box-shadow 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.send-btn:hover {
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 1),
+    0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+.transfer-dial {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.secmainHome {
+  margin-left: 10;
+  margin-right: 10;
+  padding-left: 10;
+  padding-right: 10;
+}
